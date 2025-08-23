@@ -1,0 +1,122 @@
+[
+  {
+    "id": "01",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox01@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "02",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox02@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Vendor"
+  },
+  {
+    "id": "03",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox03@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "04",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox04@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Company"
+  },
+  {
+    "id": "05",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox05@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "06",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox06@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Vendor"
+  },
+  {
+    "id": "07",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox07@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "08",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox08@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Company"
+  },
+  {
+    "id": "09",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox09@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "10",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox10@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Vendor"
+  },
+  {
+    "id": "11",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox11@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "12",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox12@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Company"
+  },
+  {
+    "id": "13",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox13@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  },
+  {
+    "id": "14",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox14@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Vendor"
+  },
+  {
+    "id": "15",
+    "fullName": "Robert Fox",
+    "phone": "516) 831-1111",
+    "email": "robert.fox15@gmail.com",
+    "joiningDate": "22/11/2024",
+    "userType": "Customer"
+  }
+]

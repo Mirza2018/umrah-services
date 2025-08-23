@@ -1,0 +1,89 @@
+export const mainTheme = {
+  token: {
+    fontFamily: "Poppins, sans-serif",
+  },
+  components: {
+    Menu: {
+      iconSize: 20,
+      fontSize: 16,
+
+      itemColor: "#727272",
+
+      itemSelectedBg: "#FE4101",
+      itemSelectedColor: "white",
+
+      // itemActiveBg: "#000",
+      // itemActiveColor: "#000",
+      // itemHoverColor: "#000",
+    },
+    Form: {
+      colorError: "#F5382C",
+    },
+    Input: {
+      colorIcon: "#000",
+      colorBorder: "#000",
+      activeBorderColor: "#000",
+    },
+    Checkbox: {
+      colorPrimary: "#000",
+      colorPrimaryHover: "#000",
+    },
+    Select: {
+      colorBorder: "rgba(151, 150, 153, 0.24)",
+      fontSize: 16,
+      optionSelectedColor: "#FFFFFF",
+      optionSelectedBg: "#000",
+
+      optionActiveColor: "#FFFFFF",
+
+      colorBgElevated: "#FFFFFF",
+      selectorBg: "#fff",
+      colorText: "#535763",
+      colorTextPlaceholder: "#000",
+      colorBgContainer: "#000",
+
+      zIndexPopup: 990,
+    },
+    DatePicker: {
+      fontSize: 20,
+      colorBorder: "#000",
+      colorTextPlaceholder: "#000",
+    },
+    Upload: {
+      colorFillAlter: "rgba(0,0,0,0)",
+      colorBorder: "#000",
+      colorBorderHover: "#000",
+      colorText: "#000",
+    },
+    Table: {
+      headerBg: "#FE4101",
+      headerSplitColor: "#FE4101",
+      rowHoverBg: "#E5FAE9",
+      borderColor: "rgb(253,253,253)",
+      headerSortHoverBg: "#FE4101",
+      headerSortActiveBg: "#FE4101",
+
+      // headerBg: "#000",
+      colorBgContainer: "#FDFDFD",
+      colorText: "#0C0C0C",
+      // borderColor: "#DFE1E3",
+      headerColor: "#fff",
+      fontSize: 18,
+      footerColor: "#FDFDFD",
+      // marginXXS: 4,
+      colorLinkActive: "#FDFDFD",
+      // headerSplitColor: "#0C0C0C",
+    },
+    Pagination: {
+      itemActiveBg: "#FE4101",
+      colorPrimary: "#FFFFFF",
+      colorPrimaryHover: "#FFFFFF",
+    },
+
+    Switch: {
+      colorPrimary: "#FE4101",
+      colorPrimaryBorder: "#000",
+      colorPrimaryHover: "#000",
+    },
+  },
+};
