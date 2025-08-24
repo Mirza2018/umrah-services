@@ -1,53 +1,52 @@
-import React, { useState } from "react";
-import { Table, Button } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+import { Button, Table } from "antd";
+import { useState } from "react";
 import { GoEye } from "react-icons/go";
-import { use } from "react";
-import ViewEarningModel from "./ViewEarningModel";
+import ViewServiceModel from "./ViewServiceModel";
+import { render } from "react-dom";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
   slNumber: "#1234",
-  name: "John Doe",
-  serviceTitle: "Economy Umrah Package",
-  amount: "$2,000",
-  date: "4:15 PM, 13/02/24",
+  vendorsName: "James Tracy",
+  email: "abc@gmail.com",
+  postTitle: "abc@gmail.com",
 }));
 
 // Define the columns for the table
 
 
 
-const EarningFromAccount = () => {
+const ServiceRequestsTable = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
     {
-      title: "#Tr.ID",
+      title: "#SI",
       dataIndex: "slNumber",
       key: "slNumber",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Vendors Name",
+      dataIndex: "vendorsName",
+      key: "vendorsName",
     },
     {
-      title: "Service Title",
-      dataIndex: "serviceTitle",
-      key: "serviceTitle",
+      title: "E-mail",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Post Title",
+      dataIndex: "postTitle",
+      key: "postTitle",
     },
     {
-      title: "Date & Time",
-      dataIndex: "date",
-      key: "date",
+      title: "Status",
+      dataIndex: "postTitle",
+      key: "postTitle",
+      render:()=><p className="text-secondary-color">Pending</p>
     },
     {
       title: "ACTION",
@@ -63,7 +62,7 @@ const EarningFromAccount = () => {
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />
@@ -88,7 +87,7 @@ const EarningFromAccount = () => {
         }}
         className="custom-table"
       />
-      <ViewEarningModel
+      <ViewServiceModel
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
@@ -97,4 +96,4 @@ const EarningFromAccount = () => {
   );
 };
 
-export default EarningFromAccount;
+export default ServiceRequestsTable;

@@ -1,31 +1,30 @@
-import React, { useState } from "react";
-import { Table, Button } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+import { Button, Table } from "antd";
+import { useState } from "react";
 import { GoEye } from "react-icons/go";
-import { use } from "react";
-import ViewEarningModel from "./ViewEarningModel";
+import ViewRefundsModel from "./ViewRefundsModel";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
   slNumber: "#1234",
   name: "John Doe",
-  serviceTitle: "Economy Umrah Package",
+  email: "abc@gmail.com",
   amount: "$2,000",
-  date: "4:15 PM, 13/02/24",
+  type: "Customer",
+  reason: "reason",
 }));
 
 // Define the columns for the table
 
 
 
-const EarningFromAccount = () => {
+const RefundsFromAccount = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
     {
-      title: "#Tr.ID",
+      title: "#SI",
       dataIndex: "slNumber",
       key: "slNumber",
     },
@@ -35,19 +34,30 @@ const EarningFromAccount = () => {
       key: "name",
     },
     {
-      title: "Service Title",
-      dataIndex: "serviceTitle",
-      key: "serviceTitle",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Amount",
+      title: "Price",
       dataIndex: "amount",
       key: "amount",
     },
     {
-      title: "Date & Time",
-      dataIndex: "date",
-      key: "date",
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Reason",
+      dataIndex: "reason",
+      key: "reason",
+    },
+    {
+      title: "Status",
+      dataIndex: "reason",
+      key: "reason",
+      render: () => <p className="text-[#EAB90A]">Pending</p>,
     },
     {
       title: "ACTION",
@@ -88,7 +98,7 @@ const EarningFromAccount = () => {
         }}
         className="custom-table"
       />
-      <ViewEarningModel
+      <ViewRefundsModel
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
@@ -97,4 +107,4 @@ const EarningFromAccount = () => {
   );
 };
 
-export default EarningFromAccount;
+export default RefundsFromAccount;

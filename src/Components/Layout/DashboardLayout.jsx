@@ -158,6 +158,7 @@ const DashboardLayout = () => {
         },
       ],
     },
+
     // {
     //   key: "driver",
     //   label: <span>Driver</span>,
@@ -205,6 +206,22 @@ const DashboardLayout = () => {
     //   label: <NavLink to="employees">Employees</NavLink>,
     // },
     {
+      key: "service",
+      icon: (
+        <img
+          src={AllIcons.two}
+          alt="service"
+          width={20}
+          style={{
+            filter: location.pathname.includes("service")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="service">Service Requests</NavLink>,
+    },
+    {
       key: "subscription",
       icon: (
         <img
@@ -235,6 +252,38 @@ const DashboardLayout = () => {
         />
       ),
       label: <NavLink to="earnings">Earnings</NavLink>,
+    },
+    {
+      key: "refunds",
+      icon: (
+        <img
+          src={AllIcons.six}
+          alt="refunds"
+          width={20}
+          style={{
+            filter: location.pathname.includes("refunds")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="refunds">Refunds</NavLink>,
+    },
+    {
+      key: "admin",
+      icon: (
+        <img
+          src={AllIcons.six}
+          alt="admin"
+          width={20}
+          style={{
+            filter: location.pathname.includes("admin")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="admin">All Admins</NavLink>,
     },
     {
       key: "offers",

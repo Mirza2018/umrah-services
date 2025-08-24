@@ -1,31 +1,31 @@
-import React, { useState } from "react";
-import { Table, Button } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+import { Button, Table } from "antd";
+import { useState } from "react";
 import { GoEye } from "react-icons/go";
-import { use } from "react";
-import ViewEarningModel from "./ViewEarningModel";
+import ViewAdminModel from "./ViewAdminModel";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
   slNumber: "#1234",
   name: "John Doe",
-  serviceTitle: "Economy Umrah Package",
-  amount: "$2,000",
-  date: "4:15 PM, 13/02/24",
+  email: "abc@gmail.com",
+  category: "Notification & Feedback",
+  role: "Admin",
 }));
 
 // Define the columns for the table
 
 
 
-const EarningFromAccount = () => {
+const AdminTable = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
     {
-      title: "#Tr.ID",
+      title: "#UID",
       dataIndex: "slNumber",
       key: "slNumber",
     },
@@ -35,31 +35,54 @@ const EarningFromAccount = () => {
       key: "name",
     },
     {
-      title: "Service Title",
-      dataIndex: "serviceTitle",
-      key: "serviceTitle",
+      title: "E-mail",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
     },
     {
-      title: "Date & Time",
-      dataIndex: "date",
-      key: "date",
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+    },
+    {
+      title: "Status",
+      dataIndex: "role",
+      key: "role",
+      render: () => <p className="text-[#45AE68]">Active</p>,
     },
     {
       title: "ACTION",
       key: "action",
       render: (record) => (
-        <>
+        <div className="flex justify-center items-center gap-2">
+         
+         
           <Button
             className="!p-0"
             style={{
               background: "#FFFFFF",
               border: "none",
-              color: "#53DD6C",
+            
+            }}
+            onClick={() => {
+              setIsViewEarningModalVisible(true);
+              record = { record };
+            }}
+          >
+
+            <MdEdit  style={{ fontSize: "24px" }}/>
+          </Button>
+          <Button
+            className="!p-0"
+            style={{
+              background: "#FFFFFF",
+              border: "none",
+       
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
@@ -68,7 +91,25 @@ const EarningFromAccount = () => {
           >
             <GoEye style={{ fontSize: "24px" }} />
           </Button>
-        </>
+
+
+          <Button
+            className="!p-0"
+            style={{
+              background: "#FFFFFF",
+              border: "none",
+          
+            }}
+            onClick={() => {
+              setIsViewEarningModalVisible(true);
+              record = { record };
+            }}
+          >
+            <FaRegTrashAlt style={{ fontSize: "24px" }} />
+          </Button>
+
+         
+        </div>
       ),
     },
   ];
@@ -88,7 +129,7 @@ const EarningFromAccount = () => {
         }}
         className="custom-table"
       />
-      <ViewEarningModel
+      <ViewAdminModel
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
@@ -97,4 +138,4 @@ const EarningFromAccount = () => {
   );
 };
 
-export default EarningFromAccount;
+export default AdminTable;

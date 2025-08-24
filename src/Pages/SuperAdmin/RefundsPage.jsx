@@ -1,19 +1,8 @@
 import { AllIcons } from "../../../public/images/AllImages";
-import EarningFromAccount from "../../Components/SuperAdminPages/EarningPage/EarningFromAccount";
+import RefundsFromAccount from "../../Components/SuperAdminPages/RefundsPage/RefundsFromAccount";
  
-const EarningsPage = () => {
-  const topBarEarning = [
-    {
-      title: "Today Income",
-      value: "$1.2K",
-      icon: AllIcons.todayIncome,
-    },
-    {
-      title: "Total Income",
-      value: "$752k",
-      icon: AllIcons.totalIncome,
-    },
-  ];
+const RefundsPage = () => {
+
   return (
     <div
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
@@ -22,7 +11,7 @@ const EarningsPage = () => {
       {/* Header  */}
       <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl">
         <div className=" w-[95%] mx-auto  flex items-center justify-between">
-          <p className="text-3xl  font-semibold">Earnings</p>
+          <p className="text-3xl  font-semibold">Refunds</p>
           <div className="flex gap-4 items-center"></div>
         </div>
       </div>
@@ -39,26 +28,11 @@ const EarningsPage = () => {
             <p className="text-2xl">$3230</p>
           </div>
         </section> */}
-        <div className="flex flex-wrap gap-7">
-          {topBarEarning.map((t, index) => (
-            <div
-              key={index}
-              className="bg-[#F2F2F2] px-8 py-7 rounded-lg flex-1 flex justify-start items-center gap-7"
-            >
-              <div className="bg-[#D2F6FF] rounded-3xl w-20 aspect-square flex justify-center items-center">
-                <img src={t.icon} alt="" />
-              </div>
-              <div className="flex flex-col gap-2">
-                <h1 className="text-2xl font-medium">{t.title}</h1>
-                <p className="text-2xl font-semibold">{t.value}</p>
-              </div>
-            </div>
-          ))}{" "}
-        </div>
-        <EarningFromAccount />
+
+        <RefundsFromAccount />
       </main>
     </div>
   );
 };
 
-export default EarningsPage;
+export default RefundsPage;

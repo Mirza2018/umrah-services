@@ -7,6 +7,44 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+
+/* Override the Ant Design Input background color */
+.ant-input {
+  background-color: rgb(242, 242, 242) !important; /* Set background color */
+}
+
+.ant-input:hover {
+  background-color: rgb(242, 242, 242) !important; /* Hover effect */
+}
+
+.ant-input:focus {
+  background-color: rgb(242, 242, 242) !important; /* Focus effect */
+}
+.ant-input-password {
+  background-color: rgb(242, 242, 242) !important; /* Default background color */
+}
+
+.ant-input-password:hover {
+  background-color: rgb(242, 242, 242) !important; /* Hover effect */
+}
+
+.ant-input-password:focus {
+  background-color: rgb(242, 242, 242) !important; /* Focus effect */
+}
+.ant-select-selector {
+  background-color: rgb(242, 242, 242) !important; /* Set background color */
+  border-color: rgba(0,0,0,0) !important; /* Set border color */
+}
+
+/* On hover */
+.ant-select-selector:hover {
+  background-color: rgb(242, 242, 242) !important; /* Hover effect */
+}
+
+/* When focused */
+.ant-select-selector:focus {
+  background-color: rgb(242, 242, 242) !important; /* Focus effect */
+}
 .react-tel-input .form-control {
   width: 100% !important;
 

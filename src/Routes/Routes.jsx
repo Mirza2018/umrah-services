@@ -54,6 +54,9 @@ import Offers from "../Pages/SuperAdmin/Offers";
 import OwnerRequest from "../Pages/SuperAdmin/OwnerRequest";
 import Passengers from "../Pages/SuperAdmin/Passengers";
 import SuperAdminDashboard from "../Pages/SuperAdmin/SuperAdminDashboard";
+import ServiceRequests from "../Pages/SuperAdmin/ServiceRequests";
+import AdminPage from "../Pages/SuperAdmin/AdminPage";
+import RefundsPage from "../Pages/SuperAdmin/RefundsPage";
 
 function AuthRedirect() {
   const navigate = useNavigate();
@@ -135,8 +138,20 @@ const router = createBrowserRouter([
         element: <OwnerRequestAccept />,
       },
       {
+        path: "service",
+        element: <ServiceRequests />,
+      },
+      {
         path: "earnings",
         element: <EarningsPage />,
+      },
+      {
+        path: "admin",
+        element: <AdminPage />,
+      },
+      {
+        path: "refunds",
+        element: <RefundsPage />,
       },
       {
         path: "subscription",

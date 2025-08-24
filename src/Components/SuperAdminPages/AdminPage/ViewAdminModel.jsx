@@ -3,19 +3,17 @@ import { Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
 
 
-const ViewEarningModel = ({
+const ViewAdminModel = ({
   setIsViewEarningModalVisible,
   isViewEarningModalVisible,
   record,
 }) => {
-  const currentCompanyRecord={}
+  const currentCompanyRecord = {};
   return (
     <Modal
       title={
         <div className="pt-7 text-center">
-          <h2 className=" text-2xl font-normal mb-5">
-            Customer payment details
-          </h2>
+          <h2 className=" text-2xl font-normal mb-5">Admin Details</h2>
           <p className="w-full bg-[#FF9815] h-0.5 "></p>
         </div>
       }
@@ -38,11 +36,11 @@ const ViewEarningModel = ({
             <div className="text-xl sm:text-2xl font-bold w-44">John Doe</div>
           </div> */}
 
-          <div className="mt-2">
+          <div className="mt-2 pb-10">
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
-                <div className="text-[#535763] ">Customer Name</div>
-                <div>Enrique</div>
+                <div className="text-[#535763] ">Name</div>
+                <div>John Doe</div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
@@ -54,21 +52,18 @@ const ViewEarningModel = ({
                 <div>12345678</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Time & Date :</div>
-                <div>4:15 PM, 13/02/24</div>
+                <div className="text-[#535763]">Category:</div>
+                <div>Notification & Feedback</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Amount:</div>
-                <div>$190</div>
+                <div className="text-[#535763]">Role:</div>
+                <div>Admin</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Commission:</div>
-                <div>5%</div>
+                <div className="text-[#535763]">Status</div>
+                <div className="text-[#45AE68]">Active</div>
               </div>
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Service Title:</div>
-                <div>Economy Umrah Package</div>
-              </div>
+           
             </div>
           </div>
         </div>
@@ -83,4 +78,4 @@ const ViewEarningModel = ({
   );
 };
 
-export default ViewEarningModel;
+export default ViewAdminModel;

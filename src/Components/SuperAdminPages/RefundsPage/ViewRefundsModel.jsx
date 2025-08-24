@@ -2,20 +2,17 @@
 import { Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
 
-
-const ViewEarningModel = ({
+const ViewRefundsModel = ({
   setIsViewEarningModalVisible,
   isViewEarningModalVisible,
   record,
 }) => {
-  const currentCompanyRecord={}
+  const currentCompanyRecord = {};
   return (
     <Modal
       title={
         <div className="pt-7 text-center">
-          <h2 className=" text-2xl font-normal mb-5">
-            Customer payment details
-          </h2>
+          <h2 className=" text-2xl font-normal mb-5">Refund Order Details</h2>
           <p className="w-full bg-[#FF9815] h-0.5 "></p>
         </div>
       }
@@ -28,20 +25,10 @@ const ViewEarningModel = ({
     >
       <div className="px-5 pb-5">
         <div className="">
-          {/* <div className="flex justify-center items-center p-4">
-  
-            <img
-              src={Person.passengerPic}
-              alt={currentCompanyRecord?.companyName}
-              className="w-12 h-12 sm:w-16  sm:h-16 rounded-full mr-4"
-            />
-            <div className="text-xl sm:text-2xl font-bold w-44">John Doe</div>
-          </div> */}
-
           <div className="mt-2">
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
-                <div className="text-[#535763] ">Customer Name</div>
+                <div className="text-[#535763] ">Name:</div>
                 <div>Enrique</div>
               </div>
 
@@ -50,37 +37,39 @@ const ViewEarningModel = ({
                 <div>abc@gmail.com</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
+                <div className="text-[#535763]">Price::</div>
+                <div>$190</div>
+              </div>
+              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Bank Account:</div>
                 <div>12345678</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Time & Date :</div>
-                <div>4:15 PM, 13/02/24</div>
+                <div className="text-[#535763]">Role:</div>
+                <div>Customar</div>
               </div>
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Amount:</div>
-                <div>$190</div>
-              </div>
+
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Commission:</div>
                 <div>5%</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Service Title:</div>
-                <div>Economy Umrah Package</div>
+                <div className="text-[#535763]">Status:</div>
+                <div className="text-[#EAB90A]">Pending</div>
               </div>
             </div>
           </div>
+          <div className="flex mt-8">
+            <h1>Reason:</h1>
+            <p>
+              Recipient not available at the estimated time/day of delivery.
+              Please refund my money
+            </p>
+          </div>
         </div>
-        {/* <button
-          onClick={() => setIsViewEarningModalVisible(false)}
-          className="bg-secondary-color text-primary-color py-3 text-xl font-semibold rounded-lg mt-8 w-full"
-        >
-          Block
-        </button> */}
       </div>
     </Modal>
   );
 };
 
-export default ViewEarningModel;
+export default ViewRefundsModel;

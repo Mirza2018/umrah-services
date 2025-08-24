@@ -49,6 +49,10 @@ import doc3 from "./doc3.png";
 import totalPassenger from "./oneIcons/totalPassenger.svg";
 import totalEarning from "./oneIcons/totalEarning.svg";
 import totalDriver from "./oneIcons/totalDriver.svg";
+//Two icons
+import totalIncome from "./twoIcons/totalIncome.svg";
+import todayIncome from "./twoIcons/todayIncome.svg";
+
 
 import samplePerson from "./personPics/samplePerson.svg";
 import passengerPic from "./personPics/passengerPic.png";
@@ -109,4 +113,6 @@ export const AllIcons = {
   revenue,
   cash,
   report,
+  todayIncome,
+  totalIncome
 };
