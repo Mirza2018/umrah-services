@@ -1,4 +1,6 @@
-import ContactsFromAccount from "../../Components/SuperAdminPages/PayoutsPage/PayoutsFromAccount";
+import ContactsFromAccount from "../../Components/SuperAdminPages/AllContactspage/ContactsFromAccount";
+
+
  
 const AllContacts = () => {
   return (

@@ -12,7 +12,7 @@ const ViewContactsModel = ({
     <Modal
       title={
         <div className="pt-7 text-center">
-          <h2 className=" text-2xl font-normal mb-5">Payout Details</h2>
+          <h2 className=" text-2xl font-normal mb-5">Details</h2>
           <p className="w-full bg-[#FF9815] h-0.5 "></p>
         </div>
       }
@@ -28,7 +28,7 @@ const ViewContactsModel = ({
           <div className="mt-2">
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
-                <div className="text-[#535763] ">Vendor Name:</div>
+                <div className="text-[#535763] ">Name:</div>
                 <div>Enrique</div>
               </div>
 
@@ -37,31 +37,21 @@ const ViewContactsModel = ({
                 <div>abc@gmail.com</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Amount:</div>
-                <div>$190</div>
-              </div>
-              {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Bank Account:</div>
-                <div>12345678</div>
-              </div> */}
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Payment Method:</div>
-                <div>Stripe</div>
-              </div>
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Transaction Id:</div>
-                <div>Tnx : 1111111111</div>
+                <div className="text-[#535763]">Role:</div>
+                <div>Customar</div>
               </div>
 
-              {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Commission:</div>
-                <div>5%</div>
-              </div> */}
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Status:</div>
                 <div className="text-[#EAB90A]">Pending</div>
               </div>
             </div>
+          </div>
+          <div className="mt-5">
+            <h1>
+              Reason: Recipient not available at the estimated time/day of
+              delivery. Please refund my money
+            </h1>
           </div>
         </div>
       </div>

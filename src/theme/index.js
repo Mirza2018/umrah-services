@@ -6,15 +6,12 @@ export const mainTheme = {
     Menu: {
       iconSize: 20,
       fontSize: 16,
-
-      itemColor: "#727272",
+      subMenuItemSelectedColor: "rgb(245,34,45)",
+      itemColor: "#000000",
 
       itemSelectedBg: "#FE4101",
-      itemSelectedColor: "white",
-
-      // itemActiveBg: "#000",
-      // itemActiveColor: "#000",
-      // itemHoverColor: "#000",
+      itemSelectedColor: "#FFFFFF",
+      colorSplit: "#FE4101",
     },
     Form: {
       colorError: "#F5382C",

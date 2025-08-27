@@ -1,27 +1,27 @@
 import { Button, Table } from "antd";
 import { useState } from "react";
-import { GoEye } from "react-icons/go";
-import ViewPayoutsModel from "./ViewPayoutsModel";
+import AcceptNotificationRequestsModel from "./AcceptNotificationRequestsModel";
+import RejectNotificationRequestsModel from "./RejectNotificationRequestsModel";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
   slNumber: "#1234",
   name: "John Doe",
-  role: "Vendors",
+  notification: "Special quarantine prom up to 20%",
   PaymentMethod: "Stripe",
-  email: "abc@gmail.com",
-  amount: "$2,000",
-  type: "Customer",
-  reason: "reason",
+  date: "16 Apr 2024",
 }));
 
 // Define the columns for the table
 
 
 
-const PayoutsFromAccount = () => {
-  const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
-    useState(false);
+const NotificationRequestsFromAccount = () => {
+  const [isAccept, setIsAccept] = useState(false);
+  const [isReject, setIsReject] = useState(false);
+  
+
+
   const [record, setRecord] = useState(null);
 
   const columns = [
@@ -36,19 +36,9 @@ const PayoutsFromAccount = () => {
       key: "name",
     },
     {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-    },
-    {
-      title: "Payment Method",
-      dataIndex: "PaymentMethod",
-      key: "PaymentMethod",
-    },
-    {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Notification",
+      dataIndex: "notification",
+      key: "notification",
     },
     {
       title: "Status",
@@ -57,25 +47,44 @@ const PayoutsFromAccount = () => {
       render: () => <p className="text-[#EAB90A]">Pending</p>,
     },
     {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
       title: "ACTION",
       key: "action",
       render: (record) => (
-        <>
+        <div className="flex justify-center items-center gap-5">
           <Button
-            className="!p-0"
+            className="!px-2"
             style={{
-              background: "#FFFFFF",
+              background: "#53DD6C",
               border: "none",
-              color: "#53DD6C",
+              color: "#FFFFFF",
             }}
             onClick={() => {
-              setIsViewEarningModalVisible(true);
+              setIsAccept(true);
               record = { record };
             }}
           >
-            <GoEye style={{ fontSize: "24px" }} />
+            Accept
           </Button>
-        </>
+          <Button
+            className="!px-2"
+            style={{
+              background: "#F5382C",
+              border: "none",
+              color: "#FFFFFF",
+            }}
+            onClick={() => {
+              setIsReject(true);
+              record = { record };
+            }}
+          >
+            Reject
+          </Button>
+        </div>
       ),
     },
   ];
@@ -89,19 +98,31 @@ const PayoutsFromAccount = () => {
           total: 250, // Total number of items
           showSizeChanger: true,
           pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
+          defaultCurrent: 1, 
           showTotal: (total, range) =>
             `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />
-      <ViewPayoutsModel
+
+      {/* <ViewNotificationRequestsModel
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
+      /> */}
+      <AcceptNotificationRequestsModel
+        record={record}
+        isAccept={isAccept}
+        setIsAccept={setIsAccept}
+       
+      />
+      <RejectNotificationRequestsModel
+        record={record}
+        isReject={isReject}
+        setIsReject={setIsReject}
       />
     </div>
   );
 };
 
-export default PayoutsFromAccount;
+export default NotificationRequestsFromAccount;

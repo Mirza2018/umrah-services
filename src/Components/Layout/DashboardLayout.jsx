@@ -22,33 +22,25 @@ const DashboardLayout = () => {
   // Logic to set active keys
   const activeKeys = (() => {
     if (currentPath.includes("/dashboard")) return ["dashboard"];
-    if (currentPath.includes("/drivers")) return ["drivers"];
-    if (currentPath.includes("/passengers")) return ["passengers"];
+    if (currentPath.includes("/customers")) return ["customers"];
     if (
-      currentPath.includes("/driver") ||
-      currentPath.includes("/all-driver") ||
-      currentPath.includes("/driver-request")
+      currentPath.includes("/vendors") ||
+      currentPath.includes("/all-vendors") ||
+      currentPath.includes("/vendors-request")
     )
-      return ["driver"];
-    if (
-      currentPath.includes("/owner") ||
-      currentPath.includes("/all-owner") ||
-      currentPath.includes("/owner-request")
-    )
-      return ["owner"];
+      return ["vendors"];
 
-    if (currentPath.includes("/subscription")) return ["subscription"];
-    if (currentPath.includes("/driver-request")) return ["driver-request"];
-    if (currentPath.includes("/employees")) return ["employees"];
+    if (currentPath.includes("/service")) return ["service"];
     if (currentPath.includes("/earnings")) return ["earnings"];
-    if (currentPath.includes("/offers")) return ["offers"];
-    if (currentPath.includes("/all-withdraw")) return ["all-withdraw"];
+    if (currentPath.includes("/all-admin")) return ["all-admin"];
+    if (currentPath.includes("/refunds")) return ["refunds"];
+    if (currentPath.includes("/feedback")) return ["feedback"];
+    if (currentPath.includes("/payouts")) return ["payouts"];
+    if (currentPath.includes("/notification-status")) return ["notification-status"];
+    if (currentPath.includes("/notification-requests")) return ["notification-requests"];
+    if (currentPath.includes("/contacts")) return ["contacts"];
+
     if (currentPath.includes("/notification")) return ["notification"];
-    if (currentPath.includes("/tracking")) return ["tracking"];
-    if (currentPath.includes("/vehicles")) return ["vehicles"];
-    if (currentPath.includes("/rent-car")) return ["rent-car"];
-    if (currentPath.includes("/earning")) return ["earning"];
-    if (currentPath.includes("/booking")) return ["booking"];
 
     return [currentPath.split("/")[1]];
   })();
@@ -113,33 +105,33 @@ const DashboardLayout = () => {
       label: <NavLink to="dashboard">Dashboard</NavLink>,
     },
     {
-      key: "passengers",
+      key: "customers",
       icon: (
         <img
           src={AllIcons.two}
-          alt="passengers"
+          alt="customers"
           width={20}
           style={{
-            filter: location.pathname.includes("passengers")
+            filter: location.pathname.includes("customers")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
         />
       ),
-      label: <NavLink to="passengers">Passengers</NavLink>,
+      label: <NavLink to="customers">Customers</NavLink>,
     },
     {
-      key: "owner",
-      label: <span>Owner</span>,
+      key: "vendors",
+      label: <span>Vendors</span>,
       icon: (
         <img
           src={AllIcons.three}
-          alt="owner"
+          alt="vendors"
           width={20}
           style={{
             filter:
-              location.pathname.includes("all-owner") ||
-              location.pathname.includes("owner-request")
+              location.pathname.includes("all-vendors") ||
+              location.pathname.includes("vendors-request")
                 ? "brightness(0) invert(1)"
                 : undefined,
           }}
@@ -147,69 +139,40 @@ const DashboardLayout = () => {
       ),
       children: [
         {
-          key: "all-owner",
+          key: "all-vendors",
           icon: <span>•</span>,
-          label: <NavLink to="all-owner">All owner</NavLink>,
+          label: <NavLink to="all-vendors">All Vendors</NavLink>,
         },
         {
-          key: "owner-request",
+          key: "vendors-request",
           icon: <span>•</span>,
-          label: <NavLink to="owner-request">Owner Request</NavLink>,
+          label: <NavLink to="vendors-request">Vendor Request</NavLink>,
         },
       ],
     },
 
-    // {
-    //   key: "driver",
-    //   label: <span>Driver</span>,
-    //   icon: (
-    //     <img
-    //       src={AllIcons.four}
-    //       alt="driver"
-    //       width={20}
-    //       style={{
-    //         filter:
-    //           location.pathname.includes("all-driver") ||
-    //           location.pathname.includes("driver-request")
-    //             ? "brightness(0) invert(1)"
-    //             : undefined,
-    //       }}
-    //     />
-    //   ),
-    //   children: [
-    //     {
-    //       key: "all-driver",
-    //       icon: <span>•</span>,
-    //       label: <NavLink to="all-driver">All driver</NavLink>,
-    //     },
-    //     {
-    //       key: "driver-request",
-    //       icon: <span>•</span>,
-    //       label: <NavLink to="driver-request">Driver Request</NavLink>,
-    //     },
-    //   ],
-    // },
-    // {
-    //   key: "employees",
-    //   icon: (
-    //     <img
-    //       src={AllIcons.five}
-    //       alt="employees"
-    //       width={20}
-    //       style={{
-    //         filter: location.pathname.includes("employees")
-    //           ? "brightness(0) invert(1)"
-    //           : undefined,
-    //       }}
-    //     />
-    //   ),
-    //   label: <NavLink to="employees">Employees</NavLink>,
-    // },
     {
       key: "service",
       icon: (
         <img
-          src={AllIcons.two}
+          src={AllIcons.four}
+          alt="service"
+          width={20}
+          style={{
+            filter: location.pathname.includes("service")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="service">Create Service</NavLink>,
+    },
+
+    {
+      key: "service",
+      icon: (
+        <img
+          src={AllIcons.five}
           alt="service"
           width={20}
           style={{
@@ -221,22 +184,7 @@ const DashboardLayout = () => {
       ),
       label: <NavLink to="service">Service Requests</NavLink>,
     },
-    {
-      key: "subscription",
-      icon: (
-        <img
-          src={AllIcons.five}
-          alt="subscription"
-          width={20}
-          style={{
-            filter: location.pathname.includes("subscription")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="subscription">Subscription</NavLink>,
-    },
+
     {
       key: "earnings",
       icon: (
@@ -255,26 +203,26 @@ const DashboardLayout = () => {
     },
 
     {
-      key: "admin",
+      key: "all-admin",
       icon: (
         <img
-          src={AllIcons.six}
-          alt="admin"
+          src={AllIcons.seven}
+          alt="all-admin"
           width={20}
           style={{
-            filter: location.pathname.includes("admin")
+            filter: location.pathname.includes("all-admin")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
         />
       ),
-      label: <NavLink to="admin">All Admins</NavLink>,
+      label: <NavLink to="all-admin">All Admins</NavLink>,
     },
     {
       key: "refunds",
       icon: (
         <img
-          src={AllIcons.six}
+          src={AllIcons.eight}
           alt="refunds"
           width={20}
           style={{
@@ -290,7 +238,7 @@ const DashboardLayout = () => {
       key: "feedback",
       icon: (
         <img
-          src={AllIcons.six}
+          src={AllIcons.nine}
           alt="feedback"
           width={20}
           style={{
@@ -306,7 +254,7 @@ const DashboardLayout = () => {
       key: "payouts",
       icon: (
         <img
-          src={AllIcons.six}
+          src={AllIcons.ten}
           alt="payouts"
           width={20}
           style={{
@@ -316,13 +264,48 @@ const DashboardLayout = () => {
           }}
         />
       ),
-      label: <NavLink to="payouts">Payouts Request</NavLink>,
+      label: <NavLink to="payouts">Payouts</NavLink>,
+    },
+
+    {
+      key: "notification-status",
+      icon: (
+        <img
+          src={AllIcons.eleven}
+          alt="notification-status"
+          width={20}
+          style={{
+            filter: location.pathname.includes("notification-status")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="notification-status">Notification Status</NavLink>,
+    },
+    {
+      key: "notification-requests",
+      icon: (
+        <img
+          src={AllIcons.eleven}
+          alt="notification-requests"
+          width={20}
+          style={{
+            filter: location.pathname.includes("notification-requests")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: (
+        <NavLink to="notification-requests">Notification Requests</NavLink>
+      ),
     },
     {
       key: "contacts",
       icon: (
         <img
-          src={AllIcons.six}
+          src={AllIcons.twelve}
           alt="contacts"
           width={20}
           style={{
@@ -332,237 +315,7 @@ const DashboardLayout = () => {
           }}
         />
       ),
-      label: <NavLink to="contacts">All Contacts</NavLink>,
-    },
-    {
-      key: "offers",
-      icon: (
-        <img
-          src={AllIcons.seven}
-          alt="offers"
-          width={20}
-          style={{
-            filter: location.pathname.includes("offers")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="offers">Offers</NavLink>,
-    },
-    {
-      key: "all-withdraw",
-      icon: (
-        <img
-          src={AllIcons.eight}
-          alt="all-withdraw"
-          width={20}
-          style={{
-            filter: location.pathname.includes("all-withdraw")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="all-withdraw">Withdraw</NavLink>,
-    },
-  ];
-
-  const companyMenuItems = [
-    {
-      key: "dashboard",
-      icon: (
-        <img
-          src={AllIcons.eleven}
-          alt="dashboard"
-          width={20}
-          style={{
-            filter: location.pathname.includes("dashboard")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="dashboard">Profile</NavLink>,
-    },
-    {
-      key: "tracking",
-      icon: (
-        <img
-          src={AllIcons.twelve}
-          alt="tracking"
-          width={20}
-          style={{
-            filter: location.pathname.includes("tracking")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="tracking">Tracking</NavLink>,
-    },
-    {
-      key: "vehicles",
-      icon: (
-        <img
-          src={AllIcons.thirtheen}
-          alt="vehicles"
-          width={20}
-          style={{
-            filter: location.pathname.includes("vehicles")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="vehicles">Vehicles</NavLink>,
-    },
-    {
-      key: "drivers",
-      icon: (
-        <img
-          src={AllIcons.three}
-          alt="drivers"
-          width={20}
-          style={{
-            filter: location.pathname.includes("drivers")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="drivers">Drivers</NavLink>,
-    },
-    {
-      key: "rent-car",
-      icon: (
-        <img
-          src={AllIcons.fourting}
-          alt="rent-car"
-          width={20}
-          style={{
-            filter: location.pathname.includes("rent-car")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="rent-car">Rent Car</NavLink>,
-    },
-    {
-      key: "earning",
-      icon: (
-        <img
-          src={AllIcons.five}
-          alt="earning"
-          width={20}
-          style={{
-            filter: location.pathname.includes("earning")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="earning">Earning</NavLink>,
-    },
-    {
-      key: "booking",
-      icon: (
-        <img
-          src={AllIcons.fifthing}
-          alt="booking"
-          width={20}
-          style={{
-            filter: location.pathname.includes("booking")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="booking">Booking</NavLink>,
-    },
-  ];
-  const ownwerMenuItems = [
-    {
-      key: "dashboard",
-      icon: (
-        <img
-          src={AllIcons.eleven}
-          alt="dashboard"
-          width={20}
-          style={{
-            filter: location.pathname.includes("dashboard")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="dashboard">Dashboard</NavLink>,
-    },
-    {
-      key: "tracking",
-      icon: (
-        <img
-          src={AllIcons.twelve}
-          alt="tracking"
-          width={20}
-          style={{
-            filter: location.pathname.includes("tracking")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="tracking">Tracking</NavLink>,
-    },
-    {
-      key: "vehicles",
-      icon: (
-        <img
-          src={AllIcons.thirtheen}
-          alt="vehicles"
-          width={20}
-          style={{
-            filter: location.pathname.includes("vehicles")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="vehicles">Vehicles</NavLink>,
-    },
-    {
-      key: "drivers",
-      icon: (
-        <img
-          src={AllIcons.three}
-          alt="drivers"
-          width={20}
-          style={{
-            filter: location.pathname.includes("drivers")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="drivers">Drivers</NavLink>,
-    },
-
-    {
-      key: "earning",
-      icon: (
-        <img
-          src={AllIcons.five}
-          alt="earning"
-          width={20}
-          style={{
-            filter: location.pathname.includes("earning")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="earning">Earning</NavLink>,
+      label: <NavLink to="contacts">Help & Support</NavLink>,
     },
   ];
 
@@ -571,7 +324,7 @@ const DashboardLayout = () => {
       key: "settings",
       icon: (
         <img
-          src={AllIcons.nine}
+          src={AllIcons.thirtheen}
           alt="settings"
           width={20}
           style={{
@@ -594,7 +347,7 @@ const DashboardLayout = () => {
       key: "logout",
       icon: (
         <img
-          src={AllIcons.ten}
+          src={AllIcons.fourting}
           alt="logout"
           width={16}
           height={16}
@@ -610,10 +363,7 @@ const DashboardLayout = () => {
   ];
 
   // const menuItems = userRole?.role === "admin" ? adminMenuItems : companyMenuItems;
-  const menuItems =
-    (userRole?.role === "admin" && adminMenuItems) ||
-    (userRole?.role === "company" && companyMenuItems) ||
-    (userRole?.role === "owner" && ownwerMenuItems);
+  const menuItems = userRole?.role === "admin" && adminMenuItems;
 
   const [progress, setProgress] = useState(0);
 
@@ -658,7 +408,7 @@ const DashboardLayout = () => {
               width={0}
               height={0}
               sizes="100vw"
-              className="my-7 mx-auto w-52"
+              className="my-7 mx-auto w-32"
             />
           </Link>
           <Menu

@@ -35,7 +35,7 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
             headerBg: "#FFFF",
           },
         },
-      }}
+      }} 
     >
       <Modal
         open={isAddAdmin}

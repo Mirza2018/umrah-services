@@ -1,26 +1,22 @@
 import { Button, Table } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
-import ViewPayoutsModel from "./ViewPayoutsModel";
 import ViewContactsModel from "./ViewContactsModel";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
   slNumber: "#1234",
   name: "John Doe",
-  role: "Vendors",
-  PaymentMethod: "Stripe",
+  type: "Vendors",
   email: "abc@gmail.com",
-  amount: "$2,000",
-  type: "Customer",
-  reason: "reason",
+  reason: "Recipient not available.........",
 }));
 
 // Define the columns for the table
 
 
 
-const PayoutsFromAccount = () => {
+const ContactsFromAccount = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
@@ -37,26 +33,21 @@ const PayoutsFromAccount = () => {
       key: "name",
     },
     {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
     },
     {
-      title: "Payment Method",
-      dataIndex: "PaymentMethod",
-      key: "PaymentMethod",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-    },
-    {
-      title: "Status",
+      title: "Reason",
       dataIndex: "reason",
       key: "reason",
-      render: () => <p className="text-[#EAB90A]">Pending</p>,
     },
+
     {
       title: "ACTION",
       key: "action",
@@ -105,4 +96,4 @@ const PayoutsFromAccount = () => {
   );
 };
 
-export default PayoutsFromAccount;
+export default ContactsFromAccount;
