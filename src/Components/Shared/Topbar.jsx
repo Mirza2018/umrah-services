@@ -95,11 +95,11 @@ const Topbar = ({ collapsed, setCollapsed }) => {
           />
         </Dropdown>
         <Link
-          to="profile"
+          to="settings/profile"
           className="flex items-center justify-center gap-2 bg-transparent text-base-color border-0 rounded-lg h-8 px-2 py-1  mr-5"
         >
           <div className="flex justify-end items-center  gap-2">
-            <div className="flex justify-center flex-col items-end gap-2 leading-none">  
+            <div className="flex justify-center flex-col items-end gap-2 leading-none">
               <h1 className="text-[#242424]">James Mitchell</h1>
               <p className="text-[#8A8D8E]">Admin</p>
             </div>
