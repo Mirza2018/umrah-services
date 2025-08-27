@@ -281,7 +281,7 @@ const DashboardLayout = () => {
           }}
         />
       ),
-      label: <NavLink to="notification-status">Notification Status</NavLink>,
+      label: <NavLink to="notification-status">Notification</NavLink>,
     },
     {
       key: "notification-requests",
