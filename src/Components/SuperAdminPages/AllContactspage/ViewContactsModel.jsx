@@ -2,7 +2,7 @@
 import { Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
 
-const ViewRefundsModel = ({
+const ViewContactsModel = ({
   setIsViewEarningModalVisible,
   isViewEarningModalVisible,
   record,
@@ -12,7 +12,7 @@ const ViewRefundsModel = ({
     <Modal
       title={
         <div className="pt-7 text-center">
-          <h2 className=" text-2xl font-normal mb-5">Refund Order Details</h2>
+          <h2 className=" text-2xl font-normal mb-5">Payout Details</h2>
           <p className="w-full bg-[#FF9815] h-0.5 "></p>
         </div>
       }
@@ -28,7 +28,7 @@ const ViewRefundsModel = ({
           <div className="mt-2">
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
-                <div className="text-[#535763] ">Name:</div>
+                <div className="text-[#535763] ">Vendor Name:</div>
                 <div>Enrique</div>
               </div>
 
@@ -37,7 +37,7 @@ const ViewRefundsModel = ({
                 <div>abc@gmail.com</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Price:</div>
+                <div className="text-[#535763]">Amount:</div>
                 <div>$190</div>
               </div>
               {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
@@ -45,8 +45,12 @@ const ViewRefundsModel = ({
                 <div>12345678</div>
               </div> */}
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Role:</div>
-                <div>Customar</div>
+                <div className="text-[#535763]">Payment Method:</div>
+                <div>Stripe</div>
+              </div>
+              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
+                <div className="text-[#535763]">Transaction Id:</div>
+                <div>Tnx : 1111111111</div>
               </div>
 
               {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
@@ -59,17 +63,10 @@ const ViewRefundsModel = ({
               </div>
             </div>
           </div>
-          <div className="flex mt-8">
-            <h1>Reason:</h1>
-            <p>
-              Recipient not available at the estimated time/day of delivery.
-              Please refund my money
-            </p>
-          </div>
         </div>
       </div>
     </Modal>
   );
 };
 
-export default ViewRefundsModel;
+export default ViewContactsModel;

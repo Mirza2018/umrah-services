@@ -253,6 +253,23 @@ const DashboardLayout = () => {
       ),
       label: <NavLink to="earnings">Earnings</NavLink>,
     },
+
+    {
+      key: "admin",
+      icon: (
+        <img
+          src={AllIcons.six}
+          alt="admin"
+          width={20}
+          style={{
+            filter: location.pathname.includes("admin")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="admin">All Admins</NavLink>,
+    },
     {
       key: "refunds",
       icon: (
@@ -270,20 +287,52 @@ const DashboardLayout = () => {
       label: <NavLink to="refunds">Refunds</NavLink>,
     },
     {
-      key: "admin",
+      key: "feedback",
       icon: (
         <img
           src={AllIcons.six}
-          alt="admin"
+          alt="feedback"
           width={20}
           style={{
-            filter: location.pathname.includes("admin")
+            filter: location.pathname.includes("feedback")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
         />
       ),
-      label: <NavLink to="admin">All Admins</NavLink>,
+      label: <NavLink to="feedback">Feedback</NavLink>,
+    },
+    {
+      key: "payouts",
+      icon: (
+        <img
+          src={AllIcons.six}
+          alt="payouts"
+          width={20}
+          style={{
+            filter: location.pathname.includes("payouts")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="payouts">Payouts Request</NavLink>,
+    },
+    {
+      key: "contacts",
+      icon: (
+        <img
+          src={AllIcons.six}
+          alt="contacts"
+          width={20}
+          style={{
+            filter: location.pathname.includes("contacts")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="contacts">All Contacts</NavLink>,
     },
     {
       key: "offers",

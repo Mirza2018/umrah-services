@@ -1,4 +1,7 @@
 import logo from "./logo.svg";
+import umra1 from "./umra1.png";
+import umra2 from "./umra2.png";
+import umra3 from "./umra3.png";
 
 // Auth Images
 import ForgotPassword from "./authImages/ForgotPassword.png";
@@ -53,7 +56,6 @@ import totalDriver from "./oneIcons/totalDriver.svg";
 import totalIncome from "./twoIcons/totalIncome.svg";
 import todayIncome from "./twoIcons/todayIncome.svg";
 
-
 import samplePerson from "./personPics/samplePerson.svg";
 import passengerPic from "./personPics/passengerPic.png";
 
@@ -80,6 +82,9 @@ export const AllImages = {
   doc1,
   doc2,
   doc3,
+  umra1,
+  umra2,
+  umra3,
 };
 
 export const AuthImages = {
@@ -114,5 +119,5 @@ export const AllIcons = {
   cash,
   report,
   todayIncome,
-  totalIncome
+  totalIncome,
 };

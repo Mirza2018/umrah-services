@@ -2,7 +2,7 @@
 import { Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
 
-const ViewRefundsModel = ({
+const ViewPayoutsModel = ({
   setIsViewEarningModalVisible,
   isViewEarningModalVisible,
   record,
@@ -12,7 +12,7 @@ const ViewRefundsModel = ({
     <Modal
       title={
         <div className="pt-7 text-center">
-          <h2 className=" text-2xl font-normal mb-5">Refund Order Details</h2>
+          <h2 className=" text-2xl font-normal mb-5">Details</h2>
           <p className="w-full bg-[#FF9815] h-0.5 "></p>
         </div>
       }
@@ -36,14 +36,7 @@ const ViewRefundsModel = ({
                 <div className="text-[#535763]">E-mail:</div>
                 <div>abc@gmail.com</div>
               </div>
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Price:</div>
-                <div>$190</div>
-              </div>
-              {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Bank Account:</div>
-                <div>12345678</div>
-              </div> */}
+
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Role:</div>
                 <div>Customar</div>
@@ -59,12 +52,11 @@ const ViewRefundsModel = ({
               </div>
             </div>
           </div>
-          <div className="flex mt-8">
-            <h1>Reason:</h1>
-            <p>
-              Recipient not available at the estimated time/day of delivery.
-              Please refund my money
-            </p>
+          <div className="mt-4">
+            <h1>
+              Reason: Recipient not available at the estimated time/day of
+              delivery. Please refund my money
+            </h1>
           </div>
         </div>
       </div>
@@ -72,4 +64,4 @@ const ViewRefundsModel = ({
   );
 };
 
-export default ViewRefundsModel;
+export default ViewPayoutsModel;

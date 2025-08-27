@@ -4,8 +4,8 @@ import axios from "axios";
 
 //* Modal Table
 import AdminFeedbackTable from "../../Components/Tables/Admin/AdminFeedbackTable";
-import ViewFeedbackModal from "../../Components/Modal/Admin/ViewFeedbackModal";
 import RemoveFeedbackModal from "../../Components/Modal/Admin/RemoveFeedbackModal";
+import ViewFeedbackModal from "../../Components/SuperAdminPages/FeedbackPage/ViewFeedbackModal";
 
 const AdminAllFeedBack = () => {
   //* Use to set user

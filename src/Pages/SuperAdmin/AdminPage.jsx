@@ -13,7 +13,7 @@ const AdminPage = () => {
     >
       {/* Header  */}
       <div className=" w-full p-4  flex rounded-tl-xl rounded-tr-xl">
-        <div className=" w-[95%] mx-auto  flex items-center justify-between">
+        <div className=" w-[95%] mx-auto  flex items-center justify-between ms-5">
           <p className="text-3xl  font-semibold">Make Admins</p>
           <div className="flex gap-4 items-center"></div>
         </div>

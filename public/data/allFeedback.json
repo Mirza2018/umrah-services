@@ -1,0 +1,107 @@
+[
+  {
+    "SI": 1,
+    "CustomerName": "John Doe",
+    "ServiceTitle": "Trusted Badal Umrah Packages",
+    "Feedback": "Best service in the world and",
+    "Rating": 4.8
+  },
+  {
+    "SI": 2,
+    "CustomerName": "John Doe",
+    "ServiceTitle": "Trusted Badal Umrah Packages",
+    "Feedback": "Best service in the world and",
+    "Rating": 4.8
+  },
+  {
+    "SI": 3,
+    "CustomerName": "John Doe",
+    "ServiceTitle": "Trusted Badal Umrah Packages",
+    "Feedback": "Best service in the world and",
+    "Rating": 4.8
+  },
+  {
+    "SI": 4,
+    "CustomerName": "Jane Smith",
+    "ServiceTitle": "Reliable Hajj Packages",
+    "Feedback": "Very professional and helpful service",
+    "Rating": 4.7
+  },
+  {
+    "SI": 5,
+    "CustomerName": "Mary Johnson",
+    "ServiceTitle": "Affordable Umrah Packages",
+    "Feedback": "An unforgettable experience, will book again",
+    "Rating": 5.0
+  },
+  {
+    "SI": 6,
+    "CustomerName": "Michael Lee",
+    "ServiceTitle": "Fast-Track Umrah Packages",
+    "Feedback": "Everything was smooth and well organized",
+    "Rating": 4.6
+  },
+  {
+    "SI": 7,
+    "CustomerName": "Emily Davis",
+    "ServiceTitle": "Custom Hajj Packages",
+    "Feedback": "Highly recommended for families",
+    "Rating": 4.9
+  },
+  {
+    "SI": 8,
+    "CustomerName": "David Clark",
+    "ServiceTitle": "VIP Umrah Services",
+    "Feedback": "Top-notch service with no complaints",
+    "Rating": 4.8
+  },
+  {
+    "SI": 9,
+    "CustomerName": "Sophia Martinez",
+    "ServiceTitle": "Budget Umrah Packages",
+    "Feedback": "Great value for money, will use again",
+    "Rating": 4.5
+  },
+  {
+    "SI": 10,
+    "CustomerName": "James Wilson",
+    "ServiceTitle": "Luxury Hajj Packages",
+    "Feedback": "The best luxury service I’ve ever had",
+    "Rating": 5.0
+  },
+  {
+    "SI": 11,
+    "CustomerName": "Olivia Brown",
+    "ServiceTitle": "Premium Umrah Packages",
+    "Feedback": "Exceptional service, highly satisfied",
+    "Rating": 4.9
+  },
+  {
+    "SI": 12,
+    "CustomerName": "William Green",
+    "ServiceTitle": "Express Hajj Packages",
+    "Feedback": "Fast, efficient, and affordable",
+    "Rating": 4.6
+  },
+  {
+    "SI": 13,
+    "CustomerName": "Isabella Harris",
+    "ServiceTitle": "Exclusive Umrah Packages",
+    "Feedback": "Wonderful service, felt very taken care of",
+    "Rating": 4.8
+  },
+  {
+    "SI": 14,
+    "CustomerName": "Benjamin Thompson",
+    "ServiceTitle": "Group Umrah Packages",
+    "Feedback": "Excellent coordination with our group",
+    "Rating": 4.7
+  },
+  {
+    "SI": 15,
+    "CustomerName": "Charlotte White",
+    "ServiceTitle": "Family Hajj Packages",
+    "Feedback": "Perfect for families, highly recommend",
+    "Rating": 5.0
+  }
+]

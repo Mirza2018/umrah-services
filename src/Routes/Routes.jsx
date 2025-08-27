@@ -57,6 +57,8 @@ import SuperAdminDashboard from "../Pages/SuperAdmin/SuperAdminDashboard";
 import ServiceRequests from "../Pages/SuperAdmin/ServiceRequests";
 import AdminPage from "../Pages/SuperAdmin/AdminPage";
 import RefundsPage from "../Pages/SuperAdmin/RefundsPage";
+import Feedbacks from "../Pages/SuperAdmin/Feedbacks";
+import PayoutsRequest from "../Pages/SuperAdmin/PayoutsRequest";
 
 function AuthRedirect() {
   const navigate = useNavigate();
@@ -152,6 +154,18 @@ const router = createBrowserRouter([
       {
         path: "refunds",
         element: <RefundsPage />,
+      },
+      {
+        path: "feedback",
+        element: <Feedbacks />,
+      },
+      {
+        path: "payouts",
+        element: <PayoutsRequest />,
+      },
+      {
+        path: "contacts",
+        element: <PayoutsRequest />,
       },
       {
         path: "subscription",

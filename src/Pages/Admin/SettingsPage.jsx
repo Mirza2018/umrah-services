@@ -25,12 +25,12 @@ const SettingsPage = () => {
         </div>
       </Link>
 
-      <Link to={`safety`}>
+      {/* <Link to={`safety`}>
         <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
           <h1 className="text-2xl !hover:text-secondary-color">Safety</h1>
           <FaChevronRight />
         </div>
-      </Link>
+      </Link> */}
       <Link to={`terms-and-condition`}>
         <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
           <h1 className="text-2xl !hover:text-secondary-color">
@@ -39,12 +39,12 @@ const SettingsPage = () => {
           <FaChevronRight />
         </div>
       </Link>
-      <Link to={`faq`}>
+      {/* <Link to={`faq`}>
         <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
           <h1 className="text-2xl !hover:text-secondary-color">FAQ</h1>
           <FaChevronRight />
         </div>
-      </Link>
+      </Link> */}
     </div>
   );
 };

@@ -64,7 +64,7 @@ export const mainTheme = {
     Table: {
       headerBg: "#FE4101",
       headerSplitColor: "#FE4101",
-      rowHoverBg: "#E5FAE9",
+      rowHoverBg: "#ffeee8",
       borderColor: "rgb(253,253,253)",
       headerSortHoverBg: "#FE4101",
       headerSortActiveBg: "#FE4101",

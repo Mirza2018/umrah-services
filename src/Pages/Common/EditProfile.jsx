@@ -5,10 +5,11 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoCameraOutline, IoChevronBackOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import { fladImages } from "../../../public/images/Flad/FladImages";
+import { FaChevronLeft } from "react-icons/fa";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -46,133 +47,102 @@ const EditProfile = () => {
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
       style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
     >
-      <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl">
-        <div className=" w-[95%] mx-auto  flex items-center ">
-          <IoChevronBackOutline
-            className="text-4xl cursor-pointer  font-semibold"
-            onClick={() => window.history.back()}
-          />
-          <p className="text-3xl text-black font-semibold">Edit Profile</p>
-        </div>
-      </div>
-      <div className=" ">
-        <Form
-          onFinish={onFinish}
-          layout="vertical"
-          className="bg-transparent py-10  h-full w-full p-10"
+      <div className=" w-full flex items-center p-5 mb-10  rounded-tl-xl rounded-tr-xl">
+        {/* <p className="text-3xl text-black font-semibold w-[95%] mx-auto flex gap-1 items-center">
+          Profile Information
+        </p> */}
+        <p
+          onClick={() => window.history.back()}
+          className="text-3xl font-semibold flex justify-center items-center gap-2 cursor-pointer"
         >
-          <div className=" rounded-lg h-full w-full md:grid grid-cols-4">
-            <div className="flex flex-col items-center justify-center gap-5 border border-[#000] mx-4 my-6 rounded-md bg-[#F5F5F5] w-56">
-              <div className=" relative">
-                <img
-                  className="h-32 w-32 relative rounded-full border border-secondary-color object-contain"
-                  src={fladImages.profile}
-                  alt=""
-                />
-                <Form.Item name="image">
-                  <Upload
-                    beforeUpload={() => false} // Prevent automatic upload to server
-                    onChange={handleImageUpload}
-                    maxCount={1}
-                    accept="image/*"
-                    className="absolute -top-10 !right-3 text-end noText"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      opacity: 0,
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Button
-                      style={{
-                        zIndex: 1,
-                      }}
-                      className="bg-white p-2 w-fit h-fit rounded-full shadow !border-none"
-                    >
-                      <IoCameraOutline
-                        className="w-5 h-5"
-                        style={{ color: "#19363D" }}
-                      />
-                    </Button>
-                  </Upload>
-                </Form.Item>
-              </div>
-              <p className="text-lg font-medium">
-                {profileData.firstName} {profileData.LastName}
-                <p className="text-center text-xl font-medium">Admin</p>
-              </p>
-            </div>
-
-            <div className=" col-span-3 text-white mt-5">
-              <Typography.Title level={5} style={{ color: "#222222" }}>
-                Name
-              </Typography.Title>
-              <Form.Item
-                initialValue={profileData.firstName}
-                name="firstName"
-                className="text-white "
-              >
-                <Input
-                  suffix={<MdOutlineEdit />}
-                  type="text"
-                  placeholder="Enter your name"
-                  className="py-2 px-3 text-xl border  ! !bg-transparent"
-                />
-              </Form.Item>
-
-              <Typography.Title level={5} style={{ color: "#222222" }}>
-                Email
-              </Typography.Title>
-              <Form.Item
-                initialValue={profileData.email}
-                name="email"
-                className="text-white "
-              >
-                <Input
-                  suffix={<MdOutlineEdit />}
-                  type="email"
-                  placeholder="Enter your email"
-                  className="py-2 px-3 text-xl border  ! !bg-transparent"
-                />
-              </Form.Item>
-              <Typography.Title level={5} style={{ color: "#222222" }}>
-                Contact number
-              </Typography.Title>
-
-              <Form.Item
-                initialValue={profileData.contactNumber}
-                name="contactNumber"
-                className="text-white"
-              >
-                <PhoneInput className="" enableSearch={true} />
-              </Form.Item>
-              {/* <Typography.Title level={5} style={{ color: "#222222" }}>
-                Date Of Birth
-              </Typography.Title>
-              <Form.Item
-                initialValue={profileData.dob}
-                name="dob"
-                className="text-white"
-              >
-                <Input
-                  suffix={<MdOutlineEdit />}
-                  placeholder="Enter your Date of Birth"
-                  className="py-2 px-3 text-xl border  ! !bg-transparent"
-                />
-              </Form.Item> */}
-              <Form.Item>
-                <Button
-                  className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
-                  htmlType="submit"
-                >
-                  Save & Change
-                </Button>
-              </Form.Item>
-            </div>
-          </div>
-        </Form>
+          <FaChevronLeft /> Edit Information
+        </p>
       </div>
+      {/* <div className=" flex justify-center items-center"> */}
+      <Form
+        onFinish={onFinish}
+        layout="vertical"
+        className="bg-transparent p-4 w-full h-full  md:grid grid-cols-4 gap-2"
+      >
+        <div className="flex flex-col items-center justify-between  ">
+          <div className="flex  flex-col items-center justify-center gap-5 border border-[#000] px-10 py-10 rounded-md bg-[#F5F5F5]">
+            <div className="relative">
+              <img
+                className="h-36 w-36 relative rounded-full"
+                src={fladImages.profile}
+                alt=""
+              />{" "}
+              <Form.Item name="image">
+                <Upload
+                  beforeUpload={() => false} // Prevent automatic upload to server
+                  onChange={handleImageUpload}
+                  maxCount={1}
+                  accept="image/*"
+                  className="absolute -top-10 !right-3 text-end noText"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0,
+                    cursor: "pointer",
+                  }}
+                >
+                  <Button
+                    style={{
+                      zIndex: 1,
+                    }}
+                    className="bg-white p-2 w-fit h-fit rounded-full shadow !border-none"
+                  >
+                    <IoCameraOutline
+                      className="w-5 h-5"
+                      style={{ color: "#19363D" }}
+                    />
+                  </Button>
+                </Upload>
+              </Form.Item>
+            </div>
+            <p className="text-lg font-medium">
+              {profileData.firstName} {profileData.LastName}
+            </p>
+            <p className="text-center text-xl font-medium">Admin</p>
+          </div>
+        </div>
+        <div className="col-span-3 flex flex-col  text-white mt-5 w-full">
+          <Typography.Title level={5} style={{ color: "#222222" }}>
+            Name
+          </Typography.Title>
+          <Form.Item className="text-white">
+            <Input
+              readOnly
+              value={profileData.firstName}
+              placeholder="Enter your name"
+              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+            />
+          </Form.Item>
+
+          <Typography.Title level={5} style={{ color: "#222222" }}>
+            Email
+          </Typography.Title>
+          <Form.Item className="text-white ">
+            <Input
+              value={profileData.email}
+              readOnly
+              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+            />
+          </Form.Item>
+          <Typography.Title level={5} style={{ color: "#222222" }}>
+            Phone Number
+          </Typography.Title>
+          <Form.Item className="text-white ">
+            <PhoneInput
+              value={profileData.contactNumber}
+              className="cursor-not-allowed"
+              enableSearch={true}
+            />
+          </Form.Item>
+        </div>
+      </Form>
     </div>
+    // </div>
   );
 };
 export default EditProfile;
