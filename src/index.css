@@ -8,6 +8,10 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+
+
+
+
 /* Override the Ant Design Input background color */
 .ant-input {
   background-color: rgb(242, 242, 242) !important; /* Set background color */
@@ -66,12 +70,9 @@ th{
 }
 
 .ant-menu-submenu-selected .ant-menu-submenu-title {
-  background-color: #000 !important;
+  background-color: #FE4101 !important;
 }
-.ant-menu-submenu-selected  .ant-menu-item-selected{
-  background-color: transparent !important;
-  color: #000 !important;
-}
+
 
 ::-webkit-scrollbar {
   width: 5px;

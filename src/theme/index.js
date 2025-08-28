@@ -8,10 +8,11 @@ export const mainTheme = {
       fontSize: 16,
       subMenuItemSelectedColor: "rgb(245,34,45)",
       itemColor: "#000000",
-
       itemSelectedBg: "#FE4101",
       itemSelectedColor: "#FFFFFF",
       colorSplit: "#FE4101",
+
+      
     },
     Form: {
       colorError: "#F5382C",

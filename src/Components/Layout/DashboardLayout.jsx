@@ -177,7 +177,7 @@ const DashboardLayout = () => {
           alt="service"
           width={20}
           style={{
-            filter: location.pathname.includes("/service")
+            filter: location.pathname.includes("service")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
