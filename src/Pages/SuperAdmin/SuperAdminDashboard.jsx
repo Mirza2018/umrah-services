@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import TopCards from "../../Components/SuperAdminPages/SuperAdminDashboardPage/TopCards";
 import UserRatioLineChart from "../../Components/SuperAdminPages/SuperAdminDashboardPage/UserRatioLineChart";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import RecentActivity from "../../Components/SuperAdminPages/SuperAdminDashboardPage/RecentActivity";
 import RecentUserTable from "../../Components/SuperAdminPages/SuperAdminDashboardPage/RecentUserTable";
 import axios from "axios";
 import { Avatar, Select } from "antd";
 import { fladImages } from "../../../public/images/Flad/FladImages";
+import Dragger from "antd/es/upload/Dragger";
+import { UploadOutlined } from "@ant-design/icons";
+import FileUploadList from "../../Components/SuperAdminPages/SuperAdminDashboardPage/FileUploadList";
 
 const SuperAdminDashboard = () => {
   const [recentUserData, setRecentUserData] = useState([]);
@@ -45,7 +48,7 @@ const SuperAdminDashboard = () => {
         <TopCards />
         <div
           className="w-full h-fit py-5 rounded-xl"
-          style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
+          // style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
         >
           <div className="flex items-center gap-5 mb-5 w-[97%] mx-auto">
             <h1 className="text-lg font-semibold">Earnings</h1>
@@ -62,7 +65,34 @@ const SuperAdminDashboard = () => {
               <p className="text-sm font-medium">Owner</p>
             </div> */}
           </div>
-          <UserRatioLineChart />
+          <div className="grid grid-cols-5">
+            <div className="col-span-4">
+              <UserRatioLineChart />
+            </div>
+            <div>
+              <div className="w-full max-w-md mx-auto">
+                {" "}
+                {/* <Form.Item
+                rules={[{ required: true, message: "Please Upload Picture" }]}
+                name="picture"
+              > */}
+                <Dragger>
+                  <p className=" ">
+                    <UploadOutlined className="text-5xl" />
+                  </p>
+                  <p className="ant-upload-text">
+                    Drop your imager here, or browse
+                  </p>
+                  <p className="ant-upload-text">Jpeg, png are allowed</p>
+                </Dragger>
+                {/* </Form.Item> */}
+              </div>
+              <div>
+                <FileUploadList />
+              </div>
+              <div></div>
+            </div>
+          </div>
         </div>
       </div>
 
