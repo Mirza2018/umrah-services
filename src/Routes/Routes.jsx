@@ -47,6 +47,7 @@ import PayoutsRequest from "../Pages/SuperAdmin/PayoutsRequest";
 import RefundsPage from "../Pages/SuperAdmin/RefundsPage";
 import ServiceRequests from "../Pages/SuperAdmin/ServiceRequests";
 import SuperAdminDashboard from "../Pages/SuperAdmin/SuperAdminDashboard";
+import CreateService from "../Pages/SuperAdmin/CreateService";
 
 function AuthRedirect() {
   const navigate = useNavigate();
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
       {
         path: "vendors-request/deatils/:id/accepted",
         element: <OwnerRequestAccept />,
+      },
+      {
+        path: "create-service",
+        element: <CreateService />,
       },
       {
         path: "service",

@@ -2,6 +2,9 @@ import logo from "./logo.svg";
 import umra1 from "./umra1.png";
 import umra2 from "./umra2.png";
 import umra3 from "./umra3.png";
+import umrapost1 from "./umrapost1.png";
+import umrapost2 from "./umrapost2.jpg";
+import omravendor from "./omravendor.svg";
 
 // Auth Images
 import ForgotPassword from "./authImages/ForgotPassword.png";
@@ -85,6 +88,9 @@ export const AllImages = {
   umra1,
   umra2,
   umra3,
+  umrapost1,
+  umrapost2,
+  omravendor,
 };
 
 export const AuthImages = {

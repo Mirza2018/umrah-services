@@ -30,6 +30,7 @@ const DashboardLayout = () => {
     )
       return ["vendors"];
 
+    if (currentPath.includes("/create-service")) return ["create-service"];
     if (currentPath.includes("/service")) return ["service"];
     if (currentPath.includes("/earnings")) return ["earnings"];
     if (currentPath.includes("/all-admin")) return ["all-admin"];
@@ -152,20 +153,20 @@ const DashboardLayout = () => {
     },
 
     {
-      key: "service",
+      key: "create-service",
       icon: (
         <img
           src={AllIcons.four}
-          alt="service"
+          alt="create-service"
           width={20}
           style={{
-            filter: location.pathname.includes("service")
+            filter: location.pathname.includes("create-service")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
         />
       ),
-      label: <NavLink to="service">Create Service</NavLink>,
+      label: <NavLink to="create-service">Create Service</NavLink>,
     },
 
     {
@@ -176,7 +177,7 @@ const DashboardLayout = () => {
           alt="service"
           width={20}
           style={{
-            filter: location.pathname.includes("service")
+            filter: location.pathname.includes("/service")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
