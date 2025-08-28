@@ -65,7 +65,7 @@ const SuperAdminDashboard = () => {
               <p className="text-sm font-medium">Owner</p>
             </div> */}
           </div>
-          <div className="grid grid-cols-5">
+          <div className="md:grid grid-cols-5">
             <div className="col-span-4">
               <UserRatioLineChart />
             </div>
