@@ -1,83 +1,94 @@
 import { Button, Table } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
-import ViewServiceModel from "./ViewServiceModel";
-import { render } from "react-dom";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import ViewServicesManagementsModel from "./ViewServicesManagementsModel";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
   slNumber: "#1234",
-  vendorsName: "James Tracy",
-  email: "abc@gmail.com",
-  postTitle: "abc@gmail.com",
+  name: "Umrah Badal",
+  type: "Flat Amount",
+  amount: "$100",
 }));
 
 // Define the columns for the table
 
 
 
-const ServiceRequestsTable = () => {
+const ServicesManagementsTable = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
     {
-      title: "#SI",
+      title: "#UID",
       dataIndex: "slNumber",
       key: "slNumber",
     },
     {
-      title: "Vendors Name",
-      dataIndex: "vendorsName",
-      key: "vendorsName",
+      title: "Service Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "Availability",
-      dataIndex: "email",
-      key: "email",
-      render: (text) => (
-        <div className="flex items-center gap-2">
-          <p>01-01-2025, 02-01-2025, 03-01-2025</p>
-        </div>
-      ),
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
     },
     {
-      title: "Service Title",
-      dataIndex: "email",
-      key: "email",
-      render: (text) => (
-        <div className="flex flex-col items-center gap-2">
-          <p>Trusted Umrah badal Packages</p>
-        </div>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "postTitle",
-      key: "postTitle",
-      render: () => <p className="text-secondary-color">Pending</p>,
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
     },
     {
       title: "ACTION",
       key: "action",
       render: (record) => (
-        <>
+        <div className="flex justify-center items-center gap-2">
           <Button
             className="!p-0"
             style={{
               background: "#FFFFFF",
               border: "none",
-              color: "#53DD6C",
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              setRecord(record);
+              record = { record };
+            }}
+          >
+            <MdEdit style={{ fontSize: "24px" }} />
+          </Button>
+          {/* <Button
+            className="!p-0"
+            style={{
+              background: "#FFFFFF",
+              border: "none",
+            }}
+            onClick={() => {
+              setIsViewEarningModalVisible(true);
+              record = { record };
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />
+          </Button> */}
+
+          <Button
+            className="!p-0"
+            style={{
+              background: "#FFFFFF",
+              border: "none",
+            }}
+            onClick={() => {
+              setIsViewEarningModalVisible(true);
+              record = { record };
+            }}
+          >
+            <FaRegTrashAlt style={{ fontSize: "24px" }} />
           </Button>
-        </>
+        </div>
       ),
     },
   ];
@@ -97,7 +108,7 @@ const ServiceRequestsTable = () => {
         }}
         className="custom-table"
       />
-      <ViewServiceModel
+      <ViewServicesManagementsModel
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
@@ -106,4 +117,4 @@ const ServiceRequestsTable = () => {
   );
 };
 
-export default ServiceRequestsTable;
+export default ServicesManagementsTable;

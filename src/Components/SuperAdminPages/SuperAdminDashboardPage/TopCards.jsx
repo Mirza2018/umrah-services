@@ -8,7 +8,7 @@ const TopCards = () => {
       icon: TopCardIcons.income,
     },
     {
-      title: "Total Servics",
+      title: "Total Service Booking",
       value: "203",
       icon: TopCardIcons.users,
     },

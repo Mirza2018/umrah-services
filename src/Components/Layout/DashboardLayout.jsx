@@ -23,22 +23,32 @@ const DashboardLayout = () => {
   const activeKeys = (() => {
     if (currentPath.includes("/dashboard")) return ["dashboard"];
     if (currentPath.includes("/customers")) return ["customers"];
-    if (
-      currentPath.includes("/vendors") ||
-      currentPath.includes("/all-vendors") ||
-      currentPath.includes("/vendors-request")
-    )
-      return ["vendors"];
+    // if (
+    //   currentPath.includes("/vendors") ||
+    //   currentPath.includes("/all-vendors") ||
+    //   currentPath.includes("/vendors-request")
+    // )
+    //   return ["vendors"];
+    
+    
+    if (currentPath.includes("/all-vendors")) return ["all-vendors"];
+    if (currentPath.includes("/vendors-request"))
+      return ["vendors-request"];
 
+
+    if (currentPath.includes("/services-managements"))
+      return ["services-managements"];
     if (currentPath.includes("/create-service")) return ["create-service"];
-    if (currentPath.includes("/service")) return ["service"];
+    if (currentPath.includes("/service-request")) return ["service-request"];
     if (currentPath.includes("/earnings")) return ["earnings"];
     if (currentPath.includes("/all-admin")) return ["all-admin"];
     if (currentPath.includes("/refunds")) return ["refunds"];
     if (currentPath.includes("/feedback")) return ["feedback"];
     if (currentPath.includes("/payouts")) return ["payouts"];
-    if (currentPath.includes("/notification-status")) return ["notification-status"];
-    if (currentPath.includes("/notification-requests")) return ["notification-requests"];
+    if (currentPath.includes("/notification-status"))
+      return ["notification-status"];
+    if (currentPath.includes("/notification-requests"))
+      return ["notification-requests"];
     if (currentPath.includes("/contacts")) return ["contacts"];
 
     if (currentPath.includes("/notification")) return ["notification"];
@@ -151,6 +161,22 @@ const DashboardLayout = () => {
         },
       ],
     },
+    {
+      key: "services-managements",
+      icon: (
+        <img
+          src={AllIcons.serviceManagement}
+          alt="services-managements"
+          width={20}
+          style={{
+            filter: location.pathname.includes("services-managements")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="services-managements">Services Managements</NavLink>,
+    },
 
     {
       key: "create-service",
@@ -170,20 +196,20 @@ const DashboardLayout = () => {
     },
 
     {
-      key: "service",
+      key: "service-request",
       icon: (
         <img
           src={AllIcons.five}
-          alt="service"
+          alt="service-request"
           width={20}
           style={{
-            filter: location.pathname.includes("service")
+            filter: location.pathname.includes("service-request")
               ? "brightness(0) invert(1)"
               : undefined,
           }}
         />
       ),
-      label: <NavLink to="service">Service Requests</NavLink>,
+      label: <NavLink to="service-request">Service Requests</NavLink>,
     },
 
     {
@@ -219,6 +245,7 @@ const DashboardLayout = () => {
       ),
       label: <NavLink to="all-admin">All Admins</NavLink>,
     },
+
     {
       key: "refunds",
       icon: (
@@ -269,39 +296,73 @@ const DashboardLayout = () => {
     },
 
     {
-      key: "notification-status",
-      icon: (
-        <img
-          src={AllIcons.eleven}
-          alt="notification-status"
-          width={20}
-          style={{
-            filter: location.pathname.includes("notification-status")
-              ? "brightness(0) invert(1)"
-              : undefined,
-          }}
-        />
-      ),
-      label: <NavLink to="notification-status">Notification</NavLink>,
-    },
-    {
-      key: "notification-requests",
+      key: "notification",
+      label: <span>Notification</span>,
       icon: (
         <img
           src={AllIcons.fifthing}
-          alt="notification-requests"
+          alt="notification"
           width={20}
           style={{
-            filter: location.pathname.includes("notification-requests")
-              ? "brightness(0) invert(1)"
-              : undefined,
+            filter:
+              location.pathname.includes("notification-status") ||
+              location.pathname.includes("notification-requests")
+                ? "brightness(0) invert(1)"
+                : undefined,
           }}
         />
       ),
-      label: (
-        <NavLink to="notification-requests">Notification Requests</NavLink>
-      ),
+      children: [
+        {
+          key: "notification-status",
+          icon: <span>•</span>,
+          label: <NavLink to="notification-status">Notification</NavLink>,
+        },
+        {
+          key: "notification-requests",
+          icon: <span>•</span>,
+          label: (
+            <NavLink to="notification-requests">Notification Requests</NavLink>
+          ),
+        },
+      ],
     },
+
+    // {
+    //   key: "notification-status",
+    //   icon: (
+    //     <img
+    //       src={AllIcons.eleven}
+    //       alt="notification-status"
+    //       width={20}
+    //       style={{
+    //         filter: location.pathname.includes("notification-status")
+    //           ? "brightness(0) invert(1)"
+    //           : undefined,
+    //       }}
+    //     />
+    //   ),
+    //   label: <NavLink to="notification-status">Notification</NavLink>,
+    // },
+    // {
+    //   key: "notification-requests",
+    //   icon: (
+    //     <img
+    //       src={AllIcons.fifthing}
+    //       alt="notification-requests"
+    //       width={20}
+    //       style={{
+    //         filter: location.pathname.includes("notification-requests")
+    //           ? "brightness(0) invert(1)"
+    //           : undefined,
+    //       }}
+    //     />
+    //   ),
+    //   label: (
+    //     <NavLink to="notification-requests">Notification Requests</NavLink>
+    //   ),
+    // },
+
     {
       key: "contacts",
       icon: (

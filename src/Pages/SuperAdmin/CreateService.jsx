@@ -21,7 +21,7 @@ const CreateService = () => {
           <div className="flex gap-4 items-center"></div>
         </div>
 
-        <div
+        {/* <div
           onClick={() => setAddService(true)}
           className="bg-transparent text-black flex justify-center items-center gap-2 py-2 w-96 rounded-lg cursor-pointer border-2 border-[#0000002e] select-none"
         >
@@ -29,7 +29,7 @@ const CreateService = () => {
           <p className="md:text-2xl text-lg font-semibold whitespace-nowrap">
             Add Service
           </p>
-        </div>
+        </div> */}
       </div>
       <AddServiceModal addService={addService} setAddService={setAddService} />
 
@@ -51,18 +51,18 @@ const CreateService = () => {
           >
             All Post
           </button>
-          <button
+          {/* <button
             onClick={() => setService("vendor")}
             className={`border border-secondary-color text-secondary-color text-lg font-medium px-4 py-1 rounded-lg  ${
               isService == "vendor" ? "bg-[#FFC4B0]" : ""
             }`}
           >
             Vendor Service Request
-          </button>
+          </button> */}
         </div>
         {isService == "create" && <CreteServiceForm />}
         {isService == "post" && <AllPost />}
-        {isService == "vendor" && <VendorServiceRequest />}
+        {/* {isService == "vendor" && <VendorServiceRequest />} */}
       </div>
     </div>
   );

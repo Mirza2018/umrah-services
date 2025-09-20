@@ -19,16 +19,11 @@ const AllOwnerTable = ({
       responsive: ["md"],
     },
     {
-      title: "Name",
+      title: "Vendors Name",
       dataIndex: "vendorName",
       key: "vendorName",
       render: (text) => (
         <div className="flex items-center gap-2">
-          {/* <img
-            src={Person.samplePerson}
-            alt={text}
-            className="w-8 h-8 rounded-full"
-          /> */}
           <p>{text}</p>
         </div>
       ),
@@ -43,6 +38,28 @@ const AllOwnerTable = ({
       title: "City",
       dataIndex: "city",
       key: "city",
+    },
+    {
+      title: "Availability",
+      dataIndex: "vendorName",
+      key: "vendorName",
+      render: (text) => (
+        <div className="flex items-center gap-2">
+          <p>01-01-2025, 02-01-2025, 03-01-2025</p>
+        </div>
+      ),
+    },
+    {
+      title: "Service Title",
+      dataIndex: "vendorName",
+      key: "vendorName",
+      render: (text) => (
+        <div className="flex flex-col items-center gap-2">
+          <p>Trusted Umrah badal Packages</p>
+          <p>Trusted Umrah badal Packages</p>
+          <p>Trusted Umrah badal Packages</p>
+        </div>
+      ),
     },
     {
       title: "Revenue",
