@@ -2,7 +2,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { ConfigProvider, Input } from "antd";
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
- 
+
 //* Modal Table
 import AllDriverTable from "../../Components/SuperAdminPages/AllDriverPage/AllDriverTable";
 import BlockDriverModal from "../../Components/SuperAdminPages/AllDriverPage/BlockDriverModal";
@@ -99,7 +99,7 @@ const AllDriver = () => {
               theme={{ token: { colorTextPlaceholder: "#D0D0D1" } }}
             >
               <Input
-                placeholder="Search Passengers..."
+                placeholder="search here......"
                 value={searchText}
                 onChange={(e) => onSearch(e.target.value)}
                 className="text-black font-semibold !border-[#D0D0D1] !bg-transparent py-2 !rounded-full"

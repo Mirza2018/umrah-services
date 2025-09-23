@@ -30,7 +30,7 @@ const OwnerRequest = () => {
             className="text-3xl  font-semibold flex justify-center items-center gap-2"
           >
             {/* <FaChevronLeft /> */}
-            Vendors Request
+            Vendors Platform Onboarding Requests
           </p>
         </div>
       </div>

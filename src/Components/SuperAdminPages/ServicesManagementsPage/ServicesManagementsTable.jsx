@@ -4,6 +4,7 @@ import { GoEye } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import ViewServicesManagementsModel from "./ViewServicesManagementsModel";
+import AddServiceModal from "../../Modal/Admin/AddServiceModal";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
@@ -20,6 +21,7 @@ const data = Array.from({ length: 8 }, (_, index) => ({
 const ServicesManagementsTable = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
+      const [addService, setAddService] = useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
@@ -55,7 +57,8 @@ const ServicesManagementsTable = () => {
               border: "none",
             }}
             onClick={() => {
-              setIsViewEarningModalVisible(true);
+              // setIsViewEarningModalVisible(true);
+              setAddService(true)
               record = { record };
             }}
           >
@@ -113,6 +116,7 @@ const ServicesManagementsTable = () => {
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
       />
+      <AddServiceModal addService={addService} setAddService={setAddService} />
     </div>
   );
 };

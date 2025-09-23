@@ -59,8 +59,6 @@ const AllOwner = () => {
     setSearchText(value);
   };
 
-
-
   const showVenueViewModal = (record) => {
     setCurrentVenueRecord(record);
     setIsVenueViewModalVisible(true);
@@ -100,7 +98,7 @@ const AllOwner = () => {
               theme={{ token: { colorTextPlaceholder: "#D0D0D1" } }}
             >
               <Input
-                placeholder="Search Passengers..."
+                placeholder="search here......"
                 value={searchText}
                 onChange={(e) => onSearch(e.target.value)}
                 className="text-black font-semibold !border-[#D0D0D1] !bg-transparent py-2 !rounded-full"

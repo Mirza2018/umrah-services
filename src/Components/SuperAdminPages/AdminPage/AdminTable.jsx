@@ -1,9 +1,10 @@
-import { Button, Table } from "antd";
+import { Button, Modal, Table } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
 import ViewAdminModel from "./ViewAdminModel";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import AddAdminModal from "../../Modal/Admin/AddAdminModal";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
@@ -21,6 +22,8 @@ const data = Array.from({ length: 8 }, (_, index) => ({
 const AdminTable = () => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
+    const [isAddAdmin, setisAddAdmin] = useState(false);
+    const [isblock, setIsBLock] = useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
@@ -70,7 +73,7 @@ const AdminTable = () => {
             
             }}
             onClick={() => {
-              setIsViewEarningModalVisible(true);
+              setisAddAdmin(true);
               record = { record };
             }}
           >
@@ -101,7 +104,7 @@ const AdminTable = () => {
           
             }}
             onClick={() => {
-              setIsViewEarningModalVisible(true);
+              setIsBLock(true);
               record = { record };
             }}
           >
@@ -134,6 +137,54 @@ const AdminTable = () => {
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
       />
+      <AddAdminModal isAddAdmin={isAddAdmin} setisAddAdmin={setisAddAdmin} />
+
+      <Modal
+        // title="Confirm Delete"
+        open={isblock}
+        onOk={() => setIsBLock(false)}
+        onCancel={() => setIsBLock(false)}
+        okText="block"
+        cancelText="Cancel"
+        centered
+        style={{ textAlign: "center" }}
+        // styles.body={{ textAlign: "center" }}
+        width={400}
+        footer={
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingBottom: "40px",
+              marginTop: "30px",
+            }}
+          >
+            <Button
+              className="text-xl py-5 px-8 !text-black font-medium"
+              type="primary"
+              onClick={() => setIsBLock(false)}
+              style={{
+                marginRight: 12,
+                background: "rgba(221, 221, 221, 1)",
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="text-xl py-5 px-8"
+              type="primary"
+              style={{ background: "#CE0000" }}
+              onClick={() => setIsBLock(false)}
+            >
+              Block
+            </Button>
+          </div>
+        }
+      >
+        <p className="text-3xl font-semibold pt-10 pb-4 text-center text-black">
+          Do you want to block this Admin?
+        </p>
+      </Modal>
     </div>
   );
 };

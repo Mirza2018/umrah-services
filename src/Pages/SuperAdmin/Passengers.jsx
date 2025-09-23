@@ -11,7 +11,7 @@ import AllPassengersTable from "../../Components/SuperAdminPages/PassengersPage/
 import ViewPassengersModal from "../../Components/SuperAdminPages/PassengersPage/ViewPassengersModal";
 import BlockPassengersModal from "../../Components/SuperAdminPages/PassengersPage/BlockPassengersModal";
 
-const Passengers = () => { 
+const Passengers = () => {
   //* Store Search Value
   const [searchText, setSearchText] = useState("");
 
@@ -27,11 +27,11 @@ const Passengers = () => {
   //* It's Use to Block Modal
   const [isCompanyBlockModalVisible, setIsCompanyBlockModalVisible] =
     useState(false);
-  
+
   //* It's Use to Add Modal
   const [isAddCompanyModalVisible, setIsAddCompanyModalVisible] =
     useState(false);
- 
+
   //* It's Use to Set Seclected User to Block and view
   const [currentCompanyRecord, setCurrentCompanyRecord] = useState(null);
 
@@ -104,7 +104,7 @@ const Passengers = () => {
               theme={{ token: { colorTextPlaceholder: "#D0D0D1" } }}
             >
               <Input
-                placeholder="Search Passengers..."
+                placeholder="search here......"
                 value={searchText}
                 onChange={(e) => onSearch(e.target.value)}
                 className="text-black font-semibold !border-[#D0D0D1] !bg-transparent py-2 !rounded-full"

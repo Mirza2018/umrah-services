@@ -157,7 +157,7 @@ const DashboardLayout = () => {
         {
           key: "vendors-request",
           icon: <span>•</span>,
-          label: <NavLink to="vendors-request">Vendor Request</NavLink>,
+          label: <NavLink to="vendors-request">Vendors Onboarding</NavLink>,
         },
       ],
     },
@@ -209,7 +209,12 @@ const DashboardLayout = () => {
           }}
         />
       ),
-      label: <NavLink to="service-request">Service Requests</NavLink>,
+      label: (
+        <NavLink to="service-request">
+          {" "}
+          Vendor additional services request
+        </NavLink>
+      ),
     },
 
     {

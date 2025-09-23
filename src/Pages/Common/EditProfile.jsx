@@ -18,6 +18,8 @@ const EditProfile = () => {
 
     email: "damienntc@yahoo.com",
     contactNumber: "+2305 123 4567",
+    country: "USA",
+    city: "california",
     // dob: "10-10-1998",
   };
 
@@ -129,6 +131,27 @@ const EditProfile = () => {
               className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
             />
           </Form.Item>
+          <Typography.Title level={5} style={{ color: "#222222" }}>
+            Country
+          </Typography.Title>
+          <Form.Item className="text-white ">
+            <Input
+              value={profileData.country}
+              readOnly
+              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+            />
+          </Form.Item>
+          <Typography.Title level={5} style={{ color: "#222222" }}>
+            City
+          </Typography.Title>
+          <Form.Item className="text-white ">
+            <Input
+              value={profileData.city}
+              readOnly
+              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+            />
+          </Form.Item>
+
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Phone Number
           </Typography.Title>

@@ -11,7 +11,7 @@ const SignIn = () => {
     const data = {
       email: values.email,
       Password: values.password,
-      role: values.role,
+      role: "admin",
     };
 
     localStorage.removeItem("home_care_user");
@@ -80,7 +80,7 @@ const SignIn = () => {
               />
             </Form.Item>
 
-            <Typography.Title level={4} style={{ color: "#222222" }}>
+            {/* <Typography.Title level={4} style={{ color: "#222222" }}>
               Role
             </Typography.Title>
             <Form.Item
@@ -99,7 +99,7 @@ const SignIn = () => {
                 <Select.Option value="company">Company </Select.Option>
                 <Select.Option value="owner">Vehicle Owner</Select.Option>
               </Select>
-            </Form.Item>
+            </Form.Item> */}
 
             <div className="flex justify-between items-center mt-10">
               <Checkbox className="">Remember me</Checkbox>
