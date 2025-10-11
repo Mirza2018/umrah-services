@@ -1,22 +1,52 @@
+import { Button, Checkbox, Form, Input, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
-import { Button, Checkbox, Form, Input, Select, Typography } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import Password from "antd/es/input/Password";
+import { useUserLoginMutation } from "../../redux/api/authApi";
+import { MdEmail } from "react-icons/md";
+import { IoMdLock } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "sonner";
+import { setAccessToken, setUserInfo } from "../../redux/slices/authSlice";
 
 const SignIn = () => {
+  const [userLogin] = useUserLoginMutation();
+  const dispatch = useDispatch();
   const navigate = useNavigate(); // useNavigate hook for navigation
+  const cookies = new Cookies();
 
-  const onFinish = (values) => {
-    const data = {
-      email: values.email,
-      Password: values.password,
-      role: "admin",
-    };
 
-    localStorage.removeItem("home_care_user");
-    localStorage.setItem("home_care_user", JSON.stringify(data));
-    navigate("/");
+  const onFinish = async (values) => {
+    const toastId = toast.loading(" Logging in...");
+    console.log("umrah-dashboard:", values);
+
+    try {
+      const res = await userLogin(values).unwrap();
+      const decodeToken = jwtDecode(res?.data?.accessToken);
+
+      dispatch(setAccessToken(res?.data?.accessToken));
+      dispatch(setUserInfo(decodeToken));
+      console.log("res: ", res, decodeToken);
+      cookies.set("umrah-dashboard_accessToken", res?.data?.accessToken);
+      toast.success(res.message, {
+        id: toastId,
+        duration: 2000,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login Error:", error); // Log the error for debugging
+
+      toast.error(
+        error?.data?.message ||
+          error?.error ||
+          "An error occurred during Login",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
   };
   return (
     <div className="">

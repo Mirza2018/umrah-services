@@ -1,9 +1,11 @@
 import {
   Link,
+  Navigate,
   NavLink,
   Outlet,
   ScrollRestoration,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { Layout, Menu, Typography } from "antd";
 import Sider from "antd/es/layout/Sider";
@@ -12,9 +14,16 @@ import { useEffect, useState } from "react";
 import Topbar from "../Shared/Topbar";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import TopLoadingBar from "react-top-loading-bar";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { clearAuth } from "../../redux/slices/authSlice";
 
 const DashboardLayout = () => {
-  const userRole = JSON.parse(localStorage.getItem("home_care_user"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth?.accessToken);
+  const userRole = jwtDecode(token);
+
   const location = useLocation();
   const pathSegment = location.pathname.split("/").pop();
   const currentPath = location.pathname;
@@ -29,12 +38,9 @@ const DashboardLayout = () => {
     //   currentPath.includes("/vendors-request")
     // )
     //   return ["vendors"];
-    
-    
-    if (currentPath.includes("/all-vendors")) return ["all-vendors"];
-    if (currentPath.includes("/vendors-request"))
-      return ["vendors-request"];
 
+    if (currentPath.includes("/all-vendors")) return ["all-vendors"];
+    if (currentPath.includes("/vendors-request")) return ["vendors-request"];
 
     if (currentPath.includes("/services-managements"))
       return ["services-managements"];
@@ -422,7 +428,12 @@ const DashboardLayout = () => {
         />
       ),
       label: (
-        <div onClick={() => localStorage.removeItem("home_care_user")}>
+        <div
+          onClick={() => {
+            dispatch(clearAuth());
+            Navigate("/signin");
+          }}
+        >
           <NavLink to="/signin">Logout</NavLink>
         </div>
       ),

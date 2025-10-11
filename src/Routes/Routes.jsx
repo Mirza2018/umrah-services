@@ -54,18 +54,12 @@ function AuthRedirect() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("home_care_user"));
-    if (user && user.role) {
-      navigate(`/${user.role}/dashboard`, { replace: true });
-    } else {
-      navigate("/signin", { replace: true });
-    }
+    navigate(`/admin/dashboard`, { replace: true });
   }, [navigate]);
 
   // Optionally display a loading indicator
   return <Loading />;
 }
-
 const router = createBrowserRouter([
   {
     path: "/",
