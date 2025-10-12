@@ -1,23 +1,41 @@
-import { Form, Input, Typography } from "antd";
-import profileImage from "/images/profileImage.png";
 import { EditOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Form, Input, Typography } from "antd";
 import { FaChevronLeft } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
+import { Link } from "react-router-dom";
 import { fladImages } from "../../../public/images/Flad/FladImages";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { useUserProfileQuery } from "../../redux/api/adminApi";
+import { useEffect, useMemo, useState } from "react";
+import { getImageUrl } from "../../redux/getBaseUrl";
 
 const Profile = () => {
-  const user = JSON.parse(localStorage.getItem("home_care_user"));
-  const profileData = {
-    firstName: "Profile",
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth?.accessToken);
+  const user = jwtDecode(token);
+  const [form] = Form.useForm();
+  const { data, isLoading } = useUserProfileQuery();
+  const initialValues = useMemo(() => {
+    const user = data?.data?.attributes[0];
+    return {
+      fullName: user?.fullName || "",
+      email: user?.email,
+      phoneNumber: user?.phoneNumber || "",
+      city: user?.city || "",
+      image: getImageUrl() + user?.image,
+    };
+  }, [data]);
+  useEffect(() => {
+    if (data?.data?.attributes) {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues, data, form]);
 
-    email: "damienntc@yahoo.com",
-    contactNumber: "+2305 123 4567",
-    country: "USA",
-    city: "california",
-    // dob: "10-10-1998",
-  };
-
+  const [imageUrl, setImageUrl] = useState(initialValues?.image);
+  useEffect(() => {
+    setImageUrl(initialValues?.image);
+  }, [initialValues.image]);
   return (
     <div
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
@@ -49,33 +67,32 @@ const Profile = () => {
         </Link>
       </div>
 
-
-
       <div className=" flex justify-center items-center">
         <div className=" rounded-lg h-full w-full md:grid grid-cols-4 ps-4">
           <div className="flex flex-col items-center justify-between  ">
             <div className="flex flex-col items-center justify-center gap-5 border border-[#000] px-10 py-10 rounded-md bg-[#F5F5F5]">
               <img
-                className="h-36 w-36 relative rounded-full"
-                src={fladImages.profile}
+                className="aspect-square object-contain w-36 relative rounded-full"
+                src={imageUrl}
                 alt=""
               />
-              <p className="text-lg font-medium">
-                {profileData.firstName} {profileData.LastName}
-              </p>
+              <p className="text-lg font-medium">{initialValues?.fullName}</p>
               <p className="text-center text-xl font-medium">Admin</p>
             </div>
           </div>
 
           <div className="col-span-3 flex flex-col items-center text-white mt-5">
-            <Form layout="vertical" className="bg-transparent p-4 w-full">
+            <Form
+              form={form}
+              layout="vertical"
+              className="bg-transparent p-4 w-full"
+            >
               <Typography.Title level={5} style={{ color: "#222222" }}>
                 Name
               </Typography.Title>
-              <Form.Item className="text-white">
+              <Form.Item className="text-white" name={`fullName`}>
                 <Input
                   readOnly
-                  value={profileData.firstName}
                   placeholder="Enter your name"
                   className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
                 />
@@ -84,29 +101,18 @@ const Profile = () => {
               <Typography.Title level={5} style={{ color: "#222222" }}>
                 Email
               </Typography.Title>
-              <Form.Item className="text-white ">
+              <Form.Item className="text-white " name={`email`}>
                 <Input
-                  value={profileData.email}
                   readOnly
                   className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
                 />
               </Form.Item>
-              <Typography.Title level={5} style={{ color: "#222222" }}>
-               Country
-              </Typography.Title>
-              <Form.Item className="text-white ">
-                <Input
-                  value={profileData.country}
-                  readOnly
-                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
-                />
-              </Form.Item>
+
               <Typography.Title level={5} style={{ color: "#222222" }}>
                 City
               </Typography.Title>
-              <Form.Item className="text-white ">
+              <Form.Item className="text-white " name={`city`}>
                 <Input
-                  value={profileData.city}
                   readOnly
                   className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
                 />
@@ -114,9 +120,8 @@ const Profile = () => {
               <Typography.Title level={5} style={{ color: "#222222" }}>
                 Phone Number
               </Typography.Title>
-              <Form.Item className="text-white ">
+              <Form.Item className="text-white " name={`phoneNumber`}>
                 <PhoneInput
-                  value={profileData.contactNumber}
                   className="cursor-not-allowed"
                   enableSearch={true}
                 />

@@ -1,16 +1,53 @@
 import { Button } from "antd";
 import JoditEditor from "jodit-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
+import { useTermsAddMutation, useTermsQuery } from "../../../redux/api/adminApi";
+import { toast } from "sonner";
+import Loading from "../../../Components/UI/Loading";
 
 const TermsOfService = () => {
-  const editor = useRef(null);
+  const { data, isLoading, error } = useTermsQuery();
+  const [termsAdd] = useTermsAddMutation();
   const [content, setContent] = useState("");
 
-  const handleOnSave = () => {
-    console.log("Saved PP");
+  useEffect(() => {
+    if (data?.data?.attributes?.content) {
+      setContent(data?.data?.attributes?.content);
+    }
+  }, [data?.data?.attributes?.content]);
+
+  const handleOnSave = async () => {
+    const toastId = toast.loading("Terms Of Service is Adding...");
+    const data = {
+      type: "terms-of-condition",
+      content: content,
+    };
+    try {
+      const res = await termsAdd(data).unwrap();
+      toast.success("Terms Of Service is added Successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+    } catch (error) {
+      toast.error("There is some problem, please try later", {
+        id: toastId,
+        duration: 2000,
+      });
+    }
   };
 
+  // Loading or error states
+  if (isLoading) {
+    return <Loading />; // You can use a spinner here
+  }
+
+  if (error) {
+    return <div>Error loading privacy policy</div>;
+  }
+
+  console.log(content);
+  
   return (
     <div
       className=" min-h-[90vh]  rounded-xl bg-white"
@@ -33,7 +70,7 @@ const TermsOfService = () => {
         <div className="w-full lg:w-[90%]">
           <div className="">
             <JoditEditor
-              ref={editor}
+
               value={content}
               config={{ height: 500, theme: "light", readonly: false }}
               onBlur={(newContent) => setContent(newContent)}

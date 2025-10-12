@@ -57,16 +57,14 @@ const columns = [
 const RecentUserTable = ({ data, loading }) => {
   return (
     <div>
-   
-        <Table
-          columns={columns}
-          dataSource={data}
-          loading={loading}
-          pagination={2}
-          scroll={{ x: true }}
-          // style={{ boxShadow: "0px 0px 5px 1px #00000040" }}
-        />
-   
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        pagination={2}
+        rowKey="id"
+        // scroll={{ x: true }}
+      />
     </div>
   );
 };

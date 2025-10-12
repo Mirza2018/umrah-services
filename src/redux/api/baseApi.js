@@ -11,24 +11,26 @@ const baseQuery = fetchBaseQuery({
     const signUpToken = getState().auth.signUpToken;
     const resendSignUpToken = getState().auth.resendSignUpToken;
     const forgotPassToken = getState().auth.forgotPasswordToken;
+    const resendForgotPasswordToken = getState().auth.resendForgotPasswordToken;
     const resetPasswordToken = getState().auth.resetPasswordToken;
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
-
-    if (signUpToken) {
-      headers.set("authorization", `Bearer ${signUpToken}`);
-    }
-
     if (forgotPassToken) {
       headers.set("signUpToken", `signUpToken ${forgotPassToken}`);
+    }
+    if (resendForgotPasswordToken) {
+      headers.set("signUpToken", `signUpToken ${resendForgotPasswordToken}`);
+    }
+    if (signUpToken) {
+      headers.set("authorization", `Bearer ${signUpToken}`);
     }
     if (resendSignUpToken) {
       headers.set("authorization", `Bearer ${resendSignUpToken}`);
     }
 
-    if (resetPasswordToken) { 
+    if (resetPasswordToken) {
       headers.set("Forget-password", `Forget-password ${resetPasswordToken}`);
     }
 

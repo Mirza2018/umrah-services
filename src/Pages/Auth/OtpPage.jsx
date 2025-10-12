@@ -1,23 +1,111 @@
 import { Button, Form } from "antd";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
-import { AllImages, AuthImages } from "../../../public/images/AllImages";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { AllImages } from "../../../public/images/AllImages";
+import {
+  useForgetOtpVerifyMutation,
+  useResendOTPMutation,
+} from "../../redux/api/authApi";
+import { clearAuth, setResetPasswordToken } from "../../redux/slices/authSlice";
 
 const OtpPage = () => {
+  const [varifyOtp] = useForgetOtpVerifyMutation();
+  const [resendOtp] = useResendOTPMutation();
+  const [isResend, setIsResend] = useState(false);
   const [otp, setOtp] = useState("");
-
   const navigate = useNavigate();
 
-  const handleOTPSubmit = () => {
+  const dispatch = useDispatch();
+
+  const forgotToken = useSelector((state) => state.auth.forgotPasswordToken);
+  const resendToken = useSelector(
+    (state) => state.auth.resendForgotPasswordToken
+  );
+  // setForgotPasswordToken
+  const token = resendToken || forgotToken;
+
+  const decodeToken = jwtDecode(token);
+
+  const handleResendOtp = async () => {
+    const toastId = toast.loading("Resending the OTP...");
+    setIsResend(true);
+    const data = {
+      email: decodeToken?.email,
+    };
+    try {
+      const res = await resendOtp(data).unwrap();
+      dispatch(setResetPasswordToken(res?.data?.forgetPasswordToken));
+      console.log(res);
+      toast.success(res.message, {
+        id: toastId,
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error("RedendOTP Error:", error); // Log the error for debugging
+
+      toast.error(
+        "An error occurred while resending the OTP. Please try again later.",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
+  };
+
+  const handleOTPSubmit = async () => {
+    // dispatch(clearResendSignUpToken());
+
+    const toastId = toast.loading("OTP submiting...");
     console.log("OTP:", otp);
-    navigate("/update-password");
+
+    let data;
+    if (isResend) {
+      data = {
+        otp: otp,
+        purpose: "resend-otp",
+      };
+    } else {
+      data = {
+        otp: otp,
+        purpose: "forget-password",
+      };
+    }
+    console.log(data);
+
+    try {
+      const res = await varifyOtp(data).unwrap();
+      console.log(res);
+
+      toast.success("Otp varify successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      dispatch(clearAuth());
+      dispatch(setResetPasswordToken(res?.data?.forgetPasswordToken));
+
+      navigate("/update-password");
+    } catch (error) {
+      console.error("Login Error:", error);
+
+      toast.error(
+        "An error occurred during Varify Opt. Please try again later.",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
   };
 
   return (
     <div className="">
       <div className="max-w-[750px] w-[90%] mx-auto flex flex-col justify-center gap-10 items-center min-h-screen bg-site-color py-10">
-    <div className="">
+        <div className="">
           <img src={AllImages.logo} alt="logo" className=" mx-auto w-96" />
         </div>
 
@@ -48,12 +136,12 @@ const OtpPage = () => {
               </Form.Item>
               <div className="flex justify-between py-1">
                 <p>Didn’t receive code?</p>
-                <Link
-                  href="/otp-verification"
-                  className="!text-[#19363D] !underline font-semibold"
+                <p
+                  onClick={handleResendOtp}
+                  className="!text-[#19363D] !underline font-semibold cursor-pointer"
                 >
                   Resend
-                </Link>
+                </p>
               </div>
 
               <Form.Item>
@@ -62,7 +150,7 @@ const OtpPage = () => {
                   className="w-full py-6 border border-secondary-color hover:border-secondary-color text-xl text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
                   onClick={handleOTPSubmit}
                 >
-                  Get OTP
+                  Submit OTP
                 </Button>
               </Form.Item>
             </Form>

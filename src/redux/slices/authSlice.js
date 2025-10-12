@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   accessToken: null,
   signUpToken: null,
+  resendSignUpToken: null,
   forgotPasswordToken: null,
+  resendForgotPasswordToken: null,
   resetPasswordToken: null,
 };
 
@@ -22,6 +24,9 @@ const authSlice = createSlice({
     },
     setForgotPasswordToken: (state, action) => {
       state.forgotPasswordToken = action.payload;
+    },
+    setResendForgotPasswordToken: (state, action) => {
+      state.resendForgotPasswordToken = action.payload;
     },
     setResetPasswordToken: (state, action) => {
       state.resetPasswordToken = action.payload;
@@ -46,6 +51,9 @@ const authSlice = createSlice({
     clearForgotPasswordToken: (state) => {
       state.forgotPasswordToken = null;
     },
+    clearResendForgotPasswordToken: (state) => {
+      state.resendForgotPasswordToken = null;
+    },
 
     clearAuth: (state) => {
       state.accessToken = null;
@@ -56,19 +64,21 @@ const authSlice = createSlice({
       state.resetPasswordToken = null;
       state.userInfo = null;
     },
-  }, 
+  },
 });
 
 export const {
   setAccessToken,
   setSignUpToken,
   setForgotPasswordToken,
+  setResendForgotPasswordToken,
   setResendSignUpToken,
   setResetPasswordToken,
   clearResetPasswordToken,
   clearAccessToken,
   clearSignUpToken,
   clearResendSignUpToken,
+  clearResendForgotPasswordToken,
   clearForgotPasswordToken,
   clearAuth,
   setUserInfo,

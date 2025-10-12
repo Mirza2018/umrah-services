@@ -12,26 +12,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import FileUploadList from "../../Components/SuperAdminPages/SuperAdminDashboardPage/FileUploadList";
 
 const SuperAdminDashboard = () => {
-  const [recentUserData, setRecentUserData] = useState([]);
-  const [recentUserLoading, setRecentUserLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchRecentUserData = async () => {
-      try {
-        const response = await axios.get("/data/recentUser.json");
-
-        setRecentUserData(response?.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setRecentUserLoading(false);
-      }
-    };
-
-    fetchRecentUserData();
-  }, []);
-  console.log(recentUserData);
-
+ 
   return (
     <>
       <div className="flex  items-center gap-5  py-3">
@@ -50,21 +32,7 @@ const SuperAdminDashboard = () => {
           className="w-full h-fit py-5 rounded-xl"
           // style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
         >
-          <div className="flex items-center gap-5 mb-5 w-[97%] mx-auto">
-            <h1 className="text-lg font-semibold">Earnings</h1>
-            {/* <div className="flex items-center gap-1">
-              <div className="bg-secondary-color w-4 h-4 rounded-full"></div>
-              <p className="text-sm font-medium">Passenger</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="bg-[#54564a] w-4 h-4 rounded-full"></div>
-              <p className="text-sm font-medium">Driver</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="bg-[#A9ABB0] w-4 h-4 rounded-full"></div>
-              <p className="text-sm font-medium">Owner</p>
-            </div> */}
-          </div>
+
           <div className="md:grid grid-cols-5">
             <div className="col-span-4">
               <UserRatioLineChart />
@@ -113,8 +81,8 @@ const SuperAdminDashboard = () => {
               </div>
 
               <RecentUserTable
-                data={recentUserData}
-                loading={recentUserLoading}
+                // data={recentUserData}
+                // loading={recentUserLoading}
               />
             </div>
           </div>

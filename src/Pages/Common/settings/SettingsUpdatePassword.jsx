@@ -1,11 +1,43 @@
 import { Button, Form, Input, Typography } from "antd";
 import { IoChevronBackOutline } from "react-icons/io5";
+import { useChangePasswordMutation } from "../../../redux/api/authApi";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const SettingsUpdatePassword = () => {
-  const onFinish = (values) => {
+  const [changePass] = useChangePasswordMutation();
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onFinish = async (values) => {
     console.log("Success:", values);
-    localStorage.removeItem("home_care_user");
-    window.location.reload();
+    const data = {
+      oldPassword: values.oldPassword,
+      newPassword: values.newPassword,
+    };
+
+    const toastId = toast.loading("Password is Changing...");
+
+    try {
+      const res = await changePass(data).unwrap();
+      console.log(res);
+      toast.success("Password Change Successfully.", {
+        id: toastId,
+        duration: 2000,
+      });
+      form.resetFields();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error?.data?.message || "There is an problrm , please try letter.",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
   };
   return (
     <div

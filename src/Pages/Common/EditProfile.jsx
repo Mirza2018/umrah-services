@@ -1,29 +1,42 @@
 /* eslint-disable no-unused-vars */
-import { Button, ConfigProvider, Form, Input, Typography, Upload } from "antd";
-import profileImage from "/images/profileImage.png";
-import { useState } from "react";
-import { EditOutlined } from "@ant-design/icons";
-import { MdOutlineEdit } from "react-icons/md";
-import { IoCameraOutline, IoChevronBackOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Form, Input, Typography, Upload } from "antd";
+import { useEffect, useMemo, useState } from "react";
+import { FaChevronLeft } from "react-icons/fa";
+import { IoCameraOutline } from "react-icons/io5";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
-import { fladImages } from "../../../public/images/Flad/FladImages";
-import { FaChevronLeft } from "react-icons/fa";
+import { toast } from "sonner";
+import {
+  useUpdateUserMutation,
+  useUserProfileQuery,
+} from "../../redux/api/adminApi";
+import { getImageUrl } from "../../redux/getBaseUrl";
+import profileImage from "/images/profileImage.png";
 
 const EditProfile = () => {
-  const navigate = useNavigate();
-  const profileData = {
-    firstName: "Profile",
+  const { data, isLoading } = useUserProfileQuery();
+  const [profileUpdate] = useUpdateUserMutation();
+  const [form] = Form.useForm();
 
-    email: "damienntc@yahoo.com",
-    contactNumber: "+2305 123 4567",
-    country: "USA",
-    city: "california",
-    // dob: "10-10-1998",
-  };
+  console.log(data?.data?.attributes[0]?.fullName);
 
-  const [imageUrl, setImageUrl] = useState(profileImage);
+  const initialValues = useMemo(() => {
+    const user = data?.data?.attributes[0];
+    return {
+      fullName: user?.fullName || "",
+      email: user?.email,
+      phoneNumber: user?.phoneNumber || "",
+      city: user?.city || "",
+      image: getImageUrl() + user?.image,
+    };
+  }, [data]);
+  useEffect(() => {
+    if (data?.data?.attributes) {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues, data, form]);
+
+  const [imageUrl, setImageUrl] = useState(initialValues.image);
 
   const handleImageUpload = (info) => {
     if (info.file.status === "removed") {
@@ -38,11 +51,48 @@ const EditProfile = () => {
     }
   };
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    console.log(imageUrl);
-    navigate("/admin/profile");
+  useEffect(() => {
+    setImageUrl(initialValues.image);
+  }, [initialValues.image]);
+
+  const onFinish = async (values) => {
+    const toastId = toast.loading("Profile  is updateing ...");
+
+    const data = {
+      fullName: values.fullName,
+      phoneNumber: values.phoneNumber,
+      city: values.city,
+    };
+
+    // console.log(data);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+
+    if (values?.image?.fileList?.[0].originFileObj) {
+      const profileImage = values.image?.fileList[0]?.originFileObj;
+
+      console.log(profileImage);
+      formData.append("profileImage", profileImage);
+    }
+
+    try {
+      const res = await profileUpdate(formData).unwrap();
+
+      console.log("API Response:", res);
+      toast.success("Profile sucessfully update.", {
+        id: toastId,
+        duration: 2000,
+      });
+    } catch (error) {
+      console.log(error);
+
+      toast.error("There is an problem please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+    }
   };
+
 
   return (
     <div
@@ -62,6 +112,7 @@ const EditProfile = () => {
       </div>
       {/* <div className=" flex justify-center items-center"> */}
       <Form
+        form={form}
         onFinish={onFinish}
         layout="vertical"
         className="bg-transparent p-4 w-full h-full  md:grid grid-cols-4 gap-2"
@@ -70,8 +121,8 @@ const EditProfile = () => {
           <div className="flex  flex-col items-center justify-center gap-5 border border-[#000] px-10 py-10 rounded-md bg-[#F5F5F5]">
             <div className="relative">
               <img
-                className="h-36 w-36 relative rounded-full"
-                src={fladImages.profile}
+                className=" w-36 aspect-square object-contain relative rounded-full"
+                src={imageUrl}
                 alt=""
               />{" "}
               <Form.Item name="image">
@@ -102,9 +153,7 @@ const EditProfile = () => {
                 </Upload>
               </Form.Item>
             </div>
-            <p className="text-lg font-medium">
-              {profileData.firstName} {profileData.LastName}
-            </p>
+            <p className="text-lg font-medium">{initialValues.fullName}</p>
             <p className="text-center text-xl font-medium">Admin</p>
           </div>
         </div>
@@ -112,56 +161,53 @@ const EditProfile = () => {
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Name
           </Typography.Title>
-          <Form.Item className="text-white">
+          <Form.Item className="text-white" name={`fullName`}>
             <Input
-              readOnly
-              value={profileData.firstName}
               placeholder="Enter your name"
-              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+              className="  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
             />
           </Form.Item>
 
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Email
           </Typography.Title>
-          <Form.Item className="text-white ">
+          <Form.Item className="text-white " name={`email`}>
             <Input
-              value={profileData.email}
               readOnly
-              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+              className="cursor-not-allowed  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
             />
           </Form.Item>
-          <Typography.Title level={5} style={{ color: "#222222" }}>
-            Country
-          </Typography.Title>
-          <Form.Item className="text-white ">
-            <Input
-              value={profileData.country}
-              readOnly
-              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
-            />
-          </Form.Item>
+
           <Typography.Title level={5} style={{ color: "#222222" }}>
             City
           </Typography.Title>
-          <Form.Item className="text-white ">
-            <Input
-              value={profileData.city}
-              readOnly
-              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
-            />
+          <Form.Item className="text-white " name={`city`}>
+            <Input className="  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color" />
           </Form.Item>
 
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Phone Number
           </Typography.Title>
-          <Form.Item className="text-white ">
-            <PhoneInput
-              value={profileData.contactNumber}
-              className="cursor-not-allowed"
-              enableSearch={true}
-            />
+          <Form.Item className="text-white " name={`phoneNumber`}>
+            <PhoneInput className=" " enableSearch={true} />
           </Form.Item>
+
+          <div className="flex justify-end !w-full gap-5 ">
+            <Button
+              onClick={() => window.history.back()}
+              className="bg-main-color  transition delay-150 duration-100 py-6 px-8 text-xl rounded-xl text-black font-bold cursor-pointer"
+            >
+              Cancel
+            </Button>
+            <Form.Item className="">
+              <Button
+                htmlType="submit"
+                className="bg-green-400 transition delay-150 duration-100 py-6 px-10 rounded-xl  text-white font-bold cursor-pointer text-xl"
+              >
+                Edit
+              </Button>
+            </Form.Item>{" "}
+          </div>
         </div>
       </Form>
     </div>

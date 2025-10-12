@@ -2,12 +2,43 @@ import { Button, Form, Input, Typography } from "antd";
 
 import { useNavigate } from "react-router-dom";
 import { AllImages, AuthImages } from "../../../public/images/AllImages";
+import { useResetPasswordMutation } from "../../redux/api/authApi";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import { clearAuth } from "../../redux/slices/authSlice";
 
 const UpdatePassword = () => {
+  const [resetPassword] = useResetPasswordMutation();
   const navigate = useNavigate();
-  const onFinish = (values) => {
+  const dispatch = useDispatch();
+
+  const onFinish = async (values) => {
     console.log("Success:", values);
-    navigate("/signin");
+    const data = {
+      password: values.password,
+    };
+    const toastId = toast.loading("Password is updateing...");
+
+    try {
+      const res = await resetPassword(data).unwrap();
+
+      console.log(res);
+
+      toast.success("Password update successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      dispatch(clearAuth());
+
+      navigate("/signin");
+    } catch (error) {
+      console.error("Login Error:", error); // Log the error for debugging
+
+      toast.error("There is an problem update password, Please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+    }
   };
 
   return (

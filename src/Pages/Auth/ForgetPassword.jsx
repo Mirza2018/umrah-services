@@ -2,18 +2,48 @@ import { Button, Form, Input } from "antd";
 
 import { useNavigate } from "react-router-dom";
 import { AllImages, AuthImages } from "../../../public/images/AllImages";
+import { useForgetPasswordMutation } from "../../redux/api/authApi";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import {
+  setForgotPasswordToken,
+  setResendSignUpToken,
+} from "../../redux/slices/authSlice";
 
 const ForgotPassword = () => {
+  const [forgotPassEmail] = useForgetPasswordMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
+    const toastId = toast.loading("Password is reseting...");
     console.log("Success:", values);
-    navigate("/verify-otp");
+
+    try {
+      const res = await forgotPassEmail(values).unwrap();
+
+      console.log("res: ", res?.data?.attributes);
+      dispatch(setForgotPasswordToken(res?.data?.attributes));
+      // dispatch(setResendSignUpToken(res?.data?.attributes));
+
+      toast.success(res.message, {
+        id: toastId,
+        duration: 2000,
+      });
+      navigate("/verify-otp");
+    } catch (error) {
+      console.error("Login Error:", error);
+
+      toast.error("There is an problem , please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+    }
   };
   return (
     <div className="">
       <div className="max-w-[750px] w-[90%] mx-auto flex flex-col justify-center gap-10 items-center min-h-screen bg-site-color py-10">
-    <div className="">
+        <div className="">
           <img src={AllImages.logo} alt="logo" className=" mx-auto w-96" />
         </div>
         <div className="w-full md:w-[80%] lg:w-full mx-auto">

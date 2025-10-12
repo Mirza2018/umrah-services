@@ -1,25 +1,55 @@
+import { Spin } from "antd";
 import { TopCardIcons } from "../../../../public/images/Flad/FladImages";
+import { useCountQuery } from "../../../redux/api/adminApi";
 
 const TopCards = () => {
+  const { data, isLoading } = useCountQuery();
+
+  console.log(data?.data?.attributes);
+
   const cards = [
     {
       title: "Total Income",
-      value: "$2.5K", // ideally from API: data?.data?.income
+      value: isLoading ? <Spin /> : `${data?.data?.attributes?.totalEarning} $`, // ideally from API: data?.data?.income
       icon: TopCardIcons.income,
     },
     {
       title: "Total Service Booking",
-      value: "203",
+      value: isLoading ? (
+        <Spin />
+      ) : (
+        `${data?.data?.attributes?.successfullBooking}`
+      ),
       icon: TopCardIcons.users,
     },
     {
       title: "Total Customers",
-      value: "309",
+      value: isLoading ? (
+        <Spin />
+      ) : (
+        <>
+          {
+            data?.data?.attributes?.userCount.find(
+              (user) => user?._id === "user"
+            )?.count
+          }
+        </>
+      ),
       icon: TopCardIcons.owners,
     },
     {
       title: "Total Vendors",
-      value: "506",
+      value: isLoading ? (
+        <Spin />
+      ) : (
+        <>
+          {
+            data?.data?.attributes?.userCount.find(
+              (user) => user?._id === "vendor"
+            )?.count
+          }
+        </>
+      ),
       icon: TopCardIcons.drivers,
     },
   ];
