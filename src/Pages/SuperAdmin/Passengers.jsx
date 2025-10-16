@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { ConfigProvider, Input } from "antd"; 
+import { ConfigProvider, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
@@ -10,8 +10,37 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import AllPassengersTable from "../../Components/SuperAdminPages/PassengersPage/AllPassengersTable";
 import ViewPassengersModal from "../../Components/SuperAdminPages/PassengersPage/ViewPassengersModal";
 import BlockPassengersModal from "../../Components/SuperAdminPages/PassengersPage/BlockPassengersModal";
+import { useAllUsersQuery } from "../../redux/api/adminApi";
 
 const Passengers = () => {
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+    role:"user"
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
+  const {
+    data: userList,
+    currentData,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = useAllUsersQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
+
   //* Store Search Value
   const [searchText, setSearchText] = useState("");
 
@@ -105,8 +134,9 @@ const Passengers = () => {
             >
               <Input
                 placeholder="search here......"
-                value={searchText}
-                onChange={(e) => onSearch(e.target.value)}
+                onChange={(e) => {
+                  handleSearch(e.target.value);
+                }}
                 className="text-black font-semibold !border-[#D0D0D1] !bg-transparent py-2 !rounded-full"
                 prefix={
                   <SearchOutlined className="!text-black font-bold text-lg mr-2" />
@@ -120,11 +150,12 @@ const Passengers = () => {
       {/* Table  */}
       <div className="px-10 py-10">
         <AllPassengersTable
-          data={filteredCompanyData}
-          loading={loading}
+          data={userList?.data?.attributes?.users}
+          meta={userList?.data?.attributes?.pagination}
+          loading={isLoading}
+          onPageChange={onPageChange}
           showCompanyViewModal={showCompanyViewModal}
           showCompanyBlockModal={showCompanyBlockModal}
-          pageSize={12}
         />
       </div>
 

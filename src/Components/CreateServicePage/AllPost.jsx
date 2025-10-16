@@ -3,31 +3,21 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { MdMoreVert } from "react-icons/md";
 import { AllImages } from "../../../public/images/AllImages";
 import EditPost from "./EditPost";
+import { useAllServicesQuery } from "../../redux/api/adminApi";
+import { getImageUrl } from "../../redux/getBaseUrl";
+import DeletePost from "./DeletePost";
 // import { MoreHorizontal } from "lucide-react";
 
 export default function AllPost() {
   const [activeMenu, setActiveMenu] = useState(null);
   const [postValue, setPostValue] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
 
-  const posts = [
-    {
-      id: 1,
-      title: "Trusted Umrah badal Packages",
-      price: "$1.00",
-      description:
-        "Trusted Umrah badal Packages are designed to help you fulfill",
-      image: AllImages.umrapost1,
-    },
-    {
-      id: 2,
-      title: "Trusted Umrah badal Packages2",
-      price: "$11.00",
-      description:
-        "Trusted Umrah badal Packages are designed to help you fulfill",
-      image: AllImages.umrapost2,
-    },
-  ];
+  const { data, isLoading } = useAllServicesQuery();
+
+  // console.log(data?.data?.attributes?.support);
+  // console.log(data?.data?.attributes?.pagination);
 
   const toggleMenu = (postId) => {
     setActiveMenu(activeMenu === postId ? null : postId);
@@ -41,21 +31,22 @@ export default function AllPost() {
 
   const handleDelete = (post) => {
     setPostValue(post);
+    setIsDelete(true);
     setActiveMenu(null);
   };
 
   return (
     <div className="max-w-4xl  p-6 bg-white">
       <div className="space-y-4">
-        {posts.map((post) => (
+        {data?.data?.attributes?.support.map((post) => (
           <div
-            key={post.id}
+            key={post._id}
             className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             {/* Post Image */}
             <div className="flex-shrink-0">
               <img
-                src={post.image || "/placeholder.svg"}
+                src={getImageUrl() + post?.image}
                 alt={post.title}
                 className="w-20 h-20 rounded-lg object-cover"
               />
@@ -67,7 +58,7 @@ export default function AllPost() {
                 {post.title}
               </h3>
               <p className="text-lg font-medium text-gray-900 mb-2">
-                {post.price}
+                $ {post.price}
               </p>
               <p className="text-gray-600 text-sm leading-relaxed">
                 {post.description}
@@ -77,14 +68,14 @@ export default function AllPost() {
             {/* Menu Button */}
             <div className="relative flex-shrink-0">
               <button
-                onClick={() => toggleMenu(post.id)}
+                onClick={() => toggleMenu(post._id)}
                 className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
               >
                 <MdMoreVert />
               </button>
 
               {/* Dropdown Menu */}
-              {activeMenu === post.id && (
+              {activeMenu === post._id && (
                 <div className="absolute right-0 top-full mt-1 w-32 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10">
                   <button
                     onClick={() => handleEdit(post)}
@@ -105,6 +96,11 @@ export default function AllPost() {
         ))}
       </div>
       <EditPost isEdit={isEdit} setIsEdit={setIsEdit} postValue={postValue} />
+      <DeletePost
+        isDelete={isDelete}
+        setIsDelete={setIsDelete}
+        postValue={postValue}
+      />
     </div>
   );
 }

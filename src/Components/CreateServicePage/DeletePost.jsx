@@ -1,39 +1,34 @@
 /* eslint-disable react/prop-types */
 import { Button, Modal } from "antd";
-import { useDeleteServiceMutation } from "../../../redux/api/adminApi";
 import { toast } from "sonner";
+import { useDeleteCreateServiceMutation } from "../../redux/api/adminApi";
 
-const ViewServicesManagementsModel = ({
-  setIsViewEarningModalVisible,
-  isViewEarningModalVisible,
-  record,
-}) => {
-
-  const [userBan] = useDeleteServiceMutation();
+const DeletePost = ({ setIsDelete, isDelete, postValue }) => {
+  const [userBan] = useDeleteCreateServiceMutation();
   const handleDelete = async () => {
     const toastId = toast.loading("Service type is deleteing...");
     try {
-      const res = await userBan(record?._id);
+      const res = await userBan(postValue?._id);
       toast.success("Service type deleted successfully", {
         id: toastId,
         duration: 2000,
       });
       console.log(res);
-      setIsViewEarningModalVisible(false);
+      setIsDelete(false);
     } catch (error) {
       toast.error("There is some Problem, please try latter", {
         id: toastId,
         duration: 2000,
       });
       console.log(error);
-      setIsViewEarningModalVisible(false);
+      setIsDelete(false);
     }
   };
   return (
     <Modal
       title={""}
-      open={isViewEarningModalVisible}
-      onCancel={() => setIsViewEarningModalVisible(false)}
+      open={isDelete}
+      onCancel={() => setIsDelete(false)}
       footer={
         <div
           style={{
@@ -46,7 +41,7 @@ const ViewServicesManagementsModel = ({
           <Button
             className="text-xl py-5 px-8 !text-black font-medium"
             type="primary"
-            onClick={() => setIsViewEarningModalVisible(false)}
+            onClick={() => setIsDelete(false)}
             style={{
               marginRight: 12,
               background: "rgba(221, 221, 221, 1)",
@@ -69,10 +64,10 @@ const ViewServicesManagementsModel = ({
       className="lg:!w-[500px]"
     >
       <p className="text-3xl font-semibold pt-10 pb-4 text-center text-black">
-        Do you want to Delete this Service Type?
+        Do you want to Delete this Service?
       </p>
     </Modal>
   );
 };
 
-export default ViewServicesManagementsModel;
+export default DeletePost;

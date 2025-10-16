@@ -14,9 +14,7 @@ const data = Array.from({ length: 8 }, (_, index) => ({
 
 // Define the columns for the table
 
-
-
-const ServiceRequestsTable = () => {
+const ServiceRequestsTable = ({ data, loading, meta, onPageChange }) => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
@@ -24,39 +22,51 @@ const ServiceRequestsTable = () => {
   const columns = [
     {
       title: "#SI",
-      dataIndex: "slNumber",
-      key: "slNumber",
-    },
-    {
-      title: "Vendors Name",
-      dataIndex: "vendorsName",
-      key: "vendorsName",
-    },
-    {
-      title: "Availability",
-      dataIndex: "email",
-      key: "email",
-      render: (text) => (
-        <div className="flex items-center gap-2">
-          <p>01-01-2025, 02-01-2025, 03-01-2025</p>
-        </div>
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
       ),
     },
     {
+      title: "Vendors Name",
+      dataIndex: "vendorName",
+      key: "vendorName",
+      render: (text) => <p className="capitalize">{text}</p>,
+    },
+    {
+      title: "Availability",
+      dataIndex: "availability",
+      key: "availability",
+      render: (text) => {
+        return (
+          <div className="flex flex-col items-center justify-start gap-2">
+            {text?.map((availabe, index) => (
+              <p key={availabe?.date} className=" ">
+                {`   ${index + 1}) ${availabe?.date?.split("T")[0]}`}
+              </p>
+            ))}
+          </div>
+        );
+      },
+    },
+    {
       title: "Service Title",
-      dataIndex: "email",
-      key: "email",
+      dataIndex: "postTitle",
+      key: "postTitle",
       render: (text) => (
         <div className="flex flex-col items-center gap-2">
-          <p>Trusted Umrah badal Packages</p>
+          <p>{text}</p>
         </div>
       ),
     },
     {
       title: "Status",
-      dataIndex: "postTitle",
-      key: "postTitle",
-      render: () => <p className="text-secondary-color">Pending</p>,
+      dataIndex: "status",
+      key: "status",
+      render: (text) => (
+        <p className={`capitalize ${text=="pending"? "text-secondary-color": "text-success-color"} `}>{text}</p>
+      ),
     },
     {
       title: "ACTION",
@@ -86,14 +96,13 @@ const ServiceRequestsTable = () => {
       <Table
         columns={columns}
         dataSource={data}
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />

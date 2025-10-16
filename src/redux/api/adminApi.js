@@ -113,6 +113,140 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.users],
     }),
 
+    usersBan: build.mutation({
+      query: (id) => {
+        return {
+          url: `/users/ban-unban/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.users],
+    }),
+    usersUnban: build.mutation({
+      query: (id) => {
+        return {
+          url: `/users/unban/${id}`,
+          method: "PUT",
+        };
+      },
+      invalidatesTags: [tagTypes.users],
+    }),
+    ///api/v1/users/all-vendo
+    allVendor: build.query({
+      query: (params) => ({
+        url: `/users/all-vendor`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.vendor],
+    }),
+
+    vendorsBan: build.mutation({
+      query: (id) => {
+        return {
+          url: `/users/ban-unban/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.vendor],
+    }),
+    //service-type/
+
+    allService: build.query({
+      query: (params) => ({
+        url: `/service-type`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.serviceType],
+    }),
+
+    addService: build.mutation({
+      query: (body) => {
+        return {
+          url: `/service-type`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.serviceType],
+    }),
+    editService: build.mutation({
+      query: (data) => {
+        return {
+          url: `/service-type/${data?.id}`,
+          method: "PUT",
+          body: data?.data,
+        };
+      },
+      invalidatesTags: [tagTypes.serviceType],
+    }),
+
+    deleteService: build.mutation({
+      query: (id) => {
+        return {
+          url: `/service-type/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: [tagTypes.serviceType],
+    }),
+
+    ///services
+    allServices: build.query({
+      query: (params) => ({
+        url: `/service/all`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.service],
+    }),
+    createService: build.mutation({
+      query: (body) => {
+        return {
+          url: `/service`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.service],
+    }),
+
+    editCreateService: build.mutation({
+      query: (data) => {
+        return {
+          url: `/service/${data?.id}`,
+          method: "PUT",
+          body: data?.data,
+        };
+      },
+      invalidatesTags: [tagTypes.service],
+    }),
+    deleteCreateService: build.mutation({
+      query: (id) => {
+        return {
+          url: `/service/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: [tagTypes.service],
+    }),
+    //Vendor Service
+    servicesRequest: build.query({
+      query: (params) => ({
+        url: `/vsm/all-pending`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.serviceRequest],
+    }),
+    servicesRequestDetails: build.query({
+      query: (id) => ({
+        url: `vsm/req-details/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.serviceRequest],
+    }),
     //end
   }),
 });
@@ -135,4 +269,22 @@ export const {
   useNotificationCountQuery,
   //users
   useAllUsersQuery,
+  useUsersBanMutation,
+  useUsersUnbanMutation,
+  ///Vendor
+  useAllVendorQuery,
+  useVendorsBanMutation,
+  //Service type
+  useAllServiceQuery,
+  useAddServiceMutation,
+  useDeleteServiceMutation,
+  useEditServiceMutation,
+  //Create service
+  useCreateServiceMutation,
+  useAllServicesQuery,
+  useEditCreateServiceMutation,
+  useDeleteCreateServiceMutation,
+  //service Requests
+  useServicesRequestQuery,
+  useServicesRequestDetailsQuery,
 } = adminApi;

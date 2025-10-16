@@ -43,11 +43,11 @@ const ViewPassengersModal = ({
             <div className="text-lg ">
               <div className="flex justify-between border-b-2 border-[#FF9815] pb-3">
                 <div className="text-[#535763]">Name</div>
-                <div>{currentCompanyRecord?.customerName}</div>
+                <div className="capitalize">{currentCompanyRecord?.fullName}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Date of Birthday:</div>
-                <div>{currentCompanyRecord?.dob}</div>
+                <div>{currentCompanyRecord?.dob?.split("T")[0]}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">E-mail:</div>
@@ -55,11 +55,11 @@ const ViewPassengersModal = ({
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Phone number:</div>
-                <div>{currentCompanyRecord?.phone}</div>
+                <div>{currentCompanyRecord?.phoneNumber}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">City:</div>
-                <div>{currentCompanyRecord?.country}</div>
+                <div className="capitalize">{currentCompanyRecord?.city}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Country:</div>

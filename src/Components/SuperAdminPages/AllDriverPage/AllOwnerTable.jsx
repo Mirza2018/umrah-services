@@ -1,30 +1,35 @@
 /* eslint-disable react/prop-types */
 import { Button, Space, Table, Tooltip } from "antd";
+import { AiOutlineStop } from "react-icons/ai";
+import { CgUnblock } from "react-icons/cg";
 import { GoEye } from "react-icons/go";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
 
 const AllOwnerTable = ({
   data,
   loading,
+  meta,
+  onPageChange,
   showVenueViewModal,
   showVenueBlockModal,
-  pageSize = 0,
 }) => {
   const columns = [
     {
       title: "#SI",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "_id",
+      key: "_id",
       responsive: ["md"],
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Vendors Name",
-      dataIndex: "vendorName",
-      key: "vendorName",
+      dataIndex: "fullName",
+      key: "fullName",
       render: (text) => (
         <div className="flex items-center gap-2">
-          <p>{text}</p>
+          <p className="capitalize">{text}</p>
         </div>
       ),
     },
@@ -38,28 +43,39 @@ const AllOwnerTable = ({
       title: "City",
       dataIndex: "city",
       key: "city",
+      render: (text) => <p className="capitalize">{text}</p>,
     },
     {
       title: "Availability",
-      dataIndex: "vendorName",
-      key: "vendorName",
-      render: (text) => (
-        <div className="flex items-center gap-2">
-          <p>01-01-2025, 02-01-2025, 03-01-2025</p>
-        </div>
-      ),
+      dataIndex: "availability",
+      key: "availability",
+      render: (text) => {
+        return (
+          <div className="flex flex-col items-center justify-start gap-2">
+            {text?.map((availabe, index) => (
+              <p key={availabe?.date} className=" ">
+                {`   ${index + 1}) ${availabe?.date?.split("T")[0]}`}
+              </p>
+            ))}
+          </div>
+        );
+      },
     },
     {
       title: "Service Title",
-      dataIndex: "vendorName",
-      key: "vendorName",
-      render: (text) => (
-        <div className="flex flex-col items-center gap-2">
-          <p>Trusted Umrah badal Packages</p>
-          <p>Trusted Umrah badal Packages</p>
-          <p>Trusted Umrah badal Packages</p>
-        </div>
-      ),
+      dataIndex: "serviceTitles",
+      key: "serviceTitles",
+      render: (text) => {
+        return (
+          <div className="flex flex-col  justify-start gap-2">
+            {text?.map((availabe, index) => (
+              <p key={availabe?.date} className="">
+                {`   ${index + 1}) ${availabe}`}
+              </p>
+            ))}
+          </div>
+        );
+      },
     },
     {
       title: "Revenue",
@@ -69,8 +85,9 @@ const AllOwnerTable = ({
     },
     {
       title: "Join Date",
-      dataIndex: "joinDate",
-      key: "joinDate",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => <p className="capitalize">{text?.split("T")[0]}</p>,
     },
     {
       title: "Action",
@@ -79,7 +96,7 @@ const AllOwnerTable = ({
         <>
           <Space size="middle">
             {/* Block User Tooltip */}
-            <Tooltip placement="left" title="Block this User">
+            {/* <Tooltip placement="left" title="Block this User">
               <Button
                 className="!p-0"
                 style={{
@@ -91,7 +108,27 @@ const AllOwnerTable = ({
               >
                 <RiDeleteBin6Line style={{ fontSize: "24px" }} />
               </Button>
+            </Tooltip> */}
+
+            <Tooltip
+              placement="right"
+              title={`${record?.isBan == true ? "Unban User" : "Ban User"} `}
+            >
+              <button
+                onClick={() => {
+                  showVenueBlockModal(record);
+                  // setCostomerData(record);
+                }}
+                className="!p-0 cursor-pointer"
+              >
+                {record?.isBan ? (
+                  <CgUnblock className="text-3xl  text-success-color" />
+                ) : (
+                  <AiOutlineStop className="text-2xl font-extrabold text-error-color" />
+                )}
+              </button>
             </Tooltip>
+
             <Tooltip placement="right" title="View Details">
               <Button
                 className="!p-0"
@@ -116,7 +153,13 @@ const AllOwnerTable = ({
         columns={columns}
         dataSource={data}
         loading={loading}
-        pagination={pageSize > 0 ? { pageSize } : false}
+        pagination={{
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
+          showSizeChanger: true,
+        }}
         rowKey="id"
         scroll={{ x: true }}
       />

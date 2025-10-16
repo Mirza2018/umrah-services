@@ -14,17 +14,11 @@ const columns = [
     title: "Full Name",
     dataIndex: "fullName",
     key: "fullName",
-    render: (text) => (
-      <div className="flex justify-center items-center gap-2">
-        {" "}
-        <img src={Person.samplePerson} alt="" /> <p className="">{text}</p>
-      </div>
-    ),
   },
   {
     title: "Phone",
-    dataIndex: "phone",
-    key: "phone",
+    dataIndex: "phoneNumber",
+    key: "phoneNumber",
   },
   {
     title: "Email",
@@ -33,8 +27,9 @@ const columns = [
   },
   {
     title: "Date",
-    dataIndex: "joiningDate",
-    key: "joiningDate",
+    dataIndex: "createdAt",
+    key: "createdAt",
+    render: (text) => <p>{text.split("T")[0]}</p>,
   },
   {
     title: "Type",
@@ -54,7 +49,7 @@ const columns = [
   },
 ];
 
-const RecentUserTable = ({ data, loading }) => {
+const RecentUserTable = ({ data, loading, meta, onPageChange }) => {
   return (
     <div>
       <Table

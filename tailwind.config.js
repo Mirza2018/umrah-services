@@ -10,6 +10,8 @@ export default {
         "highlight-color": "#FDFDFD",
         "input-color": "#242424",
         "gray-color": "#535763",
+        "error-color": "#E53935",
+        "success-color": "#11C186",
       },
     },
   },

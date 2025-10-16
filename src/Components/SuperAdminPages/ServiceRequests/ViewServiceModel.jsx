@@ -2,13 +2,19 @@
 import { Modal } from "antd";
 import { Person, RideshareIcon } from "../../../../public/images/AllImages";
 import { Link } from "react-router-dom";
+import { useServicesRequestDetailsQuery } from "../../../redux/api/adminApi";
+import { getImageUrl } from "../../../redux/getBaseUrl";
+import dayjs from "dayjs";
 
 const ViewServiceModel = ({
   setIsViewEarningModalVisible,
   isViewEarningModalVisible,
   record,
 }) => {
-  const currentCompanyRecord = {};
+  const { data, isLoading } = useServicesRequestDetailsQuery(record?._id);
+  const user = data?.data?.attributes[0];
+  console.log(data?.data?.attributes[0]);
+
   return (
     <Modal
       title={
@@ -27,12 +33,18 @@ const ViewServiceModel = ({
       <div className="px-5 pb-5">
         <div className="container mx-10">
           <div className="flex  justify-start items-center gap-2 mx-5 mb-4">
-            <img src={Person.samplePerson} className="w-20" alt="" />
+            <img
+              src={getImageUrl() + user?.vendorImage}
+              className="w-20"
+              alt=""
+            />
             <div className="flex flex-col justify-start items-start">
               <h1 className="text-xl font-semibold">
-                Name:{record?.vendorsName}
+                Name: {user?.vendorName}
               </h1>
-              <h1 className="text-xl font-semibold">Email:{record?.email}</h1>
+              <h1 className="text-xl font-semibold">
+                Email: {user?.vendorEmail}
+              </h1>
             </div>
           </div>
 
@@ -44,47 +56,66 @@ const ViewServiceModel = ({
                 <div className="text-start ">
                   <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className="">Post Title</h1>
-                    <p className="text-[#535763]">
-                      Trusted Badal Umrah Packages
-                    </p>
+                    <p className="text-[#535763]">{user?.postTitle}</p>
                   </div>
                   <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className="">Price:</h1>
-                    <p className="text-[#535763]"> $100</p>
+                    <p className="text-[#535763]">$ {user?.price}</p>
                   </div>
 
                   <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className="">Start Date:</h1>
                     <p className="text-[#535763]">
                       {" "}
-                      07-01-2025 / End Date: 07-01-2026
+                      {dayjs(user?.startDate).format("YYYY-MM-DD")}
+                    </p>
+                  </div>
+                  <div className="  flex  justify-start items-start  gap-2  ">
+                    <h1 className=""> End Date:</h1>
+                    <p className="text-[#535763]">
+                      {"   "}
+                      {dayjs(user?.endDate).format("YYYY-MM-DD")}
                     </p>
                   </div>
                   <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className="">package included:</h1>
-                    <p className="text-[#535763]">
+                    <div className="flex flex-col ">
+                      {user?.facilities?.map((f, index) => (
+                        <p key={index} className="text-[#535763]">
+                          {` ${index + 1} )
+                        ${f} .`}
+                        </p>
+                      ))}
+                    </div>
+                    {/* <p className="text-[#535763]">
                       We have designed the economy Umrah packages including the
                       listed facilities below:
-                    </p>
+                    </p> */}
                   </div>
                   <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className="">Description: </h1>
-                    <p className="text-[#535763]">
-                      Easily book your Hajj pilgrimage with trusted service
-                      providers. Choose from a range of packages, secure your
-                    </p>
+                    <p className="text-[#535763]">{user?.packageDesc}</p>
                   </div>
                   <h1 className="text-lg font-medium my-5">Availability </h1>
                   <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className=""> Set date : </h1>
-                    <p className="text-[#535763]">
+                    {/* <p className="text-[#535763]">
                       01-01-2025, 02-01-2025, 03-01-2025
-                    </p>
+                    </p> */}
+                    <div className="flex flex-col gap-1 font-medium">
+                      {user?.availability?.map((availabe, index) => (
+                        <p className="text-[#535763]" key={availabe?.date}>
+                          {`${index + 1}) ${dayjs(availabe?.date).format(
+                            "YYYY-MM-DD"
+                          )}`}
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                  <div className="  flex  justify-start items-start  gap-2  ">
+                  {/* <div className="  flex  justify-start items-start  gap-2  ">
                     <h1 className=""> Set Time : </h1>
                     <p className="text-[#535763]"> 07.12 PM</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -101,9 +132,7 @@ const ViewServiceModel = ({
           {/* <Link to={`accepted`}> */}
           <button
             onClick={() => setIsViewEarningModalVisible(false)}
-            className="font-semibold text-base bg-secondary-color rounded-md text-white px-3 py-2  hover:scale-105 transition delay-100  text-nowrap
-                          "
-          >
+            className="font-semibold text-base bg-secondary-color rounded-md text-white px-3 py-2  hover:scale-105 transition delay-100  text-nowrap">
             Accept
           </button>
           {/* </Link> */}

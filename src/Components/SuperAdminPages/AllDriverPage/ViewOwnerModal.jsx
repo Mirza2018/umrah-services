@@ -7,7 +7,7 @@ import {
 } from "../../../../public/images/AllImages";
 import { fladImages } from "../../../../public/images/Flad/FladImages";
 
-const ViewOwnerModal = ({ 
+const ViewOwnerModal = ({
   isVenueViewModalVisible,
   handleCancel,
   currentVenueRecord,
@@ -33,7 +33,7 @@ const ViewOwnerModal = ({
         <div className="text-lg ">
           <div className="flex justify-between border-b-2 border-[#FF9815] pb-3">
             <div className="text-[#535763]">Name</div>
-            <div>{currentVenueRecord?.customerName}</div>
+            <div>{currentVenueRecord?.fullName}</div>
           </div>
           <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
             <div className="text-[#535763]">Date of Birthday:</div>
@@ -45,7 +45,7 @@ const ViewOwnerModal = ({
           </div>
           <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
             <div className="text-[#535763]">Phone number:</div>
-            <div>{currentVenueRecord?.phone}</div>
+            <div>{currentVenueRecord?.phoneNumber}</div>
           </div>
           <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
             <div className="text-[#535763]">City:</div>
@@ -57,7 +57,17 @@ const ViewOwnerModal = ({
           </div>
           <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
             <div className="text-[#535763]">Service type:</div>
-            <div>{currentVenueRecord?.serviceType }</div>
+            <div>
+              {currentVenueRecord?.serviceTypeNames?.map((service, index) => (
+                <span key={index}>
+                  {service}
+                  {index < currentVenueRecord?.serviceTypeNames?.length - 1 &&
+                    ", "}
+                </span>
+              ))}
+
+              {/* {currentVenueRecord?.serviceTypeNames?.join(', ')} */}
+            </div>
           </div>
           <div className="flex justify-between border-b-2 mb-5 border-[#FF9815] py-3">
             <div className="text-[#535763]">Referral Code:</div>

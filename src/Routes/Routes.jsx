@@ -105,6 +105,10 @@ const router = createBrowserRouter([
         element: <OwnerRequestAccept />,
       },
       {
+        path: "services-managements",
+        element: <ServicesManagementsPage />,
+      },
+      {
         path: "create-service",
         element: <CreateService />,
       },
@@ -120,10 +124,7 @@ const router = createBrowserRouter([
         path: "all-admin",
         element: <AdminPage />,
       },
-      {
-        path: "services-managements",
-        element: <ServicesManagementsPage />,
-      },
+
       {
         path: "refunds",
         element: <RefundsPage />,

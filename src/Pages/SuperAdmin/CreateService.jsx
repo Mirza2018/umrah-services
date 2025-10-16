@@ -60,7 +60,7 @@ const CreateService = () => {
             Vendor Service Request
           </button> */}
         </div>
-        {isService == "create" && <CreteServiceForm />}
+        {isService == "create" && <CreteServiceForm setService={setService} />}
         {isService == "post" && <AllPost />}
         {/* {isService == "vendor" && <VendorServiceRequest />} */}
       </div>

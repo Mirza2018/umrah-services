@@ -5,6 +5,10 @@ export const tagTypes = {
   earning: "Earning",
   overview: "Overview",
   notification: "Notification",
+  vendor: "Vendor",
+  serviceType: "ServiceType",
+  service: "Service",
+  serviceRequest: "ServiceRequest",
 };
 
 export const tagTypesList = [
@@ -14,4 +18,8 @@ export const tagTypesList = [
   tagTypes.earning,
   tagTypes.overview,
   tagTypes.notification,
+  tagTypes.vendor,
+  tagTypes.service,
+  tagTypes.serviceType,
+  tagTypes.serviceRequest
 ];

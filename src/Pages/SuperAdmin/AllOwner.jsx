@@ -10,13 +10,41 @@ import ViewDriverModal from "../../Components/SuperAdminPages/AllDriverPage/View
 import AllOwnerTable from "../../Components/SuperAdminPages/AllDriverPage/AllOwnerTable";
 import ViewOwnerModal from "../../Components/SuperAdminPages/AllDriverPage/ViewOwnerModal";
 import BlockOwnerModal from "../../Components/SuperAdminPages/AllDriverPage/BlockOwnerModal";
+import { useAllVendorQuery } from "../../redux/api/adminApi";
 
 const AllOwner = () => {
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
+  const {
+    data: userList,
+    currentData,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = useAllVendorQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
+
   //* Store Search Value
   const [searchText, setSearchText] = useState("");
 
   //* Use to set user
-  const [data, setData] = useState([]);
+
 
   const [loading, setLoading] = useState(true);
 
@@ -33,31 +61,22 @@ const AllOwner = () => {
   //* It's Use to Set Seclected User to Block and view
   const [currentVenueRecord, setCurrentVenueRecord] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/allVendorData.json");
-        setData(response?.data); // Make sure this is an array
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/data/allVendorData.json");
+  //       setData(response?.data); // Make sure this is an array
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  const filteredVenueData = useMemo(() => {
-    if (!searchText) return data;
-    return data.filter((item) =>
-      item.vendorName.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [data, searchText]);
 
-  const onSearch = (value) => {
-    setSearchText(value);
-  };
 
   const showVenueViewModal = (record) => {
     setCurrentVenueRecord(record);
@@ -99,8 +118,7 @@ const AllOwner = () => {
             >
               <Input
                 placeholder="search here......"
-                value={searchText}
-                onChange={(e) => onSearch(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="text-black font-semibold !border-[#D0D0D1] !bg-transparent py-2 !rounded-full"
                 prefix={
                   <SearchOutlined className="!text-black font-bold text-lg mr-2" />
@@ -114,11 +132,12 @@ const AllOwner = () => {
       {/* Table  */}
       <div className="px-10 py-10">
         <AllOwnerTable
-          data={filteredVenueData}
-          loading={loading}
+          data={userList?.data?.attributes?.users}
+          meta={userList?.data?.attributes?.pagination}
+          loading={isLoading}
+          onPageChange={onPageChange}
           showVenueViewModal={showVenueViewModal}
           showVenueBlockModal={showVenueBlockModal}
-          pageSize={8}
         />
       </div>
 

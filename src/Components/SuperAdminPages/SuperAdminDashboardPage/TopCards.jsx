@@ -10,7 +10,11 @@ const TopCards = () => {
   const cards = [
     {
       title: "Total Income",
-      value: isLoading ? <Spin /> : `${data?.data?.attributes?.totalEarning} $`, // ideally from API: data?.data?.income
+      value: isLoading ? (
+        <Spin />
+      ) : (
+        `${data?.data?.attributes?.totalEarning || 0} $`
+      ), // ideally from API: data?.data?.income
       icon: TopCardIcons.income,
     },
     {
@@ -18,7 +22,7 @@ const TopCards = () => {
       value: isLoading ? (
         <Spin />
       ) : (
-        `${data?.data?.attributes?.successfullBooking}`
+        `${data?.data?.attributes?.successfullBooking || 0}`
       ),
       icon: TopCardIcons.users,
     },
@@ -28,11 +32,9 @@ const TopCards = () => {
         <Spin />
       ) : (
         <>
-          {
-            data?.data?.attributes?.userCount.find(
-              (user) => user?._id === "user"
-            )?.count
-          }
+          {data?.data?.attributes?.userCount.find(
+            (user) => user?._id === "user"
+          )?.count || 0}
         </>
       ),
       icon: TopCardIcons.owners,
@@ -43,11 +45,9 @@ const TopCards = () => {
         <Spin />
       ) : (
         <>
-          {
-            data?.data?.attributes?.userCount.find(
-              (user) => user?._id === "vendor"
-            )?.count
-          }
+          {data?.data?.attributes?.userCount.find(
+            (user) => user?._id === "vendor"
+          )?.count || 0}
         </>
       ),
       icon: TopCardIcons.drivers,

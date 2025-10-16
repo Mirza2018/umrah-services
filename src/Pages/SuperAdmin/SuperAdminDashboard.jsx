@@ -10,8 +10,36 @@ import { fladImages } from "../../../public/images/Flad/FladImages";
 import Dragger from "antd/es/upload/Dragger";
 import { UploadOutlined } from "@ant-design/icons";
 import FileUploadList from "../../Components/SuperAdminPages/SuperAdminDashboardPage/FileUploadList";
+import { useAllUsersQuery } from "../../redux/api/adminApi";
 
 const SuperAdminDashboard = () => {
+      const [filters, setFilters] = useState({
+        page: 1,
+        limit: 3,
+      });
+
+      const onPageChange = (page, limit) => {
+        setFilters((prev) => ({
+          ...prev,
+          page,
+          limit,
+        }));
+      };
+
+      const {
+        data: userList,
+        currentData,
+        isLoading,
+        isFetching,
+        isSuccess,
+      } = useAllUsersQuery(filters);
+      const handleSearch = (search) => {
+        setFilters((prev) => ({
+          ...prev,
+          search: search,
+        }));
+      };
+  
 
  
   return (
@@ -32,7 +60,6 @@ const SuperAdminDashboard = () => {
           className="w-full h-fit py-5 rounded-xl"
           // style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
         >
-
           <div className="md:grid grid-cols-5">
             <div className="col-span-4">
               <UserRatioLineChart />
@@ -81,8 +108,10 @@ const SuperAdminDashboard = () => {
               </div>
 
               <RecentUserTable
-                // data={recentUserData}
-                // loading={recentUserLoading}
+                data={userList?.data?.attributes?.users}
+                meta={userList?.data?.attributes?.pagination}
+                loading={isLoading}
+                onPageChange={onPageChange}
               />
             </div>
           </div>

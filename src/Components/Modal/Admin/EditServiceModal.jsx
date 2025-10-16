@@ -8,23 +8,37 @@ import {
   Modal,
   Select,
   Typography,
-  Upload,
 } from "antd";
-import { useState } from "react";
-import { useAddServiceMutation } from "../../../redux/api/adminApi";
 import { toast } from "sonner";
+import {
+  useAddServiceMutation,
+  useEditServiceMutation,
+} from "../../../redux/api/adminApi";
+import { useEffect, useMemo } from "react";
 
-const AddServiceModal = ({ addService, setAddService }) => {
+const EditServiceModal = ({ addService, setAddService, record }) => {
   const [form] = Form.useForm();
-  const { Dragger } = Upload;
-  const [facilities, setFacilities] = useState([""]); // Array to store facility inputs
 
-  const [addServices] = useAddServiceMutation();
+  const initialValues = useMemo(() => {
+    return {
+      name: record?.name,
+      type: record?.type,
+      amount: record?.amount,
+    };
+  }, [record]);
+
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue(initialValues);
+    }
+  }, [record, form]);
+
+  const [editServices] = useEditServiceMutation();
   const onFinish = async (values) => {
-    const toastId = toast.loading("Service is adding...");
+    const toastId = toast.loading("Service is editing...");
     try {
-      const res = await addServices(values);
-      toast.success("Service is added successfully", {
+      const res = await editServices({ data: values, id: record?._id });
+      toast.success("Service is edited successfully", {
         id: toastId,
         duration: 2000,
       });
@@ -130,4 +144,4 @@ const AddServiceModal = ({ addService, setAddService }) => {
   );
 };
 
-export default AddServiceModal;
+export default EditServiceModal;

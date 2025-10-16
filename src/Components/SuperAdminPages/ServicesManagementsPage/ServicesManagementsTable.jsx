@@ -5,23 +5,15 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import ViewServicesManagementsModel from "./ViewServicesManagementsModel";
 import AddServiceModal from "../../Modal/Admin/AddServiceModal";
+import EditServiceModal from "../../Modal/Admin/EditServiceModal";
 // Sample data for the table
-const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
-  slNumber: "#1234",
-  name: "Umrah Badal",
-  type: "Flat Amount",
-  amount: "$100",
-}));
 
 // Define the columns for the table
 
-
-
-const ServicesManagementsTable = () => {
+const ServicesManagementsTable = ({ data, loading, meta, onPageChange }) => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
-      const [addService, setAddService] = useState(false);
+  const [addService, setAddService] = useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
@@ -29,16 +21,21 @@ const ServicesManagementsTable = () => {
       title: "#UID",
       dataIndex: "slNumber",
       key: "slNumber",
+      // render: (text, _, index) => (
+      //   <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      // ),
     },
     {
       title: "Service Name",
       dataIndex: "name",
       key: "name",
+      render: (text) => <p className="capitalize">{text}</p>,
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
+      render: (text) => <p className="capitalize">{text}</p>,
     },
     {
       title: "Amount",
@@ -58,8 +55,8 @@ const ServicesManagementsTable = () => {
             }}
             onClick={() => {
               // setIsViewEarningModalVisible(true);
-              setAddService(true)
-              record = { record };
+              setAddService(true);
+              setRecord(record);
             }}
           >
             <MdEdit style={{ fontSize: "24px" }} />
@@ -86,10 +83,10 @@ const ServicesManagementsTable = () => {
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+              setRecord(record);
             }}
           >
-            <FaRegTrashAlt style={{ fontSize: "24px" }} />
+            <FaRegTrashAlt style={{ color: "#CE0000", fontSize: "24px" }} />
           </Button>
         </div>
       ),
@@ -100,14 +97,13 @@ const ServicesManagementsTable = () => {
       <Table
         columns={columns}
         dataSource={data}
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />
@@ -116,7 +112,11 @@ const ServicesManagementsTable = () => {
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
       />
-      <AddServiceModal addService={addService} setAddService={setAddService} />
+      <EditServiceModal
+        record={record}
+        addService={addService}
+        setAddService={setAddService}
+      />
     </div>
   );
 };
