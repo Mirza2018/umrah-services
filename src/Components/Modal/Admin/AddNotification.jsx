@@ -10,19 +10,41 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
+import { useAddNotificationMutation } from "../../../redux/api/adminApi";
+import { toast } from "sonner";
 
 const AddNotification = () => {
+  const [addNotification] = useAddNotificationMutation();
   const [form] = Form.useForm();
   const { Dragger } = Upload;
-  const [facilities, setFacilities] = useState([""]); // Array to store facility inputs
 
-  const onFinish = (values) => {
-    console.log("subscription:", { ...values, facilities });
-    form.resetFields();
-    setFacilities([""]); // Reset facilities
+  // const onFinish = (values) => {
+  //   console.log("subscription:", { ...values, facilities });
+  //   form.resetFields();
+  //   setFacilities([""]); // Reset facilities
+  // };
+
+  const onFinish = async (values) => {
+    const toastId = toast.loading("Notification is Sending...");
+    try {
+      const res = await addNotification(values);
+      toast.success("Notification Send successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(res);
+      form.resetFields();
+    } catch (error) {
+      toast.error("There is some Problem please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(error);
+    }
   };
+
   return (
-    <div className="m-5 p-5 border border-[#FFC4B0] rounded-lg">
+    <div className="m-5 p-5 border border-[#FFC4B0] rounded-lg max-w-5xl mx-auto">
       <Form
         form={form}
         onFinish={onFinish}
@@ -56,7 +78,7 @@ const AddNotification = () => {
         </Typography.Title>
         <Form.Item
           rules={[{ required: true, message: "Please Select country Name" }]}
-          name="country"
+          name="city"
         >
           <Select
             showSearch
@@ -67,7 +89,7 @@ const AddNotification = () => {
             options={countries}
           />
         </Form.Item>
-        <Typography.Title level={4} style={{ color: "#222222" }}>
+        {/* <Typography.Title level={4} style={{ color: "#222222" }}>
           Name
         </Typography.Title>
         <Form.Item
@@ -88,7 +110,7 @@ const AddNotification = () => {
               { value: "vendor", label: "Vendor" },
             ]}
           />
-        </Form.Item>
+        </Form.Item> */}
         <Typography.Title level={4} style={{ color: "#222222" }}>
           Message
         </Typography.Title>
@@ -127,7 +149,6 @@ const AddNotification = () => {
 };
 
 export default AddNotification;
-
 
 const countries = [
   { value: "afghanistan", label: "Afghanistan" },

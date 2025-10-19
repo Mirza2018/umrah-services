@@ -40,30 +40,35 @@ const ViewAdminModel = ({
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
                 <div className="text-[#535763] ">Name</div>
-                <div>John Doe</div>
+                <div>{record?.fullName}</div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">E-mail:</div>
-                <div>abc@gmail.com</div>
+                <div>{record?.email}</div>
               </div>
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
+              {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Bank Account:</div>
                 <div>12345678</div>
-              </div>
+              </div> */}
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Category:</div>
-                <div>Notification & Feedback</div>
+                <div className="text-[#535763]">Category Permissions:</div>
+                <div>{record?.categoryPermissions.join(",")}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Role:</div>
-                <div>Admin</div>
+                <div>Sub Admin</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Status</div>
-                <div className="text-[#45AE68]">Active</div>
+                <div
+                  className={` ${
+                    record?.active ? "text-[#45AE68] " : "text-[#e21212] "
+                  }`}
+                >
+                  {record?.active ? "Active" : "Deactive"}
+                </div>
               </div>
-           
             </div>
           </div>
         </div>

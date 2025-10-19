@@ -1,47 +1,98 @@
-import React, { useEffect, useState } from "react";
+import { Avatar, Button, Form, Select } from "antd";
+import Dragger from "antd/es/upload/Dragger";
+import { useState } from "react";
+import { toast } from "sonner";
+import { AllImages } from "../../../public/images/AllImages";
+import { fladImages } from "../../../public/images/Flad/FladImages";
+import FileUploadList from "../../Components/SuperAdminPages/SuperAdminDashboardPage/FileUploadList";
+import RecentUserTable from "../../Components/SuperAdminPages/SuperAdminDashboardPage/RecentUserTable";
 import TopCards from "../../Components/SuperAdminPages/SuperAdminDashboardPage/TopCards";
 import UserRatioLineChart from "../../Components/SuperAdminPages/SuperAdminDashboardPage/UserRatioLineChart";
-import { Form, Link } from "react-router-dom";
-import RecentActivity from "../../Components/SuperAdminPages/SuperAdminDashboardPage/RecentActivity";
-import RecentUserTable from "../../Components/SuperAdminPages/SuperAdminDashboardPage/RecentUserTable";
-import axios from "axios";
-import { Avatar, Select } from "antd";
-import { fladImages } from "../../../public/images/Flad/FladImages";
-import Dragger from "antd/es/upload/Dragger";
-import { UploadOutlined } from "@ant-design/icons";
-import FileUploadList from "../../Components/SuperAdminPages/SuperAdminDashboardPage/FileUploadList";
-import { useAllUsersQuery } from "../../redux/api/adminApi";
+import {
+  useAllUsersQuery,
+  usePostBannerMutation,
+} from "../../redux/api/adminApi";
 
 const SuperAdminDashboard = () => {
-      const [filters, setFilters] = useState({
-        page: 1,
-        limit: 3,
+  const [addBanner] = usePostBannerMutation();
+  const [isImage, setIsImage] = useState(null);
+  const [form] = Form.useForm();
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 3,
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
+  const {
+    data: userList,
+    currentData,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = useAllUsersQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
+
+  const uploadCommonProps = {
+    beforeUpload: () => false, // prevent auto-upload
+    maxCount: 1,
+    accept: "image/*",
+    listType: "picture",
+    showUploadList: { showRemoveIcon: true },
+  };
+  console.log(isImage);
+
+  const handleBanner = async () => {
+    const toastId = toast.loading("Banner is adding...");
+
+    console.log(isImage);
+    const formData = new FormData();
+    if (isImage?.fileList?.[0].originFileObj) {
+      const profileImage = isImage?.fileList[0]?.originFileObj;
+
+      console.log(profileImage);
+      formData.append("image", profileImage);
+    } else {
+      return toast.error("Please Selete an Image", {
+        id: toastId,
+        duration: 2000,
       });
+    }
 
-      const onPageChange = (page, limit) => {
-        setFilters((prev) => ({
-          ...prev,
-          page,
-          limit,
-        }));
-      };
+    // return;
+    try {
+      const res = await addBanner(formData).unwrap();
+      console.log(res);
+      toast.success("Banner is added successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      form.resetFields();
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error?.data?.message || "There is an problem, Please add later",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
+    setIsImage(null);
+    form.resetFields();
+  };
 
-      const {
-        data: userList,
-        currentData,
-        isLoading,
-        isFetching,
-        isSuccess,
-      } = useAllUsersQuery(filters);
-      const handleSearch = (search) => {
-        setFilters((prev) => ({
-          ...prev,
-          search: search,
-        }));
-      };
-  
-
- 
   return (
     <>
       <div className="flex  items-center gap-5  py-3">
@@ -71,16 +122,40 @@ const SuperAdminDashboard = () => {
                 rules={[{ required: true, message: "Please Upload Picture" }]}
                 name="picture"
               > */}
-                <Dragger>
-                  <p className=" ">
-                    <UploadOutlined className="text-5xl" />
-                  </p>
-                  <p className="ant-upload-text">
-                    Drop your imager here, or browse
-                  </p>
-                  <p className="ant-upload-text">Jpeg, png are allowed</p>
-                </Dragger>
-                {/* </Form.Item> */}
+                <Form form={form} onFinish={handleBanner}>
+                  <Form.Item name="image">
+                    <Dragger
+                      {...uploadCommonProps}
+                      onChange={(e) => setIsImage(e)}
+                    >
+                      <div className="flex justify-center items-center ">
+                        {/* <UploadOutlined className="text-5xl" /> */}
+                        <img
+                          src={AllImages.adminUpload}
+                          className="w-10"
+                          alt=""
+                        />
+                      </div>
+                      <p className="ant-upload-text !text-sm">
+                        Drop your imager here, or browse
+                      </p>
+                      <p className="ant-upload-text !text-sm">
+                        Jpeg, png are allowed
+                      </p>
+                    </Dragger>
+                  </Form.Item>
+                  {/* </Form.Item> */}
+                  {isImage?.fileList[0] && (
+                    <div className="pt-4 flex justify-center items-center">
+                      <Button
+                        htmlType="submit"
+                        className="text-white bg-green-500 text-lg !py-5 "
+                      >
+                        Upload Banner
+                      </Button>
+                    </div>
+                  )}{" "}
+                </Form>
               </div>
               <div>
                 <FileUploadList />

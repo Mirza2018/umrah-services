@@ -4,6 +4,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import { GoEye } from "react-icons/go";
 import { use } from "react";
 import ViewEarningModel from "./ViewEarningModel";
+import dayjs from "dayjs";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
   key: (index + 1).toString(),
@@ -16,9 +17,7 @@ const data = Array.from({ length: 8 }, (_, index) => ({
 
 // Define the columns for the table
 
-
-
-const EarningFromAccount = () => {
+const EarningFromAccount = ({ data, loading, meta, onPageChange }) => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
@@ -26,13 +25,17 @@ const EarningFromAccount = () => {
   const columns = [
     {
       title: "#Tr.ID",
-      dataIndex: "slNumber",
-      key: "slNumber",
+      dataIndex: "transactionId",
+      key: "transactionId",
+
+      // render: (text, _, index) => (
+      //   <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      // ),
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "userName",
+      key: "userName",
     },
     {
       title: "Service Title",
@@ -46,8 +49,9 @@ const EarningFromAccount = () => {
     },
     {
       title: "Date & Time",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => <p>{dayjs(text).format("DD-MM-YYYY")}</p>,
     },
     {
       title: "ACTION",
@@ -63,7 +67,7 @@ const EarningFromAccount = () => {
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />
@@ -77,14 +81,13 @@ const EarningFromAccount = () => {
       <Table
         columns={columns}
         dataSource={data}
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />

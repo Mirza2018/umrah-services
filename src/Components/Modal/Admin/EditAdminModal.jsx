@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { InboxOutlined } from "@ant-design/icons";
 import {
   Button,
   ConfigProvider,
@@ -10,15 +9,13 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { FiUpload } from "react-icons/fi";
-import { useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
-import { useAddAdminMutation } from "../../../redux/api/adminApi";
 import { toast } from "sonner";
+import { useEditAdminMutation } from "../../../redux/api/adminApi";
+import { useEffect, useMemo } from "react";
 
-const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
+const EditAdminModal = ({ isAddAdmin, setisAddAdmin, record }) => {
   const [form] = Form.useForm();
-  const [addAdmin] = useAddAdminMutation();
+  const [editAdmin] = useEditAdminMutation();
   const { Dragger } = Upload;
 
   // const onFinishr = (values) => {
@@ -27,15 +24,30 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
 
   //   setisAddAdmin(false);
   // };
+  const initialValues = useMemo(() => {
+    return {
+      fullName: record?.fullName,
+      email: record?.email,
+      categoryPermissions: record?.categoryPermissions,
+      password: record?.password,
+    };
+  }, [record]);
+
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue(initialValues);
+    }
+  }, [form, initialValues, record]);
+
   const onFinish = async (values) => {
-    const toastId = toast.loading("New Admin is Creating...");
+    const toastId = toast.loading("Admin info is Editing...");
 
     console.log(values);
     values.adminRole = "sub-admin";
 
     try {
-      const res = await addAdmin(values);
-      toast.success("Admin created successfully", {
+      const res = await editAdmin({ data: values, id: record?._id });
+      toast.success("Admin info is Edited successfully", {
         id: toastId,
         duration: 2000,
       });
@@ -57,8 +69,6 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
     name: path?.name,
   }));
 
-
-  
   return (
     <ConfigProvider
       theme={{
@@ -105,8 +115,9 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
               name="email"
             >
               <Input
+                readOnly
                 placeholder="Enter Email"
-                className="py-2 px-3 text-xl  !bg-transparent"
+                className="py-2 px-3 text-xl  !bg-transparent cursor-not-allowed"
               />
             </Form.Item>
             <Typography.Title level={4} style={{ color: "#222222" }}>
@@ -134,7 +145,7 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
                 options={optionsPath}
               />
             </Form.Item>
-            <Typography.Title level={4} style={{ color: "#222222" }}>
+            {/* <Typography.Title level={4} style={{ color: "#222222" }}>
               Password
             </Typography.Title>
             <Form.Item
@@ -145,7 +156,7 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
                 placeholder="********"
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item>
               <Button
@@ -162,7 +173,7 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
   );
 };
 
-export default AddAdminModal;
+export default EditAdminModal;
 
 const pathsArray = [
   { name: "dashboard", path: "dashboard" },

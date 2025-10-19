@@ -1,19 +1,44 @@
+import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import EarningFromAccount from "../../Components/SuperAdminPages/EarningPage/EarningFromAccount";
- 
+import { useAllTransactionsQuery } from "../../redux/api/adminApi";
+
 const EarningsPage = () => {
-  const topBarEarning = [
-    {
-      title: "Today Income",
-      value: "$1.2K",
-      icon: AllIcons.todayIncome,
-    },
-    {
-      title: "Total Income",
-      value: "$752k",
-      icon: AllIcons.totalIncome,
-    },
-  ];
+    const topBarEarning = [
+      {
+        title: "Today Income",
+        value: "$1.2K",
+        icon: AllIcons.todayIncome,
+      },
+      {
+        title: "Total Income",
+        value: "$752k",
+        icon: AllIcons.totalIncome,
+      },
+    ];
+  
+      const [filters, setFilters] = useState({
+        page: 1,
+        limit: 8,
+      });
+    
+      const onPageChange = (page, limit) => {
+        setFilters((prev) => ({
+          ...prev,
+          page,
+          limit,
+        }));
+      };
+    
+  const { data, isLoading } = useAllTransactionsQuery(filters);
+
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
+
   return (
     <div
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
@@ -55,7 +80,12 @@ const EarningsPage = () => {
             </div>
           ))}{" "}
         </div>
-        <EarningFromAccount />
+        <EarningFromAccount
+          data={data?.data?.attributes?.transactions}
+          meta={data?.data?.attributes?.pagination}
+          loading={isLoading}
+          onPageChange={onPageChange}
+        />
       </main>
     </div>
   );

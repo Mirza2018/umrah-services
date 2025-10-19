@@ -1,8 +1,32 @@
+import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import PayoutsFromAccount from "../../Components/SuperAdminPages/PayoutsPage/PayoutsFromAccount";
 import RefundsFromAccount from "../../Components/SuperAdminPages/RefundsPage/RefundsFromAccount";
- 
+import { useAllPayoutQuery } from "../../redux/api/adminApi";
+
 const PayoutsRequest = () => {
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
+  const { data, currentData, isLoading, isFetching, isSuccess } =
+    useAllPayoutQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
+
   return (
     <div
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
@@ -29,7 +53,12 @@ const PayoutsRequest = () => {
           </div>
         </section> */}
 
-        <PayoutsFromAccount />
+        <PayoutsFromAccount
+          data={data?.data?.attributes}
+          meta={data?.data?.attributes?.pagination}
+          loading={isLoading}
+          onPageChange={onPageChange}
+        />
       </main>
     </div>
   );

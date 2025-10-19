@@ -29,29 +29,32 @@ const ViewContactsModel = ({
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
                 <div className="text-[#535763] ">Name:</div>
-                <div>Enrique</div>
+                <div>{record?.name}</div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">E-mail:</div>
-                <div>abc@gmail.com</div>
+                <div>{record?.email}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Role:</div>
-                <div>Customar</div>
+                <div className="capitalize">{record?.role}</div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Status:</div>
-                <div className="text-[#EAB90A]">Pending</div>
+                <div className="text-[#535763]">Read:</div>
+                <div
+                  className={` ${
+                    record?.isRead ? "text-green-600" : "text-[#EAB90A]"
+                  } text-[#EAB90A]`}
+                >
+                  {record?.isRead ? "yes" : "No"}
+                </div>
               </div>
             </div>
           </div>
           <div className="mt-5">
-            <h1>
-              Reason: Recipient not available at the estimated time/day of
-              delivery. Please refund my money
-            </h1>
+            <h1>Reason: {record?.reason}</h1>
           </div>
         </div>
       </div>

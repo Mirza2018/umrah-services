@@ -17,8 +17,8 @@ const AllPassengersTable = ({
   const columns = [
     {
       title: "#SI",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "_id",
+      key: "_id",
       responsive: ["md"],
       render: (text, _, index) => (
         <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>

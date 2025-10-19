@@ -247,6 +247,192 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.serviceRequest],
     }),
+
+    acceptervicesRequest: build.mutation({
+      query: (id) => {
+        return {
+          url: `/vsm/approve/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.serviceRequest],
+    }),
+    rejectServicesRequest: build.mutation({
+      query: (id) => {
+        return {
+          url: `/vsm/reject/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.serviceRequest],
+    }),
+    //All Transaction
+    allTransactions: build.query({
+      query: (params) => ({
+        url: `/transaction/alltransactions`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.trsnsaction],
+    }),
+    totalTransaction: build.query({
+      query: (params) => ({
+        url: `/transaction/earning`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.trsnsaction],
+    }),
+
+    //Admin
+    allAdmin: build.query({
+      query: (params) => ({
+        url: `/admin/all`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.admin],
+    }),
+
+    addAdmin: build.mutation({
+      query: (body) => {
+        return {
+          url: `/admin/add`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.admin],
+    }),
+
+    editAdmin: build.mutation({
+      query: (data) => {
+        return {
+          url: `/admin/edit/${data?.id}`,
+          method: "PUT",
+          body: data?.data,
+        };
+      },
+      invalidatesTags: [tagTypes.admin],
+    }),
+    deleteAdmin: build.mutation({
+      query: (id) => {
+        return {
+          url: `/admin/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: [tagTypes.admin],
+    }),
+
+    //refund
+    allRefund: build.query({
+      query: (params) => ({
+        url: `/usm/refund`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.refund],
+    }),
+
+    //FeedBack
+    allFeedback: build.query({
+      query: (params) => ({
+        url: `/feedback/all-admin`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.feedback],
+    }),
+
+    actionFeedback: build.mutation({
+      query: (id) => {
+        return {
+          url: `/feedback/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.feedback],
+    }),
+
+    //payouts
+    allPayout: build.query({
+      query: (params) => ({
+        url: `/usm/payouts`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.payout],
+    }),
+    /// Support
+    allSupport: build.query({
+      query: (params) => ({
+        url: `/support`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.support],
+    }),
+    readSupport: build.mutation({
+      query: (id) => {
+        return {
+          url: `/support/read/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.support],
+    }),
+    /// Notification Post
+    historyNotification: build.query({
+      query: (params) => ({
+        url: `/support`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.notificationPost],
+    }),
+    addNotification: build.mutation({
+      query: (body) => {
+        return {
+          url: `/notification/direct-notification`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.notificationPost],
+    }),
+    //Banner
+
+    allBanner: build.query({
+      query: (params) => ({
+        url: `/quots/all`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.banner],
+    }),
+
+    postBanner: build.mutation({
+      query: (body) => {
+        return {
+          url: `/quots/add`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.banner],
+    }),
+    deleteBanner: build.mutation({
+      query: (data) => {
+        return {
+          url: `/quots/delete/${data.id}`,
+          method: "DELETE",
+          body: data.data,
+        };
+      },
+      invalidatesTags: [tagTypes.banner],
+    }),
+
     //end
   }),
 });
@@ -287,4 +473,30 @@ export const {
   //service Requests
   useServicesRequestQuery,
   useServicesRequestDetailsQuery,
+  useAcceptervicesRequestMutation,
+  useRejectServicesRequestMutation,
+  //Transaction
+  useAllTransactionsQuery,
+  useTotalTransactionQuery,
+  //Admin
+  useAllAdminQuery,
+  useAddAdminMutation,
+  useEditAdminMutation,
+  useDeleteAdminMutation,
+  //refund
+  useAllRefundQuery,
+  //feedback
+  useAllFeedbackQuery,
+  useActionFeedbackMutation,
+  ///payout
+  useAllPayoutQuery,
+  //Support
+  useAllSupportQuery,
+  useReadSupportMutation,
+  //Notification
+  useAddNotificationMutation,
+  //Banner
+  useAllBannerQuery,
+  usePostBannerMutation,
+  useDeleteBannerMutation,
 } = adminApi;

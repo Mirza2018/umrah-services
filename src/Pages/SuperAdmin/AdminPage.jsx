@@ -3,13 +3,36 @@ import AddAdminModal from "../../Components/Modal/Admin/AddAdminModal";
 import AdminTable from "../../Components/SuperAdminPages/AdminPage/AdminTable";
 import { FaRegEdit } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
+import { useAllAdminQuery } from "../../redux/api/adminApi";
 
 const AdminPage = () => {
   const [isAddAdmin, setisAddAdmin] = useState(false);
+
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
+  const { data, currentData, isLoading, isFetching, isSuccess } =
+    useAllAdminQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
   return (
     <div
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
-      style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
+      // style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
     >
       {/* Header  */}
       <div className=" w-full p-4  flex rounded-tl-xl rounded-tr-xl">
@@ -31,7 +54,12 @@ const AdminPage = () => {
 
       <AddAdminModal isAddAdmin={isAddAdmin} setisAddAdmin={setisAddAdmin} />
       <main className="p-5">
-        <AdminTable />
+        <AdminTable
+          data={data?.data?.attributes?.result}
+          meta={data?.data?.attributes?.pagination}
+          loading={isLoading}
+          onPageChange={onPageChange}
+        />
       </main>
     </div>
   );

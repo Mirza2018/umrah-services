@@ -5,7 +5,7 @@ import { useCountQuery } from "../../../redux/api/adminApi";
 const TopCards = () => {
   const { data, isLoading } = useCountQuery();
 
-  console.log(data?.data?.attributes);
+  // console.log(data?.data?.attributes);
 
   const cards = [
     {

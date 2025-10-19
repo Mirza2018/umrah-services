@@ -1,15 +1,12 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { ConfigProvider, Input } from "antd";
-import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
 //* Modal Table
 
-import BlockDriverModal from "../../Components/SuperAdminPages/AllDriverPage/BlockDriverModal";
-import ViewDriverModal from "../../Components/SuperAdminPages/AllDriverPage/ViewDriverModal";
 import AllOwnerTable from "../../Components/SuperAdminPages/AllDriverPage/AllOwnerTable";
-import ViewOwnerModal from "../../Components/SuperAdminPages/AllDriverPage/ViewOwnerModal";
 import BlockOwnerModal from "../../Components/SuperAdminPages/AllDriverPage/BlockOwnerModal";
+import ViewOwnerModal from "../../Components/SuperAdminPages/AllDriverPage/ViewOwnerModal";
 import { useAllVendorQuery } from "../../redux/api/adminApi";
 
 const AllOwner = () => {

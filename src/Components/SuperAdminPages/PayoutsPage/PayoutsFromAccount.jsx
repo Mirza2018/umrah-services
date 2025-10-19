@@ -3,23 +3,10 @@ import { useState } from "react";
 import { GoEye } from "react-icons/go";
 import ViewPayoutsModel from "./ViewPayoutsModel";
 // Sample data for the table
-const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
-  slNumber: "#1234",
-  name: "John Doe",
-  role: "Vendors",
-  PaymentMethod: "Stripe",
-  email: "abc@gmail.com",
-  amount: "$2,000",
-  type: "Customer",
-  reason: "reason",
-}));
 
 // Define the columns for the table
 
-
-
-const PayoutsFromAccount = () => {
+const PayoutsFromAccount = ({ data, loading, meta, onPageChange }) => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
@@ -27,8 +14,11 @@ const PayoutsFromAccount = () => {
   const columns = [
     {
       title: "#SI",
-      dataIndex: "slNumber",
-      key: "slNumber",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Name",
@@ -47,14 +37,15 @@ const PayoutsFromAccount = () => {
     },
     {
       title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
+      dataIndex: "totalCost",
+      key: "totalCost",
+      render: (text) => <p className="">$ {text}</p>,
     },
     {
       title: "Status",
-      dataIndex: "reason",
-      key: "reason",
-      render: () => <p className="text-[#EAB90A]">Pending</p>,
+      dataIndex: "status",
+      key: "status",
+      render: (text) => <p className="capitalize">{text}</p>,
     },
     {
       title: "ACTION",
@@ -83,15 +74,14 @@ const PayoutsFromAccount = () => {
     <div className="p-4">
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data} // Use the filtered data here based on selected company
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />

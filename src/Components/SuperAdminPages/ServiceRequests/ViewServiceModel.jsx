@@ -2,9 +2,14 @@
 import { Modal } from "antd";
 import { Person, RideshareIcon } from "../../../../public/images/AllImages";
 import { Link } from "react-router-dom";
-import { useServicesRequestDetailsQuery } from "../../../redux/api/adminApi";
+import {
+  useAcceptervicesRequestMutation,
+  useRejectServicesRequestMutation,
+  useServicesRequestDetailsQuery,
+} from "../../../redux/api/adminApi";
 import { getImageUrl } from "../../../redux/getBaseUrl";
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 const ViewServiceModel = ({
   setIsViewEarningModalVisible,
@@ -13,7 +18,47 @@ const ViewServiceModel = ({
 }) => {
   const { data, isLoading } = useServicesRequestDetailsQuery(record?._id);
   const user = data?.data?.attributes[0];
-  console.log(data?.data?.attributes[0]);
+  const [acceptervicesRequest] = useAcceptervicesRequestMutation();
+  const [rejectServicesRequest] = useRejectServicesRequestMutation();
+
+  const handleAccept = async () => {
+    const toastId = toast.loading("Service request is accepting...");
+    try {
+      const res = await acceptervicesRequest(record?._id);
+      toast.success("Service request is accept successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(res);
+    } catch (error) {
+      toast.error("There is some Problem please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(error);
+    }
+
+    setIsViewEarningModalVisible(false);
+  };
+  const handleReject = async () => {
+    const toastId = toast.loading("Service request is rejecting...");
+    try {
+      const res = await acceptervicesRequest(record?._id);
+      toast.success("Service request is reject successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(res);
+    } catch (error) {
+      toast.error("There is some Problem please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(error);
+    }
+
+    setIsViewEarningModalVisible(false);
+  };
 
   return (
     <Modal
@@ -124,15 +169,16 @@ const ViewServiceModel = ({
         </div>
         <div className="flex justify-center items-center gap-5">
           <button
-            onClick={() => setIsViewEarningModalVisible(false)}
+            onClick={handleReject}
             className="font-semibold text-base rounded-md border border-secondary-color text-secondary-color  px-3 py-2 hover:scale-105 transition delay-100 "
           >
             Delete
           </button>
           {/* <Link to={`accepted`}> */}
           <button
-            onClick={() => setIsViewEarningModalVisible(false)}
-            className="font-semibold text-base bg-secondary-color rounded-md text-white px-3 py-2  hover:scale-105 transition delay-100  text-nowrap">
+            onClick={handleAccept}
+            className="font-semibold text-base bg-secondary-color rounded-md text-white px-3 py-2  hover:scale-105 transition delay-100  text-nowrap"
+          >
             Accept
           </button>
           {/* </Link> */}

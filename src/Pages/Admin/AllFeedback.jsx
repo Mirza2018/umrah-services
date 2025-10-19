@@ -84,7 +84,7 @@ const AdminAllFeedBack = () => {
       {/* Modals */}
       <ViewFeedbackModal
         isFeedbackViewModalVisible={isFeedbackViewModalVisible}
-        handleCancel={handleCancel}
+        handleCancel={handleCancel} 
         currentRecord={currentRecord}
         handleRemove={handleRemove}
       />

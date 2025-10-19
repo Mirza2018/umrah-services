@@ -1,31 +1,27 @@
-import { Button, Table } from "antd";
+import { Button, Switch, Table, Tooltip } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
 import ViewContactsModel from "./ViewContactsModel";
-// Sample data for the table
-const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
-  slNumber: "#1234",
-  name: "John Doe",
-  type: "Vendors",
-  email: "abc@gmail.com",
-  reason: "Recipient not available.........",
-}));
+import BlockFeedbackModal from "../FeedbackPage/BlockFeedbackModal";
+import ReadHelpFrom from "./ReadHelpFrom";
 
 // Define the columns for the table
 
-
-
-const ContactsFromAccount = () => {
+const ContactsFromAccount = ({ data, loading, meta, onPageChange }) => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
+  const [isContract, setIsContract] = useState(false);
 
   const columns = [
     {
       title: "#SI",
-      dataIndex: "slNumber",
-      key: "slNumber",
+      dataIndex: "_id",
+      key: "_id",
+      responsive: ["md"],
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Name",
@@ -34,8 +30,8 @@ const ContactsFromAccount = () => {
     },
     {
       title: "Type",
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "role",
+      key: "role",
     },
     {
       title: "Email",
@@ -52,7 +48,38 @@ const ContactsFromAccount = () => {
       title: "ACTION",
       key: "action",
       render: (record) => (
-        <>
+        <div className="flex justify-between gap-5 items-center">
+          {record?.isRead ? (
+            <p
+              className=" text-xl !border-2 p-1 rounded-xl border-green-400"
+              // style={{
+              //   background: "#FFFFFF",
+              //   border: "none",
+              //   color: "#53DD6C",
+      
+              // }}
+            >
+              Readed
+            </p>
+          ) : (
+            <Tooltip placement="left" title={`Read this Support request`}>
+              <Button
+                className="!p-0"
+                style={{
+                  background: "#FFFFFF",
+                  border: "none",
+                  color: "#C50000",
+                }}
+                onClick={() => {
+                  setIsContract(true);
+                  setRecord(record);
+                }}
+              >
+                <Switch checked={record?.isRead} />
+              </Button>
+            </Tooltip>
+          )}
+
           <Button
             className="!p-0"
             style={{
@@ -62,12 +89,12 @@ const ContactsFromAccount = () => {
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />
           </Button>
-        </>
+        </div>
       ),
     },
   ];
@@ -76,14 +103,13 @@ const ContactsFromAccount = () => {
       <Table
         columns={columns}
         dataSource={data}
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />
@@ -91,6 +117,12 @@ const ContactsFromAccount = () => {
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
+      />
+
+      <ReadHelpFrom
+        record={record}
+        isContract={isContract}
+        setIsContract={setIsContract}
       />
     </div>
   );

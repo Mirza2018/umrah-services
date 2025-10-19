@@ -1,8 +1,34 @@
+import { useState } from "react";
 import ContactsFromAccount from "../../Components/SuperAdminPages/AllContactspage/ContactsFromAccount";
+import { useAllSupportQuery } from "../../redux/api/adminApi";
 
-
- 
 const AllContacts = () => {
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
+  const {
+    data,
+    currentData,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = useAllSupportQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
   return (
     <div
       className="bg-highlight-color min-h-[90vh]  rounded-xl"
@@ -29,7 +55,12 @@ const AllContacts = () => {
           </div>
         </section> */}
 
-        <ContactsFromAccount />
+        <ContactsFromAccount
+          data={data?.data?.attributes?.support}
+          meta={data?.data?.attributes?.pagination}
+          loading={isLoading}
+          onPageChange={onPageChange}
+        />
       </main>
     </div>
   );

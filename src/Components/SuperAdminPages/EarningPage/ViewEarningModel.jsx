@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
-
+import dayjs from "dayjs";
 
 const ViewEarningModel = ({
   setIsViewEarningModalVisible,
   isViewEarningModalVisible,
   record,
 }) => {
-  const currentCompanyRecord={}
+  const currentCompanyRecord = {};
   return (
     <Modal
       title={
@@ -42,32 +42,32 @@ const ViewEarningModel = ({
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
                 <div className="text-[#535763] ">Customer Name</div>
-                <div>Enrique</div>
+                <div>{record?.userName}</div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">E-mail:</div>
-                <div>abc@gmail.com</div>
+                <div>{record?.userEmail}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
-                <div className="text-[#535763]">Bank Account:</div>
-                <div>12345678</div>
+                <div className="text-[#535763]">Transaction Id:</div>
+                <div>{record?.transactionId}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Time & Date :</div>
-                <div>4:15 PM, 13/02/24</div>
+                <div>{dayjs(record?.createdAt).format("DD-MM-YYYY")}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Amount:</div>
-                <div>$190</div>
+                <div>$ {record?.amount}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Commission:</div>
-                <div>5%</div>
+                <div>not provided %</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Service Title:</div>
-                <div>Economy Umrah Package</div>
+                <div>{record?.serviceTitle}</div>
               </div>
             </div>
           </div>

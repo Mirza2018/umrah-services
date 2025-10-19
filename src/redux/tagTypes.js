@@ -9,6 +9,15 @@ export const tagTypes = {
   serviceType: "ServiceType",
   service: "Service",
   serviceRequest: "ServiceRequest",
+  trsnsaction: "TransAction",
+  admin: "Admin",
+  refund: "Refund",
+  feedback: "Feedack",
+  payout: "Payouts",
+  support: "Support",
+  notificationPost: "NotificationPost",
+  notificationAction: "NotificationAction",
+  banner: "Banner",
 };
 
 export const tagTypesList = [
@@ -21,5 +30,14 @@ export const tagTypesList = [
   tagTypes.vendor,
   tagTypes.service,
   tagTypes.serviceType,
-  tagTypes.serviceRequest
+  tagTypes.serviceRequest,
+  tagTypes.trsnsaction,
+  tagTypes.admin,
+  tagTypes.refund,
+  tagTypes.feedback,
+  tagTypes.payout,
+  tagTypes.support,
+  tagTypes.notificationPost,
+  tagTypes.notificationAction,
+  tagTypes.banner,
 ];

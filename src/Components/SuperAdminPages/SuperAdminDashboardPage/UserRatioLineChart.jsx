@@ -17,7 +17,7 @@ import { DatePicker } from "antd";
 
 const UserRatioLineChart = () => {
   const currentYear = new Date().getFullYear();
-  console.log(currentYear);
+  // console.log(currentYear);
   const [filter, setFilter] = useState({ year: currentYear });
   const { data, isLoading } = useEarningRatioQuery(filter);
 

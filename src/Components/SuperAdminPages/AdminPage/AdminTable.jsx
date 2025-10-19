@@ -5,37 +5,34 @@ import ViewAdminModel from "./ViewAdminModel";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import AddAdminModal from "../../Modal/Admin/AddAdminModal";
+import { toast } from "sonner";
+import { useDeleteAdminMutation } from "../../../redux/api/adminApi";
+import EditAdminModal from "../../Modal/Admin/EditAdminModal";
 // Sample data for the table
-const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
-  slNumber: "#1234",
-  name: "John Doe",
-  email: "abc@gmail.com",
-  category: "Notification & Feedback",
-  role: "Admin",
-}));
 
 // Define the columns for the table
 
-
-
-const AdminTable = () => {
+const AdminTable = ({ data, onPageChange, loading, meta }) => {
+  const [deleteAdmin] = useDeleteAdminMutation();
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
-    const [isAddAdmin, setisAddAdmin] = useState(false);
-    const [isblock, setIsBLock] = useState(false);
+  const [isAddAdmin, setisAddAdmin] = useState(false);
+  const [isblock, setIsBLock] = useState(false);
   const [record, setRecord] = useState(null);
 
   const columns = [
     {
       title: "#UID",
-      dataIndex: "slNumber",
-      key: "slNumber",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "fullName",
+      key: "fullName",
     },
     {
       title: "E-mail",
@@ -44,100 +41,121 @@ const AdminTable = () => {
     },
     {
       title: "Category",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "categoryPermissions",
+      key: "categoryPermissions",
+      render: (text) => <div>{text.join(",")}</div>,
     },
     {
       title: "Role",
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text) => <div>Sub Admin</div>,
     },
     {
       title: "Status",
-      dataIndex: "role",
-      key: "role",
-      render: () => <p className="text-[#45AE68]">Active</p>,
+      dataIndex: "active",
+      key: "active",
+      render: (text) => (
+        <p className={` ${text ? "text-[#45AE68] " : "text-[#e21212] "}`}>
+          {text ? "Active" : "Deactive"}
+        </p>
+      ),
     },
     {
       title: "ACTION",
       key: "action",
       render: (record) => (
         <div className="flex justify-center items-center gap-2">
-         
-         
           <Button
             className="!p-0"
             style={{
               background: "#FFFFFF",
               border: "none",
-            
             }}
             onClick={() => {
               setisAddAdmin(true);
-              record = { record };
+              setRecord(record);
             }}
           >
-
-            <MdEdit  style={{ fontSize: "24px" }}/>
+            <MdEdit style={{ fontSize: "24px" }} />
           </Button>
           <Button
             className="!p-0"
             style={{
               background: "#FFFFFF",
               border: "none",
-       
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />
           </Button>
 
-
           <Button
             className="!p-0"
             style={{
               background: "#FFFFFF",
               border: "none",
-          
             }}
             onClick={() => {
               setIsBLock(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             <FaRegTrashAlt style={{ fontSize: "24px" }} />
           </Button>
-
-         
         </div>
       ),
     },
   ];
+
+  const handleDelete = async () => {
+    const toastId = toast.loading("Admin is deleteing...");
+    try {
+      const res = await deleteAdmin(record?.userId);
+      toast.success("Admin is deleted successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(res);
+    } catch (error) {
+      toast.error("There is some Problem please try latter", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.log(error);
+    }
+
+setIsBLock(false);
+  };
   return (
     <div className="p-4">
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data} // Use the filtered data here based on selected company
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
+        // scroll={{ x: true }}
       />
       <ViewAdminModel
         record={record}
         isViewEarningModalVisible={isViewEarningModalVisible}
         setIsViewEarningModalVisible={setIsViewEarningModalVisible}
       />
-      <AddAdminModal isAddAdmin={isAddAdmin} setisAddAdmin={setisAddAdmin} />
+      <EditAdminModal
+        record={record}
+        isAddAdmin={isAddAdmin}
+        setisAddAdmin={setisAddAdmin}
+      />
 
       <Modal
         // title="Confirm Delete"
@@ -174,7 +192,7 @@ const AdminTable = () => {
               className="text-xl py-5 px-8"
               type="primary"
               style={{ background: "#CE0000" }}
-              onClick={() => setIsBLock(false)}
+              onClick={handleDelete}
             >
               Block
             </Button>

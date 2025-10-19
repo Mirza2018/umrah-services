@@ -15,9 +15,7 @@ const data = Array.from({ length: 8 }, (_, index) => ({
 
 // Define the columns for the table
 
-
-
-const RefundsFromAccount = () => {
+const RefundsFromAccount = ({ data, loading, meta, onPageChange }) => {
   const [isViewEarningModalVisible, setIsViewEarningModalVisible] =
     useState(false);
   const [record, setRecord] = useState(null);
@@ -25,23 +23,26 @@ const RefundsFromAccount = () => {
   const columns = [
     {
       title: "#SI",
-      dataIndex: "slNumber",
-      key: "slNumber",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "appUserName",
+      key: "appUserName",
     },
     {
       title: "Email",
-      dataIndex: "email",
-      key: "email",
+      dataIndex: "appUserEmail",
+      key: "appUserEmail",
     },
     {
       title: "Price",
-      dataIndex: "amount",
-      key: "amount",
+      dataIndex: "totalCost",
+      key: "totalCost",
     },
     {
       title: "Type",
@@ -55,9 +56,9 @@ const RefundsFromAccount = () => {
     },
     {
       title: "Status",
-      dataIndex: "reason",
-      key: "reason",
-      render: () => <p className="text-[#EAB90A]">Pending</p>,
+      dataIndex: "status",
+      key: "status",
+      render: (text) => <p className={` capitalize`}>{ text}</p>,
     },
     {
       title: "ACTION",
@@ -86,15 +87,14 @@ const RefundsFromAccount = () => {
     <div className="p-4">
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data} // Use the filtered data here based on selected company
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1,
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />
