@@ -1,35 +1,48 @@
 import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import EarningFromAccount from "../../Components/SuperAdminPages/EarningPage/EarningFromAccount";
-import { useAllTransactionsQuery } from "../../redux/api/adminApi";
+import {
+  useAllTransactionsQuery,
+  useTotalTransactionQuery,
+} from "../../redux/api/adminApi";
+import { Spin } from "antd";
 
 const EarningsPage = () => {
-    const topBarEarning = [
-      {
-        title: "Today Income",
-        value: "$1.2K",
-        icon: AllIcons.todayIncome,
-      },
-      {
-        title: "Total Income",
-        value: "$752k",
-        icon: AllIcons.totalIncome,
-      },
-    ];
-  
-      const [filters, setFilters] = useState({
-        page: 1,
-        limit: 8,
-      });
-    
-      const onPageChange = (page, limit) => {
-        setFilters((prev) => ({
-          ...prev,
-          page,
-          limit,
-        }));
-      };
-    
+  const { data: earningsData, isLoading:earningLoading } = useTotalTransactionQuery();
+  const topBarEarning = [
+    {
+      title: "Today Income",
+      value: earningLoading ? (
+        <Spin />
+      ) : (
+        `$ ${earningsData?.data?.attributes?.today || 0}`
+      ),
+      icon: AllIcons.todayIncome,
+    },
+    {
+      title: "Total Income",
+      value: earningLoading ? (
+        <Spin />
+      ) : (
+        `$ ${earningsData?.data?.attributes?.total || 0}`
+      ),
+      icon: AllIcons.totalIncome,
+    },
+  ];
+
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+  });
+
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+
   const { data, isLoading } = useAllTransactionsQuery(filters);
 
   const handleSearch = (search) => {

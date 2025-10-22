@@ -28,7 +28,7 @@ const OtpPage = () => {
   // setForgotPasswordToken
   const token = resendToken || forgotToken;
 
-  const decodeToken = jwtDecode(token);
+  const decodeToken = token ? jwtDecode(token) : [];
 
   const handleResendOtp = async () => {
     const toastId = toast.loading("Resending the OTP...");
@@ -104,9 +104,13 @@ const OtpPage = () => {
 
   return (
     <div className="">
-      <div className="max-w-[750px] w-[90%] mx-auto flex flex-col justify-center gap-10 items-center min-h-screen bg-site-color py-10">
+      <div className="max-w-[750px] w-[90%] mx-auto flex md:flex-row flex-col justify-center gap-10 items-center min-h-screen bg-site-color  md:py-10 py-5">
         <div className="">
-          <img src={AllImages.logo} alt="logo" className=" mx-auto w-96" />
+          <img
+            src={AllImages.logo}
+            alt="logo"
+            className=" mx-auto lg:w-72 w-32"
+          />
         </div>
 
         <div className="w-full md:w-[80%] lg:w-[50%] ">

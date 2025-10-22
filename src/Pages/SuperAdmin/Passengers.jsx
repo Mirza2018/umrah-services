@@ -16,7 +16,7 @@ const Passengers = () => {
   const [filters, setFilters] = useState({
     page: 1,
     limit: 8,
-    role:"user"
+    role: "user",
   });
 
   const onPageChange = (page, limit) => {
@@ -111,12 +111,9 @@ const Passengers = () => {
   };
 
   const handleCompanyBlock = (data) => {
-    console.log("Blocked Company:", {
-      id: data?.id,
-      companyName: data?.companyName,
-    });
+    setCurrentCompanyRecord(data);
     setIsCompanyViewModalVisible(false);
-    setIsCompanyBlockModalVisible(false);
+    setIsCompanyBlockModalVisible(true);
   };
 
   return (

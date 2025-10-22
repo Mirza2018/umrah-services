@@ -2,7 +2,7 @@ import { Button, Checkbox, Form, Input, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import { useUserLoginMutation } from "../../redux/api/authApi";
-import { MdEmail } from "react-icons/md";
+import { MdEmail } from "react-icons/md"; 
 import { IoMdLock } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
@@ -50,14 +50,18 @@ const SignIn = () => {
   };
   return (
     <div className="">
-      <div className="max-w-[1350px] w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center gap-10 min-h-screen py-10">
+      <div className="max-w-[1350px] w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center gap-10 min-h-screen  md:py-10 py-5">
         <div className="">
-          <img src={AllImages.logo} alt="logo" className=" mx-auto w-96" />
+          <img
+            src={AllImages.logo}
+            alt="logo"
+            className=" mx-auto lg:w-96 w-32"
+          />
         </div>
         <div className="w-full md:w-[80%] lg:w-full mx-auto">
           {/* -------- Sign In Page Header ------------ */}
           <div className="flex flex-col justify-center items-center">
-            <div className="text-center mt-5 mb-8">
+            <div className="text-center md:mt-5 mb-8">
               <h1 className="text-3xl sm:text-4xl font-medium mb-4">
                 Login to Account!
               </h1>

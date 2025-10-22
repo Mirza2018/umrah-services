@@ -2,9 +2,10 @@ import { Button, Table } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
 import ViewRefundsModel from "./ViewRefundsModel";
+import dayjs from "dayjs";
 // Sample data for the table
 const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
+  key: (index + 1).toString(), 
   slNumber: "#1234",
   name: "John Doe",
   email: "abc@gmail.com",
@@ -30,36 +31,46 @@ const RefundsFromAccount = ({ data, loading, meta, onPageChange }) => {
       ),
     },
     {
+      title: "Service Title",
+      dataIndex: "serviceTitle",
+      key: "serviceTitle",
+      render: (text) => <p className={` capitalize`}>{text}</p>,
+    },
+    {
       title: "Name",
-      dataIndex: "appUserName",
-      key: "appUserName",
+      dataIndex: "userName",
+      key: "userName",
+      render: (text) => <p className={` capitalize`}>{text}</p>,
     },
     {
       title: "Email",
-      dataIndex: "appUserEmail",
-      key: "appUserEmail",
+      dataIndex: "userEmail",
+      key: "userEmail",
     },
     {
       title: "Price",
-      dataIndex: "totalCost",
-      key: "totalCost",
+      dataIndex: "amount",
+      key: "amount",
+      render: (text) => <p>$ {text}</p>,
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => <p>{dayjs(text).format("DD-MM-YYYY")}</p>,
     },
     {
       title: "Reason",
-      dataIndex: "reason",
-      key: "reason",
+      dataIndex: "cancelReason",
+      key: "cancelReason",
+      render: (text) => <p className={` capitalize`}>{text}</p>,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (text) => <p className={` capitalize`}>{ text}</p>,
-    },
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   key: "status",
+    //   render: (text) => <p className={` capitalize`}>{text}</p>,
+    // },
     {
       title: "ACTION",
       key: "action",
@@ -74,7 +85,7 @@ const RefundsFromAccount = ({ data, loading, meta, onPageChange }) => {
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />

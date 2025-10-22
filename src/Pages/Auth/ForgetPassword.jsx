@@ -42,13 +42,17 @@ const ForgotPassword = () => {
   };
   return (
     <div className="">
-      <div className="max-w-[750px] w-[90%] mx-auto flex flex-col justify-center gap-10 items-center min-h-screen bg-site-color py-10">
+      <div className="max-w-[750px] w-[90%] mx-auto flex md:flex-row flex-col justify-center gap-10 items-center min-h-screen bg-site-color md:py-10 py-5">
         <div className="">
-          <img src={AllImages.logo} alt="logo" className=" mx-auto w-96" />
+          <img
+            src={AllImages.logo}
+            alt="logo"
+            className=" mx-auto lg:w-96 w-32"
+          />
         </div>
         <div className="w-full md:w-[80%] lg:w-full mx-auto">
           <div className="flex flex-col justify-center items-center">
-            <div className="text-center mt-5 mb-8">
+            <div className="text-center md:mt-5 mb-8">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium mb-4">
                 Forget password
               </h1>

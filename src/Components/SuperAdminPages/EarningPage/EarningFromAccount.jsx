@@ -28,9 +28,9 @@ const EarningFromAccount = ({ data, loading, meta, onPageChange }) => {
       dataIndex: "transactionId",
       key: "transactionId",
 
-      // render: (text, _, index) => (
-      //   <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
-      // ),
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Name",
@@ -46,9 +46,10 @@ const EarningFromAccount = ({ data, loading, meta, onPageChange }) => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      render: (text) => <p>$ {text}</p>,
     },
     {
-      title: "Date & Time",
+      title: "Date",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (text) => <p>{dayjs(text).format("DD-MM-YYYY")}</p>,

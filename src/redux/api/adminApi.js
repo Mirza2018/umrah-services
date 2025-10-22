@@ -150,6 +150,35 @@ export const adminApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.vendor],
     }),
+
+    requestedVendor: build.query({
+      query: (params) => ({
+        url: `/users/pending-vendor`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.vendorRequest],
+    }),
+
+    acceptVendorRequest: build.mutation({
+      query: (id) => {
+        return {
+          url: `/users/approve/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.vendorRequest, tagTypes.vendor],
+    }),
+    deleteVendorRequest: build.mutation({
+      query: (id) => {
+        return {
+          url: `/users/reject/${id}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: [tagTypes.vendorRequest],
+    }),
+
     //service-type/
 
     allService: build.query({
@@ -328,7 +357,7 @@ export const adminApi = baseApi.injectEndpoints({
     //refund
     allRefund: build.query({
       query: (params) => ({
-        url: `/usm/refund`,
+        url: `/transaction/refund`,
         method: "GET",
         params,
       }),
@@ -358,7 +387,7 @@ export const adminApi = baseApi.injectEndpoints({
     //payouts
     allPayout: build.query({
       query: (params) => ({
-        url: `/usm/payouts`,
+        url: `/transaction/payout`,
         method: "GET",
         params,
       }),
@@ -460,6 +489,9 @@ export const {
   ///Vendor
   useAllVendorQuery,
   useVendorsBanMutation,
+  useRequestedVendorQuery,
+  useAcceptVendorRequestMutation,
+  useDeleteVendorRequestMutation,
   //Service type
   useAllServiceQuery,
   useAddServiceMutation,

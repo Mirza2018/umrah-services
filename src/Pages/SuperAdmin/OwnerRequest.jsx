@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OwnerRequestSingle from "../../Components/SuperAdminPages/DriverRequestPage/OwnerRequestSingle";
+import { useRequestedVendorQuery } from "../../redux/api/adminApi";
 
 const OwnerRequest = () => {
   const [data, setData] = useState([]);
@@ -18,7 +19,11 @@ const OwnerRequest = () => {
 
     fetchData();
   }, []);
-  console.log(data);
+
+
+  const { data: vendordata } = useRequestedVendorQuery();
+
+  console.log(vendordata);
 
   return (
     <div className="bg-white rounded-tl-xl rounded-tr-xl h-full">

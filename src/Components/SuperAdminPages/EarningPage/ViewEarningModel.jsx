@@ -12,7 +12,7 @@ const ViewEarningModel = ({
   return (
     <Modal
       title={
-        <div className="pt-7 text-center">
+        <div className="pt-7 text-center"> 
           <h2 className=" text-2xl font-normal mb-5">
             Customer payment details
           </h2>
@@ -30,7 +30,7 @@ const ViewEarningModel = ({
         <div className="">
           {/* <div className="flex justify-center items-center p-4">
   
-            <img
+            <img 
               src={Person.passengerPic}
               alt={currentCompanyRecord?.companyName}
               className="w-12 h-12 sm:w-16  sm:h-16 rounded-full mr-4"
@@ -42,7 +42,7 @@ const ViewEarningModel = ({
             <div className="text-lg ">
               <div className="flex justify-between  border-b-2 border-[#FF9815] pb-3">
                 <div className="text-[#535763] ">Customer Name</div>
-                <div>{record?.userName}</div>
+                <div className="capitalize">{record?.userName}</div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
@@ -51,7 +51,7 @@ const ViewEarningModel = ({
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Transaction Id:</div>
-                <div>{record?.transactionId}</div>
+                <div>{record?.stripePaymentIntentId}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Time & Date :</div>
@@ -63,11 +63,15 @@ const ViewEarningModel = ({
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Commission:</div>
-                <div>not provided %</div>
+                <div>{record?.commission}</div>
+              </div>
+              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
+                <div className="text-[#535763]">Commission Type:</div>
+                <div>{record?.commissionType}</div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Service Title:</div>
-                <div>{record?.serviceTitle}</div>
+                <div className="capitalize">{record?.serviceTitle}</div>
               </div>
             </div>
           </div>

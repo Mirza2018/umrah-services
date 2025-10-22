@@ -2,6 +2,7 @@ import { Button, Table } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
 import ViewPayoutsModel from "./ViewPayoutsModel";
+import dayjs from "dayjs";
 // Sample data for the table
 
 // Define the columns for the table
@@ -21,31 +22,39 @@ const PayoutsFromAccount = ({ data, loading, meta, onPageChange }) => {
       ),
     },
     {
+      title: "Service Title",
+      dataIndex: "serviceTitle",
+      key: "serviceTitle",
+      render: (text) => <p className={` capitalize`}>{text}</p>,
+    },
+    {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "userName",
+      key: "userName",
+      render: (text) => <p className={` capitalize`}>{text}</p>,
     },
     {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
+      title: "Email",
+      dataIndex: "userEmail",
+      key: "userEmail",
     },
     {
-      title: "Payment Method",
-      dataIndex: "PaymentMethod",
-      key: "PaymentMethod",
+      title: "Price",
+      dataIndex: "amount",
+      key: "amount",
+      render: (text) => <p>$ {text}</p>,
     },
     {
-      title: "Amount",
-      dataIndex: "totalCost",
-      key: "totalCost",
-      render: (text) => <p className="">$ {text}</p>,
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => <p>{dayjs(text).format("DD-MM-YYYY")}</p>,
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (text) => <p className="capitalize">{text}</p>,
+      title: "Commission Type",
+      dataIndex: "commissionType",
+      key: "commissionType",
+      render: (text) => <p className={` capitalize`}>{text}</p>,
     },
     {
       title: "ACTION",
@@ -61,7 +70,7 @@ const PayoutsFromAccount = ({ data, loading, meta, onPageChange }) => {
             }}
             onClick={() => {
               setIsViewEarningModalVisible(true);
-              record = { record };
+             setRecord(record);
             }}
           >
             <GoEye style={{ fontSize: "24px" }} />

@@ -34,10 +34,11 @@ export default function EditPost({ isEdit, setIsEdit, postValue }) {
     console.log(getImageUrl() + postValue?.image);
 
     form.setFieldsValue({
-      name: postValue?.title,
+      title: postValue?.title,
       price: postValue?.price,
       description: postValue?.description,
       packageName: postValue?.packageName,
+      packageDesc: postValue?.packageDesc,
       facilities: postValue?.facilities,
       serviceType: postValue?.serviceType,
       startDate: dayjs(postValue?.startDate),
@@ -65,8 +66,13 @@ export default function EditPost({ isEdit, setIsEdit, postValue }) {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
 
-    if (values?.picture?.fileList?.[0].originFileObj) {
-      const profileImage = values.picture?.fileList[0]?.originFileObj;
+// console.log(values.picture[0].originFileObj);
+
+
+//     return
+
+    if (values.picture[0].originFileObj) {
+      const profileImage = values.picture[0].originFileObj;
 
       // console.log(profileImage);
       formData.append("image", profileImage);
@@ -111,13 +117,16 @@ export default function EditPost({ isEdit, setIsEdit, postValue }) {
       name: serviceData?.name,
     })
   );
-  const uploadCommonProps = {
-    beforeUpload: () => false, // prevent auto-upload
-    maxCount: 1,
-    accept: "image/*",
-    listType: "picture",
-    showUploadList: { showRemoveIcon: true },
-  };
+const uploadCommonProps = {
+  beforeUpload: () => false, // prevent auto-upload
+  maxCount: 1,
+  accept: "image/*",
+  listType: "picture",
+  showUploadList: {
+    showRemoveIcon: true,
+    showPreviewIcon: true, // Allow preview of existing image
+  },
+};
   return (
     <ConfigProvider
       theme={{
@@ -181,10 +190,25 @@ export default function EditPost({ isEdit, setIsEdit, postValue }) {
               </Typography.Title>
               <Form.Item
                 rules={[{ required: true, message: "Please enter title" }]}
-                name="name"
+                name="title"
               >
                 <Input
                   placeholder="Type Title...."
+                  className="py-2 px-3 text-xl  !bg-transparent"
+                />
+              </Form.Item>
+              <Typography.Title level={4} style={{ color: "#222222" }}>
+                Description
+              </Typography.Title>
+              <Form.Item
+                rules={[
+                  { required: true, message: "Please enter Description" },
+                ]}
+                name="description"
+              >
+                <TextArea
+                  rows={2}
+                  placeholder="Type Description....."
                   className="py-2 px-3 text-xl  !bg-transparent"
                 />
               </Form.Item>
@@ -202,18 +226,17 @@ export default function EditPost({ isEdit, setIsEdit, postValue }) {
                   className="py-2 px-3 text-xl  !bg-transparent"
                 />
               </Form.Item>
+
               <Typography.Title level={4} style={{ color: "#222222" }}>
-                Description
+                Package details
               </Typography.Title>
               <Form.Item
-                rules={[
-                  { required: true, message: "Please enter Description" },
-                ]}
-                name="description"
+                rules={[{ required: true, message: "Please enter details" }]}
+                name="packageDesc"
               >
                 <TextArea
                   rows={2}
-                  placeholder="Type Description....."
+                  placeholder="Type details....."
                   className="py-2 px-3 text-xl  !bg-transparent"
                 />
               </Form.Item>
@@ -366,7 +389,7 @@ export default function EditPost({ isEdit, setIsEdit, postValue }) {
                 valuePropName="fileList"
                 getValueFromEvent={normFileEvent}
               >
-                <Dragger {...uploadCommonProps} onChange={handlePictureChange}>
+                <Dragger {...uploadCommonProps}>
                   <p className=" ">
                     <UploadOutlined className="text-2xl" />
                   </p>

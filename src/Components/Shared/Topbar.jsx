@@ -1,11 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { BarsOutlined, BellFilled } from "@ant-design/icons";
-import { Dropdown } from "antd";
-import { useState } from "react";
+import { Avatar, Dropdown } from "antd";
+import { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { FiBell } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getImageUrl } from "../../redux/getBaseUrl";
+import { FaUser } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useUserProfileQuery } from "../../redux/api/adminApi";
+import { clearAuth } from "../../redux/slices/authSlice";
 
 const notifications = [
   {
@@ -36,7 +41,48 @@ const notifications = [
 ];
 
 const Topbar = ({ collapsed, setCollapsed }) => {
-  const user = JSON.parse(localStorage.getItem("home_care_user"));
+  const { data, isLoading, error, refetch } = useUserProfileQuery();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(data?.data?.attributes?.[0]?.isLogIn);
+  useEffect(() => {
+    if (isLoading) {
+      console.log("Loading data..."); // Debug loading state
+      return;
+    }
+
+    if (error) {
+      console.error("Error fetching data:", error); // Debug error state
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (data?.data?.attributes) {
+        console.log(
+          "Current isLogIn status:",
+          data?.data?.attributes?.[0]?.isLogIn
+        ); // Debug the isLogIn value
+        refetch();
+
+        if (data?.data?.attributes?.[0]?.isLogIn === false) {
+          console.log("User is not logged in, dispatching logout..."); // Debug dispatch
+          dispatch(clearAuth());
+          navigate("/signin");
+        }
+      } else {
+        console.log("Data or attributes are not available."); // Debug data availability
+      }
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+    // Cleanup the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+      console.log("Interval cleared."); // Debug interval cleanup
+    };
+  }, [data, isLoading, error, dispatch, navigate]);
+
+  const userInfo = useSelector((state) => state.auth?.userInfo);
+
   const [notificationCount, setNotificationCount] = useState(
     notifications.length
   );
@@ -66,7 +112,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
         </div>
       ))}
       <Link
-        to={`/${user?.role}/notifications`}
+        to={`/${userInfo?.role}/notifications`}
         className="px-16 !text-white mx-auto bg-secondary-color  rounded-2xl h-8 py-1 font-semibold"
       >
         See All
@@ -100,10 +146,22 @@ const Topbar = ({ collapsed, setCollapsed }) => {
         >
           <div className="flex justify-end items-center  gap-2">
             <div className="flex justify-center flex-col items-end gap-2 leading-none">
-              <h1 className="text-[#242424]">James Mitchell</h1>
-              <p className="text-[#8A8D8E]">Admin</p>
+              <h1 className="text-[#242424] truncate w-28 text-end">
+                {" "}
+                {userInfo?.fullName}
+              </h1>
+              <p className="text-[#8A8D8E] capitalize">{userInfo?.role}</p>
             </div>
-            <CiUser className="text-secondary-color font-bold text-xl rounded-full border border-secondary-color w-10 h-10 p-1" />
+            {/* {false ? ( */}
+            {userInfo?.image ? (
+              <Avatar
+                className="rounded-full ring-red-500 ring"
+                size={50}
+                src={getImageUrl() + userInfo?.image}
+              />
+            ) : (
+              <Avatar size={55} icon={<FaUser />} />
+            )}
           </div>
         </Link>
       </div>

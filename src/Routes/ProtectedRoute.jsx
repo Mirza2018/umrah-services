@@ -50,6 +50,30 @@ function ProtectedRoute({ children, role }) {
     return <Navigate to="/signin" replace />;
   }
 
+    const path = window.location.pathname;
+    const currentpath = path.split("/")[2];
+  if (role == "sub-admin") {
+    // console.log(token?.userInfo?.categoryPermissions, children);
+    // console.log(currentpath);
+
+    const currentCategory = token?.userInfo?.categoryPermissions?.find(
+      (cat) => cat === currentpath
+    );
+    // console.log(currentCategory);
+
+    if (
+      !currentCategory &&
+      currentpath != "dashboard" &&
+      currentpath != "settings"
+    ) {
+      console.log("redirecting");
+      return <Navigate to={`/sub-admin/dashboard`} replace />;
+    }
+
+    //   ?.includes(path.split("/")[2])
+    //   ? null
+    //   : navigate("/employee/dashboard");
+  }
   // Render children if authorized
   return <>{children}</>;
 }

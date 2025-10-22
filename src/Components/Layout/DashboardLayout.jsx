@@ -24,6 +24,7 @@ const DashboardLayout = () => {
   const token = useSelector((state) => state.auth?.accessToken);
   const userRole = jwtDecode(token);
 
+
   const location = useLocation();
   const pathSegment = location.pathname.split("/").pop();
   const currentPath = location.pathname;
@@ -103,6 +104,7 @@ const DashboardLayout = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
 
   const adminMenuItems = [
     {
@@ -392,6 +394,69 @@ const DashboardLayout = () => {
     },
   ];
 
+
+  const getAllowedKeys = () => {
+    // Use a Set for quick lookup
+    const allowedUrls = new Set(userRole?.categoryPermissions?.map((item) => item));
+    // const allowedUrls = userRole?.categoryPermissions;
+
+    // Also, add "dashboard" as it's often a default accessible page
+    // and has a different key than the categories.
+    if (allowedUrls.has("dashboard")) {
+      // If you have a specific category for 'dashboard', use it, otherwise, assume it's allowed.
+    } else {
+      // Assuming 'dashboard' is a default that should always be visible/accessible
+      allowedUrls.add("dashboard");
+    }
+
+    // You might also need to add all parent keys of allowed children keys.
+    // For simplicity here, we'll handle the parent/child key logic in the menu filter.
+
+    return allowedUrls;
+  };
+
+  const allowedKeys = getAllowedKeys();
+
+
+
+  const filterMenuItems = (menuItems, allowedKeys) => {
+    return menuItems.flatMap((item) => {
+      // 1. Check if the current item is directly allowed (by its key)
+      const isAllowed = allowedKeys.has(item.key);
+
+      // 2. Handle children if they exist
+      let filteredChildren = [];
+      if (item.children) {
+        filteredChildren = filterMenuItems(item.children, allowedKeys);
+      }
+
+      // 3. Determine if the item should be kept
+      // Keep the item if:
+      // a) It's directly allowed (e.g., "passengers")
+      // b) It's a parent of at least one allowed child (e.g., "driver" which contains "all-driver")
+      if (isAllowed || filteredChildren.length > 0) {
+        // Return a new object with the filtered children
+        return [
+          {
+            ...item,
+            ...(item.children ? { children: filteredChildren } : {}),
+          },
+        ];
+      }
+
+      // 4. If neither the item nor its children are allowed, return an empty array (removes it)
+      return [];
+    });
+  };
+
+  const userMenus = filterMenuItems(adminMenuItems, allowedKeys);
+
+
+
+
+
+
+
   const commonItems = [
     {
       key: "settings",
@@ -441,7 +506,9 @@ const DashboardLayout = () => {
   ];
 
   // const menuItems = userRole?.role === "admin" ? adminMenuItems : companyMenuItems;
-  const menuItems = userRole?.role === "admin" && adminMenuItems;
+  const menuItems =
+    (userRole?.role === "admin" && adminMenuItems) ||
+    (userRole?.role === "sub-admin" && userMenus);
 
   const [progress, setProgress] = useState(0);
 

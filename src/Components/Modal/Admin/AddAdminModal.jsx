@@ -165,18 +165,12 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
 export default AddAdminModal;
 
 const pathsArray = [
-  { name: "dashboard", path: "dashboard" },
   { name: "customers", path: "customers" },
   { name: "all-vendors", path: "all-vendors" },
-  { name: "vendors-request", path: "vendors-request" },
-  { name: "vendors-request/deatils/:id", path: "vendors-request/deatils/:id" },
-  {
-    name: "vendors-request/deatils/:id/accepted",
-    path: "vendors-request/deatils/:id/accepted",
-  },
+  { name: "Vendors Platform Onboarding Requestst", path: "vendors-request" },
   { name: "services-managements", path: "services-managements" },
   { name: "create-service", path: "create-service" },
-  { name: "service-request", path: "service-request" },
+  { name: "Vendor additional services requestt", path: "service-request" },
   { name: "earnings", path: "earnings" },
   { name: "all-admin", path: "all-admin" },
   { name: "refunds", path: "refunds" },
@@ -185,20 +179,6 @@ const pathsArray = [
   { name: "contacts", path: "contacts" },
   { name: "notification-status", path: "notification-status" },
   { name: "notification-requests", path: "notification-requests" },
-  { name: "notification", path: "notification" },
-  { name: "settings", path: "settings" },
-  { name: "settings/change-password", path: "settings/change-password" },
-  { name: "settings/faq", path: "settings/faq" },
-  { name: "settings/safety", path: "settings/safety" },
-  {
-    name: "settings/terms-and-condition",
-    path: "settings/terms-and-condition",
-  },
-  { name: "notifications", path: "notifications" },
+  // { name: "notifications", path: "notifications" },
   { name: "show-feedback", path: "show-feedback" },
-  { name: "settings/profile", path: "settings/profile" },
-  { name: "settings/edit-profile", path: "settings/edit-profile" },
-  { name: "settings/forgot-password", path: "settings/forgot-password" },
-  { name: "settings/otp-page", path: "settings/otp-page" },
-  { name: "settings/update-password", path: "settings/update-password" },
 ];

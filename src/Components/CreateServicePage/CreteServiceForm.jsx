@@ -155,6 +155,21 @@ const CreteServiceForm = ({ setService }) => {
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
             </Form.Item>
+
+            <Typography.Title level={4} style={{ color: "#222222" }}>
+              Description
+            </Typography.Title>
+            <Form.Item
+              rules={[{ required: true, message: "Please enter Description" }]}
+              name="description"
+            >
+              <TextArea
+                rows={2}
+                placeholder="Type Description....."
+                className="py-2 px-3 text-xl  !bg-transparent"
+              />
+            </Form.Item>
+
             <Typography.Title level={4} style={{ color: "#222222" }}>
               Package included
             </Typography.Title>
@@ -169,16 +184,17 @@ const CreteServiceForm = ({ setService }) => {
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
             </Form.Item>
+
             <Typography.Title level={4} style={{ color: "#222222" }}>
-              Description
+              Package details
             </Typography.Title>
             <Form.Item
-              rules={[{ required: true, message: "Please enter Description" }]}
-              name="description"
+              rules={[{ required: true, message: "Please enter details" }]}
+              name="packageDesc"
             >
               <TextArea
                 rows={2}
-                placeholder="Type Description....."
+                placeholder="Type details....."
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
             </Form.Item>

@@ -5,36 +5,34 @@ import { FaChevronLeft } from "react-icons/fa";
 import { IoCameraOutline } from "react-icons/io5";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import {
-  useUpdateUserMutation,
-  useUserProfileQuery,
-} from "../../redux/api/adminApi";
+import { useUpdateUserMutation } from "../../redux/api/adminApi";
 import { getImageUrl } from "../../redux/getBaseUrl";
+import { setUserInfo } from "../../redux/slices/authSlice";
 import profileImage from "/images/profileImage.png";
 
 const EditProfile = () => {
-  const { data, isLoading } = useUserProfileQuery();
   const [profileUpdate] = useUpdateUserMutation();
   const [form] = Form.useForm();
-
-  console.log(data?.data?.attributes[0]?.fullName);
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.auth?.userInfo);
 
   const initialValues = useMemo(() => {
-    const user = data?.data?.attributes[0];
+    // const user = data?.data?.attributes[0];
     return {
-      fullName: user?.fullName || "",
-      email: user?.email,
-      phoneNumber: user?.phoneNumber || "",
-      city: user?.city || "",
-      image: getImageUrl() + user?.image,
+      fullName: userInfo?.fullName || "",
+      email: userInfo?.email,
+      phoneNumber: userInfo?.phoneNumber || "",
+      city: userInfo?.city || "",
+      image: getImageUrl() + userInfo?.image,
     };
-  }, [data]);
+  }, [userInfo]);
   useEffect(() => {
-    if (data?.data?.attributes) {
+    if (userInfo) {
       form.setFieldsValue(initialValues);
     }
-  }, [initialValues, data, form]);
+  }, [initialValues, userInfo, form]);
 
   const [imageUrl, setImageUrl] = useState(initialValues.image);
 
@@ -78,7 +76,8 @@ const EditProfile = () => {
     try {
       const res = await profileUpdate(formData).unwrap();
 
-      console.log("API Response:", res);
+      console.log("API Response:", res?.data?.attributes);
+      dispatch(setUserInfo(res?.data?.attributes));
       toast.success("Profile sucessfully update.", {
         id: toastId,
         duration: 2000,
@@ -92,7 +91,6 @@ const EditProfile = () => {
       });
     }
   };
-
 
   return (
     <div
@@ -154,7 +152,9 @@ const EditProfile = () => {
               </Form.Item>
             </div>
             <p className="text-lg font-medium">{initialValues.fullName}</p>
-            <p className="text-center text-xl font-medium">Admin</p>
+            <p className="text-center text-xl font-medium capitalize">
+              {userInfo?.role}
+            </p>
           </div>
         </div>
         <div className="col-span-3 flex flex-col  text-white mt-5 w-full">

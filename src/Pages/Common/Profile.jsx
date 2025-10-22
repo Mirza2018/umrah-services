@@ -11,26 +11,29 @@ import { useEffect, useMemo, useState } from "react";
 import { getImageUrl } from "../../redux/getBaseUrl";
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth?.accessToken);
-  const user = jwtDecode(token);
+  // const dispatch = useDispatch();
+  // const token = useSelector((state) => state.auth?.accessToken);
+  // const user = jwtDecode(token);
   const [form] = Form.useForm();
-  const { data, isLoading } = useUserProfileQuery();
+  // const { data, isLoading } = useUserProfileQuery();
+
+  const userInfo = useSelector((state) => state.auth?.userInfo);
+  console.log(userInfo);
   const initialValues = useMemo(() => {
-    const user = data?.data?.attributes[0];
+    // const user = data?.data?.attributes[0];
     return {
-      fullName: user?.fullName || "",
-      email: user?.email,
-      phoneNumber: user?.phoneNumber || "",
-      city: user?.city || "",
-      image: getImageUrl() + user?.image,
+      fullName: userInfo?.fullName || "",
+      email: userInfo?.email,
+      phoneNumber: userInfo?.phoneNumber || "",
+      city: userInfo?.city || "",
+      image: getImageUrl() + userInfo?.image,
     };
-  }, [data]);
+  }, [userInfo]);
   useEffect(() => {
-    if (data?.data?.attributes) {
+    if (userInfo) {
       form.setFieldsValue(initialValues);
     }
-  }, [initialValues, data, form]);
+  }, [initialValues, userInfo, form]);
 
   const [imageUrl, setImageUrl] = useState(initialValues?.image);
   useEffect(() => {
@@ -52,7 +55,7 @@ const Profile = () => {
           </p>
         </div>
         <Link
-          to={`/${user?.role}/settings/edit-profile`}
+          to={`/${userInfo?.role}/settings/edit-profile`}
           className="hover:text-primary-color ml-auto "
         >
           <div className=" bg-secondary-color  flex justify-center items-center gap-2 py-2 px-3 rounded-lg cursor-pointer border-2 border-[#0000002e]">
@@ -77,7 +80,9 @@ const Profile = () => {
                 alt=""
               />
               <p className="text-lg font-medium">{initialValues?.fullName}</p>
-              <p className="text-center text-xl font-medium">Admin</p>
+              <p className="text-center text-xl font-medium capitalize">
+                {userInfo?.role}
+              </p>
             </div>
           </div>
 

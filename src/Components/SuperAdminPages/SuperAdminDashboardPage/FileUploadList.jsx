@@ -15,7 +15,6 @@ const FileUploadList = () => {
     setIsOpen(true);
   };
 
-  console.log(data?.data?.attributes);
 
   return (
     <div className="w-full max-w-md mx-auto p-4 ">

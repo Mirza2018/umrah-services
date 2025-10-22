@@ -33,12 +33,12 @@ const columns = [
   },
   {
     title: "Type",
-    dataIndex: "userType",
-    key: "userType",
+    dataIndex: "role",
+    key: "role",
     filters: [
       {
         text: "Customers",
-        value: "Customer",
+        value: "user",
       },
       {
         text: "Vendors",

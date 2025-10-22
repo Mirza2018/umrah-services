@@ -54,7 +54,7 @@ const PayoutsRequest = () => {
         </section> */}
 
         <PayoutsFromAccount
-          data={data?.data?.attributes}
+          data={data?.data?.attributes?.transactions}
           meta={data?.data?.attributes?.pagination}
           loading={isLoading}
           onPageChange={onPageChange}

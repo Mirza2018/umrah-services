@@ -17,14 +17,14 @@ const ServicesManagementsTable = ({ data, loading, meta, onPageChange }) => {
   const [record, setRecord] = useState(null);
 
   const columns = [
-    {
-      title: "#UID",
-      dataIndex: "slNumber",
-      key: "slNumber",
-      // render: (text, _, index) => (
-      //   <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
-      // ),
-    },
+    // {
+    //   title: "#UID",
+    //   dataIndex: "slNumber",
+    //   key: "slNumber",
+    //   // render: (text, _, index) => (
+    //   //   <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+    //   // ),
+    // },
     {
       title: "Service Name",
       dataIndex: "name",

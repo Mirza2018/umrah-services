@@ -6,6 +6,7 @@ export const tagTypes = {
   overview: "Overview",
   notification: "Notification",
   vendor: "Vendor",
+  vendorRequest: "VendorRequest",
   serviceType: "ServiceType",
   service: "Service",
   serviceRequest: "ServiceRequest",
@@ -40,4 +41,5 @@ export const tagTypesList = [
   tagTypes.notificationPost,
   tagTypes.notificationAction,
   tagTypes.banner,
+  tagTypes.vendorRequest
 ];

@@ -12,9 +12,15 @@ import {
   useAllUsersQuery,
   usePostBannerMutation,
 } from "../../redux/api/adminApi";
+import { useSelector } from "react-redux";
+import { getImageUrl } from "../../redux/getBaseUrl";
+import { FaUser } from "react-icons/fa";
 
 const SuperAdminDashboard = () => {
   const [addBanner] = usePostBannerMutation();
+  const userInfo = useSelector((state) => state.auth?.userInfo);
+  // console.log(userInfo);
+
   const [isImage, setIsImage] = useState(null);
   const [form] = Form.useForm();
   const [filters, setFilters] = useState({
@@ -51,7 +57,6 @@ const SuperAdminDashboard = () => {
     listType: "picture",
     showUploadList: { showRemoveIcon: true },
   };
-  console.log(isImage);
 
   const handleBanner = async () => {
     const toastId = toast.loading("Banner is adding...");
@@ -96,9 +101,13 @@ const SuperAdminDashboard = () => {
   return (
     <>
       <div className="flex  items-center gap-5  py-3">
-        <Avatar size={64} src={fladImages.profile} />
+        {userInfo?.image ? (
+          <Avatar size={64} src={getImageUrl() + userInfo?.image} />
+        ) : (
+          <Avatar size={64} icon={<FaUser />} />
+        )}
         <div>
-          <h1 className="text-xl font-medium">Hello, Emma Taylor</h1>
+          <h1 className="text-xl font-medium">Hello, {userInfo?.fullName}</h1>
           <p className="text-lg !text-gray-color ">
             Check your activities in this dashboard.
           </p>
