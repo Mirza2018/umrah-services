@@ -159,6 +159,13 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.vendorRequest],
     }),
+    requestedVendorDetails: build.query({
+      query: (id) => ({
+        url: `/users/vendor-details/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.vendorRequest],
+    }),
 
     acceptVendorRequest: build.mutation({
       query: (id) => {
@@ -405,7 +412,7 @@ export const adminApi = baseApi.injectEndpoints({
     readSupport: build.mutation({
       query: (id) => {
         return {
-          url: `/support/read/${id}`,
+          url: `/support/toggle/${id}`,
           method: "PATCH",
         };
       },
@@ -490,6 +497,7 @@ export const {
   useAllVendorQuery,
   useVendorsBanMutation,
   useRequestedVendorQuery,
+  useRequestedVendorDetailsQuery,
   useAcceptVendorRequestMutation,
   useDeleteVendorRequestMutation,
   //Service type

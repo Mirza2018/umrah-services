@@ -92,7 +92,7 @@ const SignIn = () => {
             >
               <Input
                 placeholder="Enter your email"
-                className="py-2 px-3 text-xl bg-site-color border !border-secondary-color "
+                className="py-2 px-3 text-xl  "
               />
             </Form.Item>
             <Typography.Title level={4} style={{ color: "#222222" }}>
@@ -110,7 +110,7 @@ const SignIn = () => {
             >
               <Input.Password
                 placeholder="Enter your password"
-                className="py-2 px-3 text-xl bg-site-color border !border-secondary-color "
+                className="py-2 px-3 text-xl  "
               />
             </Form.Item>
 

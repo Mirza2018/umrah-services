@@ -50,17 +50,22 @@ const ContactsFromAccount = ({ data, loading, meta, onPageChange }) => {
       render: (record) => (
         <div className="flex justify-between gap-5 items-center">
           {record?.isRead ? (
-            <p
-              className=" text-xl !border-2 p-1 rounded-xl border-green-400"
-              // style={{
-              //   background: "#FFFFFF",
-              //   border: "none",
-              //   color: "#53DD6C",
-      
-              // }}
-            >
-              Readed
-            </p>
+            <Tooltip placement="left" title={`Unread this Support request`}>
+              <Button
+                className="!p-0"
+                style={{
+                  background: "#FFFFFF",
+                  border: "none",
+                  color: "#C50000",
+                }}
+                onClick={() => {
+                  setIsContract(true);
+                  setRecord(record);
+                }}
+              >
+                <Switch checked={record?.isRead} />
+              </Button>
+            </Tooltip>
           ) : (
             <Tooltip placement="left" title={`Read this Support request`}>
               <Button

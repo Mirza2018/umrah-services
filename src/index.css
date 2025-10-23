@@ -13,42 +13,42 @@ body {
 
 
 /* Override the Ant Design Input background color */
-.ant-input {
-  background-color: rgb(242, 242, 242) !important; /* Set background color */
+/* .ant-input {
+  background-color: rgb(242, 242, 242) !important; 
 }
 
 .ant-input:hover {
-  background-color: rgb(242, 242, 242) !important; /* Hover effect */
+  background-color: rgb(242, 242, 242) !important; 
 }
 
 .ant-input:focus {
-  background-color: rgb(242, 242, 242) !important; /* Focus effect */
+  background-color: rgb(242, 242, 242) !important;
 }
 .ant-input-password {
-  background-color: rgb(242, 242, 242) !important; /* Default background color */
+  background-color: rgb(242, 242, 242) !important; 
 }
 
 .ant-input-password:hover {
-  background-color: rgb(242, 242, 242) !important; /* Hover effect */
+  background-color: rgb(242, 242, 242) !important; 
 }
 
 .ant-input-password:focus {
-  background-color: rgb(242, 242, 242) !important; /* Focus effect */
+  background-color: rgb(242, 242, 242) !important; 
 }
 .ant-select-selector {
-  background-color: rgb(242, 242, 242) !important; /* Set background color */
-  border-color: rgba(0,0,0,0) !important; /* Set border color */
+  background-color: rgb(242, 242, 242) !important;
+  border-color: rgba(0,0,0,0) !important; 
 }
 
-/* On hover */
+
 .ant-select-selector:hover {
-  background-color: rgb(242, 242, 242) !important; /* Hover effect */
+  background-color: rgb(242, 242, 242) !important; 
 }
 
-/* When focused */
+
 .ant-select-selector:focus {
-  background-color: rgb(242, 242, 242) !important; /* Focus effect */
-}
+  background-color: rgb(242, 242, 242) !important;
+} */
 .react-tel-input .form-control {
   width: 100% !important;
 

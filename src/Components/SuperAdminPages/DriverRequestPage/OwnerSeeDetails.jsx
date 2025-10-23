@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
 import { Person, RideshareIcon } from "../../../../public/images/AllImages";
+import { useRequestedVendorDetailsQuery } from "../../../redux/api/adminApi";
+import { getImageUrl } from "../../../redux/getBaseUrl";
 
 const OwnerSeeDetails = () => {
+  const params = useParams();
+  // console.log(params);
+
+  const { data } = useRequestedVendorDetailsQuery(params?.id);
+  console.log(data?.data?.attributes[0]);
+
   return (
     <div className="bg-white rounded-tl-xl rounded-tr-xl">
       <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl mb-20">
@@ -17,9 +25,15 @@ const OwnerSeeDetails = () => {
       </div>
       <div className="container mx-10">
         <div className="flex  justify-start items-center gap-2 mx-5 mb-4">
-          <img src={Person.samplePerson} className="w-20" alt="" />
+          <img
+            src={getImageUrl() + data?.data?.attributes[0]?.image}
+            className="w-20"
+            alt=""
+          />
           <div className="">
-            <h1 className="text-xl font-semibold">Dianne Russell</h1>
+            <h1 className="text-xl font-semibold capitalize">
+              {data?.data?.attributes[0]?.fullName}
+            </h1>
           </div>
         </div>
 
@@ -32,19 +46,22 @@ const OwnerSeeDetails = () => {
                 <div className="text-lg  ">
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Name:</div>
-                    <div>Dianne Russell</div>
+                    <div className="capitalize">
+                      {" "}
+                      {data?.data?.attributes[0]?.fullName}
+                    </div>
                   </div>
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Gender:</div>
-                    <div>Male</div>
+                    <div className="capitalize"> {data?.data?.attributes[0]?.gender}</div>
                   </div>
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Email:</div>
-                    <div>email</div>
+                    <div className="">{data?.data?.attributes[0]?.email}</div>
                   </div>
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Phone:</div>
-                    <div>phone</div>
+                    <div className="">{data?.data?.attributes[0]?.phone}</div>
                   </div>
 
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
@@ -105,7 +122,7 @@ const OwnerSeeDetails = () => {
         </Link>
       </div>
     </div>
-  ); 
+  );
 };
 
 export default OwnerSeeDetails;

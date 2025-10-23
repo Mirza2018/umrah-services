@@ -4,26 +4,45 @@ import OwnerRequestSingle from "../../Components/SuperAdminPages/DriverRequestPa
 import { useRequestedVendorQuery } from "../../redux/api/adminApi";
 
 const OwnerRequest = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/allVendorData.json");
-        setData(response?.data); // Make sure this is an array
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        // setLoading(false);
-      }
-    };
+  // const [data, setData] = useState([]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/data/allVendorData.json");
+  //       setData(response?.data); // Make sure this is an array
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       // setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 8,
+  });
 
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
 
-  const { data: vendordata } = useRequestedVendorQuery();
+  const { data, currentData, isLoading, isFetching, isSuccess } =
+    useRequestedVendorQuery(filters);
+  const handleSearch = (search) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: search,
+    }));
+  };
 
-  console.log(vendordata);
+  console.log(data?.data?.attributes?.users);
+  console.log(data?.data?.attributes?.pagination);
 
   return (
     <div className="bg-white rounded-tl-xl rounded-tr-xl h-full">
@@ -40,8 +59,11 @@ const OwnerRequest = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 p-10">
-        {data.map((singleData) => (
-          <OwnerRequestSingle data={singleData} key={singleData?.id} />
+        {data?.data?.attributes?.users?.map((singleData) => (
+          <OwnerRequestSingle
+            data={singleData}
+            key={singleData?._id}
+          />
         ))}
       </div>
     </div>

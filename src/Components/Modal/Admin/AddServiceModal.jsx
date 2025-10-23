@@ -110,8 +110,9 @@ const AddServiceModal = ({ addService, setAddService }) => {
               name="amount"
             >
               <InputNumber
+                controls={false}
                 placeholder="Enter Amount"
-                className="py-2 px-3 text-xl w-full  !bg-transparent"
+                className="px-3 text-xl w-full  !bg-transparent"
               />
             </Form.Item>
 

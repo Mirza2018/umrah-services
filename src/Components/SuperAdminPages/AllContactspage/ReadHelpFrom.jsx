@@ -12,12 +12,12 @@ const ReadHelpFrom = ({
 
   const handleAction = async () => {
     const toastId = toast.loading(
-      `Support message is making read...`
+      `Support message is making ${record?.isRead ? "unread" : "read"}...`
     );
     try {
       const res = await readSupport(record?._id);
       toast.success(
-        `support message has been successfully read.`,
+        `support message has been successfully ${record?.isRead ? "unread" : "read"}.`,
         {
           id: toastId,
           duration: 2000,
@@ -77,7 +77,7 @@ const ReadHelpFrom = ({
       }
     >
       <p className="text-3xl font-semibold pt-10 pb-4">
-        Do you want to read this suppport message?
+        Do you want to mark this message as {record?.isRead ? "unread" : "read"}?
       </p>
     </Modal>
   );

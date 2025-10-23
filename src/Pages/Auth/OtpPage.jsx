@@ -139,7 +139,7 @@ const OtpPage = () => {
                 </div>
               </Form.Item>
               <div className="flex justify-between py-1">
-                <p>Didn’t receive code?</p>
+                <p>Didn`t receive code?</p>
                 <p
                   onClick={handleResendOtp}
                   className="!text-[#19363D] !underline font-semibold cursor-pointer"

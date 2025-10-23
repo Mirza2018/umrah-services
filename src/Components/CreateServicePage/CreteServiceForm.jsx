@@ -1,27 +1,24 @@
-import React, { useState } from "react";
 import {
-  Button,
-  Form,
-  Input,
-  Select,
-  DatePicker,
-  Upload,
-  Modal,
-  Typography,
-  InputNumber,
-} from "antd";
-import {
-  InboxOutlined,
   MinusCircleOutlined,
   PlusOutlined,
-  UploadOutlined,
+  UploadOutlined
 } from "@ant-design/icons";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Typography,
+  Upload
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { toast } from "sonner";
 import {
   useAllServiceQuery,
   useCreateServiceMutation,
 } from "../../redux/api/adminApi";
-import { toast } from "sonner";
 // import "antd/dist/antd.css";
 
 const { Title } = Typography;

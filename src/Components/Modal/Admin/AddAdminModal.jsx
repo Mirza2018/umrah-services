@@ -119,7 +119,7 @@ const AddAdminModal = ({ isAddAdmin, setisAddAdmin }) => {
               <Select
                 showSearch
                 mode="multiple"
-                className="h-11 text-xl  !bg-transparent"
+                className=" text-xl  !bg-transparent"
                 placeholder="Select category"
                 filterOption={(input, option) =>
                   (option?.name ?? "")
@@ -178,7 +178,7 @@ const pathsArray = [
   { name: "payouts", path: "payouts" },
   { name: "contacts", path: "contacts" },
   { name: "notification-status", path: "notification-status" },
-  { name: "notification-requests", path: "notification-requests" },
+  // { name: "notification-requests", path: "notification-requests" },
   // { name: "notifications", path: "notifications" },
   { name: "show-feedback", path: "show-feedback" },
 ];

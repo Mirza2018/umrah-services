@@ -11,29 +11,41 @@ export const mainTheme = {
       itemSelectedBg: "#FE4101",
       itemSelectedColor: "#FFFFFF",
       colorSplit: "#FE4101",
-
-      
     },
     Form: {
       colorError: "#F5382C",
     },
     Input: {
-      colorBorder: "rgba(0,0,0,0)",
-      hoverBorderColor: "rgba(0,0,0,0)",
-      colorPrimaryHover: "rgba(2,2,2,0)",
-      colorPrimaryActive: "rgba(0,0,0,0)",
-      activeBorderColor: "rgba(255,255,255,0)",
-      colorText: "rgb(83,87,99)",
-      activeBg: "rgb(242,242,242)",
-      hoverBg: "rgb(242,242,242)",
-      addonBg: "rgb(242,242,242)",
+      // colorBorder: "rgba(0,0,0,0)",
+      // hoverBorderColor: "rgba(0,0,0,0)",
+      // colorPrimaryHover: "rgba(2,2,2,0)",
+      // colorPrimaryActive: "rgba(0,0,0,0)",
+      // activeBorderColor: "rgba(255,255,255,0)",
+      // colorText: "rgb(83,87,99)",
+      // activeBg: "rgb(242,242,242)",
+      // hoverBg: "rgb(242,242,242)",
+      // addonBg: "rgb(242,242,242)",
+      activeBorderColor: "rgb(22,119,255)",
+      colorText: "rgb(0,0,0)",
+      colorBorder: "rgb(0,0,0)",
     },
     Checkbox: {
       colorPrimary: "#000",
       colorPrimaryHover: "#000",
     },
+
+    InputNumber: {
+      activeBorderColor: "rgb(22,119,255)",
+      colorText: "rgb(0,0,0)",
+      colorBorder: "rgb(0,0,0)",
+      lineHeight: 2,
+    },
+
     Select: {
-      colorBorder: "rgba(151, 150, 153, 0.24)",
+      activeBorderColor: "rgb(22,119,255)",
+      colorText: "rgb(0,0,0)",
+      colorBorder: "rgb(0,0,0)",
+      // colorBorder: "rgba(151, 150, 153, 0.24)",
       fontSize: 16,
       optionSelectedColor: "#000",
       optionSelectedBg: "#F2F2F2",
@@ -42,7 +54,7 @@ export const mainTheme = {
 
       colorBgElevated: "#FFFFFF",
       selectorBg: "#fff",
-      colorText: "#535763",
+      // colorText: "#535763",
       colorTextPlaceholder: "#000",
       colorBgContainer: "#000",
 

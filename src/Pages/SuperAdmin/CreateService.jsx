@@ -1,11 +1,7 @@
-import { LuArrowRightLeft } from "react-icons/lu";
-import ServiceRequestsTable from "../../Components/SuperAdminPages/ServiceRequests/ServiceRequestsTable";
 import { useState } from "react";
-import { IoMdAdd } from "react-icons/io";
-import AddServiceModal from "../../Components/Modal/Admin/AddServiceModal";
-import CreteServiceForm from "../../Components/CreateServicePage/CreteServiceForm";
 import AllPost from "../../Components/CreateServicePage/AllPost";
-import VendorServiceRequest from "../../Components/CreateServicePage/VendorServiceRequest";
+import CreteServiceForm from "../../Components/CreateServicePage/CreteServiceForm";
+import AddServiceModal from "../../Components/Modal/Admin/AddServiceModal";
 
 const CreateService = () => {
   const [isService, setService] = useState("create");
