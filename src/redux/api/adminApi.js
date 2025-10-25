@@ -160,26 +160,26 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.vendorRequest],
     }),
     requestedVendorDetails: build.query({
-      query: (id) => ({
-        url: `/users/vendor-details/${id}`,
+      query: (data) => ({
+        url: `/users/vendor-details/${data?.id}/${data?.sID}`,
         method: "GET",
       }),
       providesTags: [tagTypes.vendorRequest],
     }),
 
     acceptVendorRequest: build.mutation({
-      query: (id) => {
+      query: (data) => {
         return {
-          url: `/users/approve/${id}`,
+          url: `/users/approve/${data?.driverData}/${data?.sID}`,
           method: "PATCH",
         };
       },
       invalidatesTags: [tagTypes.vendorRequest, tagTypes.vendor],
     }),
     deleteVendorRequest: build.mutation({
-      query: (id) => {
+      query: (data) => {
         return {
-          url: `/users/reject/${id}`,
+          url: `/users/reject/${data?.driverData}/${data?.sID}`,
           method: "PATCH",
         };
       },

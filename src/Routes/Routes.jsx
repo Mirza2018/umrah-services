@@ -111,7 +111,7 @@ const router = createBrowserRouter([
         element: <OwnerRequest />,
       },
       {
-        path: "vendors-request/deatils/:id",
+        path: "vendors-request/details/:id/:sID",
         element: <OwnerSeeDetails />,
       },
       {
@@ -245,11 +245,11 @@ const router = createBrowserRouter([
         element: <OwnerRequest />,
       },
       {
-        path: "vendors-request/deatils/:id",
+        path: "vendors-request/details/:id/:sID",
         element: <OwnerSeeDetails />,
       },
       {
-        path: "vendors-request/deatils/:id/accepted",
+        path: "vendors-request/details/:id/accepted",
         element: <OwnerRequestAccept />,
       },
       {

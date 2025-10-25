@@ -2,8 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OwnerRequestSingle from "../../Components/SuperAdminPages/DriverRequestPage/OwnerRequestSingle";
 import { useRequestedVendorQuery } from "../../redux/api/adminApi";
+import DeleteVendorRequest from "./DeleteVendorRequest";
+import { Pagination } from "antd";
 
 const OwnerRequest = () => {
+  const [requestedDrivers, setRequestedDrivers] = useState(null);
+  const [isDeleted, setIsDeleted] = useState(false);
   // const [data, setData] = useState([]);
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -41,8 +45,8 @@ const OwnerRequest = () => {
     }));
   };
 
-  console.log(data?.data?.attributes?.users);
-  console.log(data?.data?.attributes?.pagination);
+  console.log(requestedDrivers);
+  // console.log(data?.data?.attributes?.pagination);
 
   return (
     <div className="bg-white rounded-tl-xl rounded-tr-xl h-full">
@@ -63,9 +67,34 @@ const OwnerRequest = () => {
           <OwnerRequestSingle
             data={singleData}
             key={singleData?._id}
+            setRequestedDrivers={setRequestedDrivers}
+            setIsDeleted={setIsDeleted}
           />
         ))}
+
+        <DeleteVendorRequest
+          isDeleted={isDeleted}
+          setIsDeleted={setIsDeleted}
+          driverData={requestedDrivers?._id}
+          sID={requestedDrivers?.serviceType?.type}
+        />
       </div>
+      {/* pagination=
+      {{
+        current: meta?.page,
+        pageSize: meta?.limit,
+        total: meta?.total,
+        onChange: onPageChange,
+   
+      }} */}
+
+      <Pagination
+        align="end"
+        current={data?.data?.attributes?.pagination?.current}
+        pageSize={data?.data?.attributes?.pagination?.limit}
+        total={data?.data?.attributes?.pagination?.total}
+        onChange={onPageChange}
+      />
     </div>
   );
 };

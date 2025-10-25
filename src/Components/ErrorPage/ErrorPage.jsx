@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const ErrorPage = () => {
       const userInfo = useSelector((state) => state.auth?.userInfo);
-  console.log(userInfo);
+  // console.log(userInfo);
     const navigate = useNavigate();
   return (
     <Result

@@ -44,7 +44,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
   const { data, isLoading, error, refetch } = useUserProfileQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(data?.data?.attributes?.[0]?.isLogIn);
+  // console.log(data?.data?.attributes?.[0]?.isLogIn);
   useEffect(() => {
     if (isLoading) {
       console.log("Loading data..."); // Debug loading state
