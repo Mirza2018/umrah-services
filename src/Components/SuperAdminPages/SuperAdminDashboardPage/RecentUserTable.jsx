@@ -35,17 +35,17 @@ const columns = [
     title: "Type",
     dataIndex: "role",
     key: "role",
-    filters: [
-      {
-        text: "Customers",
-        value: "user",
-      },
-      {
-        text: "Vendors",
-        value: "Vendor",
-      },
-    ],
-    onFilter: (value, record) => record.userType.indexOf(value) === 0,
+    // filters: [
+    //   {
+    //     text: "Customers",
+    //     value: "user",
+    //   },
+    //   {
+    //     text: "Vendors",
+    //     value: "Vendor",
+    //   },
+    // ],
+    // onFilter: (value, record) => record.userType.indexOf(value) === 0,
   },
 ];
 

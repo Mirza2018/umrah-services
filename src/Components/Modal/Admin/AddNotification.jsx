@@ -10,19 +10,32 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
-import { useAddNotificationMutation } from "../../../redux/api/adminApi";
+import {
+  useAddNotificationMutation,
+  useAddNotificationSubAdminMutation,
+} from "../../../redux/api/adminApi";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 
 const AddNotification = () => {
-  const [addNotification] = useAddNotificationMutation();
+  const token = useSelector((state) => state.auth?.accessToken);
+  const user = jwtDecode(token);
+  const userRole = user?.role;
+  let profileUpdateUrl;
+  switch (userRole) {
+    case "admin":
+      profileUpdateUrl = useAddNotificationMutation;
+      break;
+    case "sub-admin":
+      profileUpdateUrl = useAddNotificationSubAdminMutation;
+      break;
+  }
+
+  const [addNotification] = profileUpdateUrl();
+  // const [addNotification] = useAddNotificationSubAdminMutation();
   const [form] = Form.useForm();
   const { Dragger } = Upload;
-
-  // const onFinish = (values) => {
-  //   console.log("subscription:", { ...values, facilities });
-  //   form.resetFields();
-  //   setFacilities([""]); // Reset facilities
-  // };
 
   const onFinish = async (values) => {
     const toastId = toast.loading("Notification is Sending...");

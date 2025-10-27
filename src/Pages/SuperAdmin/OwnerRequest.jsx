@@ -8,21 +8,7 @@ import { Pagination } from "antd";
 const OwnerRequest = () => {
   const [requestedDrivers, setRequestedDrivers] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/data/allVendorData.json");
-  //       setData(response?.data); // Make sure this is an array
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     } finally {
-  //       // setLoading(false);
-  //     }
-  //   };
 
-  //   fetchData();
-  // }, []);
   const [filters, setFilters] = useState({
     page: 1,
     limit: 8,

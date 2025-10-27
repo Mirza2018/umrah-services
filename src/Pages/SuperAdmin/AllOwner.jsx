@@ -13,6 +13,9 @@ const AllOwner = () => {
   const [filters, setFilters] = useState({
     page: 1,
     limit: 8,
+    // serviceTitle: "",
+    startDate: "", // Use null for initial date values
+    endDate: "",
   });
 
   const onPageChange = (page, limit) => {
@@ -33,15 +36,32 @@ const AllOwner = () => {
   const handleSearch = (search) => {
     setFilters((prev) => ({
       ...prev,
+      serviceTitle:"",
       search: search,
     }));
   };
+  // Function to handle filtering for serviceTitle
+  const handleServiceTitleSearch = (serviceTitle) => {
+    setFilters((prev) => ({
+      ...prev,
+      serviceTitle: serviceTitle,
+    }));
+  };
 
+  const handleAvailabilityFilter = (dates) => {
+    // Assuming 'dates' is an array or object like { startDate: '...', endDate: '...' }
+    // Adjust based on your date picker component's output
+    setFilters((prev) => ({
+      ...prev,
+      serviceTitle: "",
+      startDate: dates?.startDate || "",
+      endDate: dates?.endDate || "",
+    }));
+  };
   //* Store Search Value
   const [searchText, setSearchText] = useState("");
 
   //* Use to set user
-
 
   const [loading, setLoading] = useState(true);
 
@@ -72,8 +92,6 @@ const AllOwner = () => {
 
   //   fetchData();
   // }, []);
-
-
 
   const showVenueViewModal = (record) => {
     setCurrentVenueRecord(record);
@@ -133,6 +151,8 @@ const AllOwner = () => {
           meta={userList?.data?.attributes?.pagination}
           loading={isLoading}
           onPageChange={onPageChange}
+          onServiceTitleSearch={handleServiceTitleSearch}
+          onAvailabilityFilter={handleAvailabilityFilter}
           showVenueViewModal={showVenueViewModal}
           showVenueBlockModal={showVenueBlockModal}
         />

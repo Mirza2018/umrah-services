@@ -1,15 +1,12 @@
-import { useMemo } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { ConfigProvider, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import { ConfigProvider, Input } from "antd";
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
 
 //* Modal Table
 import AllPassengersTable from "../../Components/SuperAdminPages/PassengersPage/AllPassengersTable";
-import ViewPassengersModal from "../../Components/SuperAdminPages/PassengersPage/ViewPassengersModal";
 import BlockPassengersModal from "../../Components/SuperAdminPages/PassengersPage/BlockPassengersModal";
+import ViewPassengersModal from "../../Components/SuperAdminPages/PassengersPage/ViewPassengersModal";
 import { useAllUsersQuery } from "../../redux/api/adminApi";
 
 const Passengers = () => {

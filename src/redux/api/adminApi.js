@@ -48,31 +48,32 @@ export const adminApi = baseApi.injectEndpoints({
 
     ////notification
 
-    notificationAll: build.query({
+    allNotification: build.query({
       query: (params) => ({
-        url: `/notifications/notification-adminend`,
+        url: `/notification/admin-notification`,
         method: "GET",
         params,
       }),
       providesTags: [tagTypes.notification],
     }),
+
     notificationCount: build.query({
       query: (params) => ({
-        url: `notifications/unread-count`,
+        url: `/notification/admin-notification-count`,
         method: "GET",
         params,
       }),
-      providesTags: [tagTypes.notification],
+      providesTags: [tagTypes.notificationCount],
     }),
     notificationRead: build.mutation({
       query: (data) => {
         return {
-          url: `/notifications/read-admin`,
+          url: `/notification/read-admin`,
           method: "PATCH",
           body: data,
         };
       },
-      // invalidatesTags: [tagTypes.notification],
+      invalidatesTags: [tagTypes.notificationCount, tagTypes.notification],
     }),
 
     ///overView
@@ -419,14 +420,7 @@ export const adminApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.support],
     }),
     /// Notification Post
-    historyNotification: build.query({
-      query: (params) => ({
-        url: `/support`,
-        method: "GET",
-        params,
-      }),
-      providesTags: [tagTypes.notificationPost],
-    }),
+
     addNotification: build.mutation({
       query: (body) => {
         return {
@@ -437,6 +431,45 @@ export const adminApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.notificationPost],
     }),
+    addNotificationSubAdmin: build.mutation({
+      query: (body) => {
+        return {
+          url: `/notification/add-subadmin-notification`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.notificationPost],
+    }),
+
+    historyNotification: build.query({
+      query: (params) => ({
+        url: `/notification/my-notification`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.notificationPost],
+    }),
+    requestedNotification: build.query({
+      query: (params) => ({
+        url: `/notification/request`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.notificationPost],
+    }),
+
+    approveNotification: build.mutation({
+      query: (data) => {
+        return {
+          url: `/notification/approve/${data?.id}`,
+          method: "PUT",
+          body: data?.data,
+        };
+      },
+      invalidatesTags: [tagTypes.notificationPost],
+    }),
+
     //Banner
 
     allBanner: build.query({
@@ -486,9 +519,9 @@ export const {
   useUserProfileQuery,
   useUpdateUserMutation,
   //notification
-  useNotificationAllQuery,
-  useNotificationReadMutation,
+  useAllNotificationQuery,
   useNotificationCountQuery,
+  useNotificationReadMutation,
   //users
   useAllUsersQuery,
   useUsersBanMutation,
@@ -535,6 +568,10 @@ export const {
   useReadSupportMutation,
   //Notification
   useAddNotificationMutation,
+  useAddNotificationSubAdminMutation,
+  useHistoryNotificationQuery,
+  useApproveNotificationMutation,
+  useRequestedNotificationQuery,
   //Banner
   useAllBannerQuery,
   usePostBannerMutation,

@@ -14,6 +14,7 @@ import {
 import { useEarningRatioQuery } from "../../../redux/api/adminApi";
 import { useState } from "react";
 import { DatePicker } from "antd";
+import dayjs from "dayjs";
 
 const UserRatioLineChart = () => {
   const currentYear = new Date().getFullYear();
@@ -31,7 +32,12 @@ const UserRatioLineChart = () => {
         <h1 className="text-xl font-bold">Earning</h1>
 
         <div>
-          <DatePicker onChange={onChange} picker="year" prefix="" />
+          <DatePicker
+            defaultValue={dayjs(new Date())}
+            onChange={onChange}
+            picker="year"
+            prefix=""
+          />
         </div>
       </div>
       <div className="w-full h-96 p-5 ">

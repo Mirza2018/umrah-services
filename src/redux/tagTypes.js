@@ -5,6 +5,7 @@ export const tagTypes = {
   earning: "Earning",
   overview: "Overview",
   notification: "Notification",
+  notificationCount: "NotificationCount",
   vendor: "Vendor",
   vendorRequest: "VendorRequest",
   serviceType: "ServiceType",
@@ -41,5 +42,6 @@ export const tagTypesList = [
   tagTypes.notificationPost,
   tagTypes.notificationAction,
   tagTypes.banner,
-  tagTypes.vendorRequest
+  tagTypes.vendorRequest,
+  tagTypes.notificationCount,
 ];

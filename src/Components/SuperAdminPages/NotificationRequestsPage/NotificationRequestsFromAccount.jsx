@@ -2,54 +2,49 @@ import { Button, Table } from "antd";
 import { useState } from "react";
 import AcceptNotificationRequestsModel from "./AcceptNotificationRequestsModel";
 import RejectNotificationRequestsModel from "./RejectNotificationRequestsModel";
+import dayjs from "dayjs";
 // Sample data for the table
-const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
-  slNumber: "#1234",
-  name: "John Doe",
-  notification: "Special quarantine prom up to 20%",
-  PaymentMethod: "Stripe",
-  date: "16 Apr 2024",
-}));
 
 // Define the columns for the table
 
-
-
-const NotificationRequestsFromAccount = () => {
+const NotificationRequestsFromAccount = ({ data,meta, loading, onPageChange }) => {
   const [isAccept, setIsAccept] = useState(false);
   const [isReject, setIsReject] = useState(false);
-  
-
 
   const [record, setRecord] = useState(null);
 
   const columns = [
     {
       title: "#SI",
-      dataIndex: "slNumber",
-      key: "slNumber",
+      dataIndex: "_id", 
+      key: "_id",
+
+      render: (text, _, index) => (
+        <p>{index + 1 + meta?.limit * (meta?.currentPage - 1)}</p>
+      ),
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "sender",
+      key: "sender",
+      render: (text) => <p className="">{text?.fullName}</p>,
     },
     {
       title: "Notification",
-      dataIndex: "notification",
-      key: "notification",
+      dataIndex: "message",
+      key: "message",
     },
-    {
-      title: "Status",
-      dataIndex: "reason",
-      key: "reason",
-      render: () => <p className="text-[#EAB90A]">Pending</p>,
-    },
+    // {
+    //   title: "Status",
+    //   dataIndex: "reason",
+    //   key: "reason",
+    //   render: () => <p className="text-[#EAB90A]">Pending</p>,
+    // },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (text) => <p className="">{dayjs(text).format("DD/MM/YYYY")}</p>,
     },
     {
       title: "ACTION",
@@ -65,7 +60,7 @@ const NotificationRequestsFromAccount = () => {
             }}
             onClick={() => {
               setIsAccept(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             Accept
@@ -79,7 +74,7 @@ const NotificationRequestsFromAccount = () => {
             }}
             onClick={() => {
               setIsReject(true);
-              record = { record };
+              setRecord(record);
             }}
           >
             Reject
@@ -93,14 +88,13 @@ const NotificationRequestsFromAccount = () => {
       <Table
         columns={columns}
         dataSource={data}
+        loading={loading}
         pagination={{
-          pageSize: 8,
-          total: 250, // Total number of items
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
           showSizeChanger: true,
-          pageSizeOptions: ["8", "60", "120"],
-          defaultCurrent: 1, 
-          showTotal: (total, range) =>
-            `SHOWING ${range[0]}-${range[1]} OF ${total}`,
         }}
         className="custom-table"
       />
@@ -114,7 +108,6 @@ const NotificationRequestsFromAccount = () => {
         record={record}
         isAccept={isAccept}
         setIsAccept={setIsAccept}
-       
       />
       <RejectNotificationRequestsModel
         record={record}

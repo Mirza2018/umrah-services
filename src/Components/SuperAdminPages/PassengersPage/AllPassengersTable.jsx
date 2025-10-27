@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Button, Space, Table, Tooltip } from "antd";
-import { GoEye } from "react-icons/go";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { AllImages, Person } from "../../../../public/images/AllImages";
-import { CgUnblock } from "react-icons/cg";
 import { AiOutlineStop } from "react-icons/ai";
+import { CgUnblock } from "react-icons/cg";
+import { GoEye } from "react-icons/go";
 
 const AllPassengersTable = ({
   data,
@@ -49,7 +47,7 @@ const AllPassengersTable = ({
       title: "Country",
       dataIndex: "country",
       key: "country",
-      render: (text) => <p>{text ? text.split(" ")[0] : "No data"}</p>,
+      render: (text) => <p>{text ? text : "No data"}</p>,
     },
     {
       title: "City",

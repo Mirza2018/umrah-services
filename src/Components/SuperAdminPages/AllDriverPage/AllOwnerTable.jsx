@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
-import { Button, Space, Table, Tooltip } from "antd";
+import { Button, Space, Table, Tooltip, Input, DatePicker } from "antd";
+import dayjs from "dayjs";
 import { AiOutlineStop } from "react-icons/ai";
 import { CgUnblock } from "react-icons/cg";
 import { GoEye } from "react-icons/go";
-import { RiDeleteBin6Line } from "react-icons/ri";
+// RiDeleteBin6Line is imported but not used, keeping imports from original code
+
+const { RangePicker } = DatePicker;
+const { Search } = Input;
 
 const AllOwnerTable = ({
   data,
@@ -12,7 +16,37 @@ const AllOwnerTable = ({
   onPageChange,
   showVenueViewModal,
   showVenueBlockModal,
+  // New Filter Handlers
+  onServiceTitleSearch,
+  onAvailabilityFilter,
 }) => {
+  // --- Custom Filter Render Functions ---
+
+  // Service Title Filter UI
+  const getServiceTitleFilter = () => (
+    <Search
+      placeholder="Search Service Title"
+      allowClear
+      onChange={onServiceTitleSearch} // This function sends the query to the parent component
+      style={{ width: 180 }}
+    />
+  );
+
+  // Availability Date Range Filter UI
+  const getAvailabilityDateFilter = () => (
+    <RangePicker
+      onChange={(_, dateStrings) => {
+        // dateStrings is an array: [startDateString, endDateString]
+        onAvailabilityFilter({
+          startDate: dateStrings[0],
+          endDate: dateStrings[1],
+        });
+      }}
+      style={{ width: 290 }}
+    />
+  );
+
+  // --- Column Definitions ---
   const columns = [
     {
       title: "#SI",
@@ -33,7 +67,6 @@ const AllOwnerTable = ({
         </div>
       ),
     },
-
     {
       title: "Email",
       dataIndex: "email",
@@ -45,38 +78,53 @@ const AllOwnerTable = ({
       key: "city",
       render: (text) => <p className="capitalize">{text}</p>,
     },
+
+    // --- SERVICE TITLE COLUMN WITH FILTER ---
     {
-      title: "Availability",
-      dataIndex: "availability",
-      key: "availability",
-      render: (text) => {
-        return (
-          <div className="flex flex-col items-center justify-start gap-2">
-            {text?.map((availabe, index) => (
-              <p key={availabe?.date} className=" ">
-                {`   ${index + 1}) ${availabe?.date?.split("T")[0]}`}
-              </p>
-            ))}
-          </div>
-        );
-      },
-    },
-    {
-      title: "Service Title",
+      title: (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          Service Title
+          {getServiceTitleFilter()}
+        </div>
+      ),
       dataIndex: "serviceTitles",
       key: "serviceTitles",
       render: (text) => {
         return (
-          <div className="flex flex-col  justify-start gap-2">
-            {text?.map((availabe, index) => (
-              <p key={availabe?.date} className="">
-                {`   ${index + 1}) ${availabe}`}
+          <div className="flex flex-col justify-start gap-2">
+            {text?.map((title, index) => (
+              <p key={index} className="">
+                {`${index + 1}) ${title}`}
               </p>
             ))}
           </div>
         );
       },
     },
+
+    // --- AVAILABILITY COLUMN WITH DATE RANGE FILTER ---
+    {
+      title: (
+        <div style={{ display: "flex", flexDirection: "column"  }}>
+          Availability
+          {getAvailabilityDateFilter()}
+        </div>
+      ),
+      dataIndex: "availability",
+      key: "availability",
+      render: (text) => {
+        return (
+          <div className="flex flex-col items-center justify-start gap-2 ">
+            {text?.map((availabe, index) => (
+              <p key={availabe?.date} className=" ">
+                {` ${index + 1}) ${dayjs(availabe?.date).format("DD-MM-YYYY") }`}
+              </p>
+            ))}
+          </div>
+        );
+      },
+    },
+
     {
       title: "Revenue",
       dataIndex: "revenue",
@@ -95,21 +143,6 @@ const AllOwnerTable = ({
       render: (_, record) => (
         <>
           <Space size="middle">
-            {/* Block User Tooltip */}
-            {/* <Tooltip placement="left" title="Block this User">
-              <Button
-                className="!p-0"
-                style={{
-                  background: "#FFFFFF",
-                  border: "none",
-                  color: "#C50000",
-                }}
-                onClick={() => showVenueBlockModal(record)}
-              >
-                <RiDeleteBin6Line style={{ fontSize: "24px" }} />
-              </Button>
-            </Tooltip> */}
-
             <Tooltip
               placement="right"
               title={`${record?.isBan == true ? "Unban User" : "Ban User"} `}
@@ -117,12 +150,11 @@ const AllOwnerTable = ({
               <button
                 onClick={() => {
                   showVenueBlockModal(record);
-                  // setCostomerData(record);
                 }}
                 className="!p-0 cursor-pointer"
               >
                 {record?.isBan ? (
-                  <CgUnblock className="text-3xl  text-success-color" />
+                  <CgUnblock className="text-3xl  text-success-color" />
                 ) : (
                   <AiOutlineStop className="text-2xl font-extrabold text-error-color" />
                 )}
@@ -147,6 +179,7 @@ const AllOwnerTable = ({
       ),
     },
   ];
+
   return (
     <div>
       <Table
@@ -161,7 +194,7 @@ const AllOwnerTable = ({
           showSizeChanger: true,
         }}
         rowKey="id"
-        scroll={{ x: true }}
+        scroll={{ x: 1200 }} // Increased scroll to accommodate new filters
       />
     </div>
   );

@@ -1,13 +1,37 @@
 /* eslint-disable react/prop-types */
 import { Button, Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
+import { useApproveNotificationMutation } from "../../../redux/api/adminApi";
+import { toast } from "sonner";
 
-const AcceptNotificationRequestsModel = ({
-  setIsAccept,
-  isAccept,
-  record,
-}) => {
-  const currentCompanyRecord = {};
+const AcceptNotificationRequestsModel = ({ setIsAccept, isAccept, record }) => {
+  const [acceptRequest] = useApproveNotificationMutation();
+
+  const onFinish = async () => {
+    const toastId = toast.loading("Notification Request is accecpting...");
+    const data = {
+      action: "approve",
+    };
+    //   return
+    try {
+      const res = await acceptRequest({ data: data, id: record?._id }).unwrap();
+      toast.success("Notification Request accepted successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+
+      setIsAccept(false);
+      // navigate(`/${userRole?.role}/vendors-request`);
+    } catch (error) {
+      toast.error(
+        error?.data?.message || "There was a problem, please try later",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
+  };
   return (
     <Modal
       // title={
@@ -42,7 +66,7 @@ const AcceptNotificationRequestsModel = ({
             className="text-xl py-5 px-8"
             type="primary"
             style={{ background: "#008000" }}
-            onClick={() => setIsAccept(false)}
+            onClick={onFinish}
           >
             Yes
           </Button>
