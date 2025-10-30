@@ -32,7 +32,7 @@ const SettingsChangePassword = () => {
     } catch (error) {
       console.log(error);
       toast.error(
-        error?.data?.message || "There is an problrm , please try letter.",
+        error?.data?.message || "There is an problem , please try letter.",
         {
           id: toastId,
           duration: 2000,

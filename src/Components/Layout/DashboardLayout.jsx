@@ -24,7 +24,6 @@ const DashboardLayout = () => {
   const token = useSelector((state) => state.auth?.accessToken);
   const userRole = jwtDecode(token);
 
-
   const location = useLocation();
   const pathSegment = location.pathname.split("/").pop();
   const currentPath = location.pathname;
@@ -104,7 +103,6 @@ const DashboardLayout = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   const adminMenuItems = [
     {
@@ -394,10 +392,11 @@ const DashboardLayout = () => {
     },
   ];
 
-
   const getAllowedKeys = () => {
     // Use a Set for quick lookup
-    const allowedUrls = new Set(userRole?.categoryPermissions?.map((item) => item));
+    const allowedUrls = new Set(
+      userRole?.categoryPermissions?.map((item) => item)
+    );
     // const allowedUrls = userRole?.categoryPermissions;
 
     // Also, add "dashboard" as it's often a default accessible page
@@ -416,8 +415,6 @@ const DashboardLayout = () => {
   };
 
   const allowedKeys = getAllowedKeys();
-
-
 
   const filterMenuItems = (menuItems, allowedKeys) => {
     return menuItems.flatMap((item) => {
@@ -450,12 +447,6 @@ const DashboardLayout = () => {
   };
 
   const userMenus = filterMenuItems(adminMenuItems, allowedKeys);
-
-
-
-
-
-
 
   const commonItems = [
     {
@@ -496,7 +487,7 @@ const DashboardLayout = () => {
         <div
           onClick={() => {
             dispatch(clearAuth());
-            Navigate("/signin");
+            navigate("/signin");
           }}
         >
           <NavLink to="/signin">Logout</NavLink>
