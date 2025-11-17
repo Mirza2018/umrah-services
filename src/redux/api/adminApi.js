@@ -12,6 +12,14 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.terms],
     }),
+    privacy: build.query({
+      query: (params) => ({
+        url: `/static-contents?type=privacy-policy`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.privacy],
+    }),
 
     termsAdd: build.mutation({
       query: (data) => {
@@ -21,7 +29,7 @@ export const adminApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: [tagTypes.terms],
+      invalidatesTags: [tagTypes.terms, tagTypes.privacy],
     }),
 
     //Profile details
@@ -510,6 +518,7 @@ export const {
   //Terms
   useTermsAddMutation,
   useTermsQuery,
+  usePrivacyQuery,
   //Overview
   useCountQuery,
   useUserAllRatioQuery,

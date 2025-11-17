@@ -39,6 +39,14 @@ const SettingsPage = () => {
           <FaChevronRight />
         </div>
       </Link>
+      <Link to={`privacy-policy`}>
+        <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
+          <h1 className="text-2xl !hover:text-secondary-color">
+            Privacy Policy
+          </h1>
+          <FaChevronRight />
+        </div>
+      </Link>
       {/* <Link to={`faq`}>
         <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
           <h1 className="text-2xl !hover:text-secondary-color">FAQ</h1>

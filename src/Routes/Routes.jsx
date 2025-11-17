@@ -52,6 +52,7 @@ import ServicesManagementsPage from "../Pages/SuperAdmin/ServicesManagementsPage
 import { useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
+import PrivacyPolicy from "../Pages/Common/settings/PrivacyPolicy";
 
 function AuthRedirect() {
   const token = useSelector((state) => state.auth?.accessToken);
@@ -68,7 +69,7 @@ function AuthRedirect() {
     } else {
       navigate("/signin", { replace: true });
     }
-  }, [navigate,token]);
+  }, [navigate, token]);
 
   // Optionally display a loading indicator
   return <Loading />;
@@ -187,6 +188,10 @@ const router = createBrowserRouter([
       {
         path: "settings/terms-and-condition",
         element: <TermsOfService />,
+      },
+      {
+        path: "settings/privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "notifications",
