@@ -43,7 +43,7 @@ const TermsOfService = () => {
   }
 
   if (error) {
-    return <div>Error loading privacy policy</div>;
+    return <div>Error loading Terms of Services</div>;
   }
 
   console.log(content);

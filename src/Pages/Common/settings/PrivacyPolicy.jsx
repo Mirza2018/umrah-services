@@ -18,14 +18,14 @@ const PrivacyPolicy = () => {
   }, [data?.data?.attributes?.content]);
 
   const handleOnSave = async () => {
-    const toastId = toast.loading("Terms Of Service is Adding...");
+    const toastId = toast.loading("Privacy policy is Adding...");
     const data = {
       type: "privacy-policy",
       content: content,
     };
     try {
       const res = await termsAdd(data).unwrap();
-      toast.success("Terms Of Service is added Successfully", {
+      toast.success("TPrivacy policy is added Successfully", {
         id: toastId,
         duration: 2000,
       });
