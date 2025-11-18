@@ -167,7 +167,7 @@ const CreteServiceForm = ({ setService }) => {
               />
             </Form.Item>
 
-            <Typography.Title level={4} style={{ color: "#222222" }}>
+            {/* <Typography.Title level={4} style={{ color: "#222222" }}>
               Package included
             </Typography.Title>
             <Form.Item
@@ -180,9 +180,9 @@ const CreteServiceForm = ({ setService }) => {
                 placeholder="Type package....."
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
-            </Form.Item>
+            </Form.Item> */}
 
-            <Typography.Title level={4} style={{ color: "#222222" }}>
+            {/* <Typography.Title level={4} style={{ color: "#222222" }}>
               Package details
             </Typography.Title>
             <Form.Item
@@ -194,10 +194,10 @@ const CreteServiceForm = ({ setService }) => {
                 placeholder="Type details....."
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
-            </Form.Item>
+            </Form.Item> */}
 
             <Typography.Title level={4} style={{ color: "#222222" }}>
-              Facilities
+              Services include
             </Typography.Title>
             <Form.List
               name="facilities"
@@ -207,7 +207,7 @@ const CreteServiceForm = ({ setService }) => {
                   validator: async (_, facilities) => {
                     if (!facilities || facilities.length < 1) {
                       return Promise.reject(
-                        new Error("At least one facility is required")
+                        new Error("At least one Service is required")
                       );
                     }
                   },
@@ -224,13 +224,13 @@ const CreteServiceForm = ({ setService }) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please enter a facility",
+                            message: "Please enter a Service",
                           },
                         ]}
                         className="flex-1"
                       >
                         <Input
-                          placeholder="Enter Plan Facility"
+                          placeholder="Enter a service"
                           className="py-2 px-3 text-xl border !border-input-color !bg-transparent"
                         />
                       </Form.Item>
@@ -250,7 +250,7 @@ const CreteServiceForm = ({ setService }) => {
                     icon={<PlusOutlined />}
                     className="w-full mb-4"
                   >
-                    Add another Facility
+                    Add another service
                   </Button>
                 </>
               )}
