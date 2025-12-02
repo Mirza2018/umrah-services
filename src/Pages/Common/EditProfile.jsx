@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, Typography, Upload } from "antd";
+import { Button, Form, Input, Select, Typography, Upload } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { IoCameraOutline } from "react-icons/io5";
@@ -11,12 +11,14 @@ import { useUpdateUserMutation } from "../../redux/api/adminApi";
 import { getImageUrl } from "../../redux/getBaseUrl";
 import { setUserInfo } from "../../redux/slices/authSlice";
 import profileImage from "/images/profileImage.png";
+import { Country, City } from "country-state-city";
 
 const EditProfile = () => {
   const [profileUpdate] = useUpdateUserMutation();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.auth?.userInfo);
+  const [selectedCountryIso, setSelectedCountryIso] = useState(null);
 
   const initialValues = useMemo(() => {
     // const user = data?.data?.attributes[0];
@@ -24,6 +26,7 @@ const EditProfile = () => {
       fullName: userInfo?.fullName || "",
       email: userInfo?.email,
       phoneNumber: userInfo?.phoneNumber || "",
+      country: userInfo?.country || "",
       city: userInfo?.city || "",
       image: getImageUrl() + userInfo?.image,
     };
@@ -49,6 +52,30 @@ const EditProfile = () => {
     }
   };
 
+  // All countries with flags
+  const countryOptions = useMemo(() => {
+    return Country.getAllCountries()
+      .map((country) => ({
+        label: `${country.flag} ${country.name}`,
+        value: country.isoCode,
+        name: country.name,
+        countryName: country.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, []);
+
+  // All cities of selected country
+  const cityOptions = useMemo(() => {
+    if (!selectedCountryIso) return [];
+    const cities = City.getCitiesOfCountry(selectedCountryIso) || [];
+    return cities
+      .map((city) => ({
+        label: city.name,
+        value: city.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [selectedCountryIso]);
+
   useEffect(() => {
     setImageUrl(initialValues.image);
   }, [initialValues.image]);
@@ -60,6 +87,7 @@ const EditProfile = () => {
       fullName: values.fullName,
       phoneNumber: values.phoneNumber,
       city: values.city,
+      country: values.country,
     };
 
     // console.log(data);
@@ -178,12 +206,78 @@ const EditProfile = () => {
             />
           </Form.Item>
 
-          <Typography.Title level={5} style={{ color: "#222222" }}>
+          {/* <Typography.Title level={5} style={{ color: "#222222" }}>
             City
           </Typography.Title>
           <Form.Item className="text-white " name={`city`}>
             <Input className="  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color" />
-          </Form.Item>
+          </Form.Item> */}
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {/* Country */}
+            <div>
+              <Typography.Title
+                level={5}
+                className="text-gray-700 font-medium mb-2"
+              >
+                Country
+              </Typography.Title>
+              <Form.Item
+                name="country"
+                rules={[{ required: true, message: "Please select country" }]}
+              >
+                <Select
+                  showSearch
+                  size="large"
+                  placeholder="Search country"
+                  options={countryOptions}
+                  onChange={(value, option) => {
+                    setSelectedCountryIso(value);
+                    form.setFieldsValue({
+                      country: option.countryName,
+                      city: undefined,
+                    });
+                  }}
+                  optionFilterProp="label"
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().includes(input.toLowerCase())
+                  }
+                  className="w-full"
+                  popupClassName="rounded-xl"
+                />
+              </Form.Item>
+            </div>
+
+            {/* City */}
+            <div>
+              <Typography.Title
+                level={5}
+                className="text-gray-700 font-medium mb-2"
+              >
+                City
+              </Typography.Title>
+              <Form.Item
+                name="city"
+                rules={[{ required: true, message: "Please select city" }]}
+              >
+                <Select
+                  showSearch
+                  size="large"
+                  placeholder={
+                    selectedCountryIso ? "Search city" : "First select country"
+                  }
+                  options={cityOptions}
+                  disabled={!selectedCountryIso}
+                  optionFilterProp="label"
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().includes(input.toLowerCase())
+                  }
+                  className="w-full"
+                  popupClassName="rounded-xl"
+                />
+              </Form.Item>
+            </div>
+          </div>
 
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Phone Number
@@ -204,7 +298,7 @@ const EditProfile = () => {
                 htmlType="submit"
                 className="bg-green-400 transition delay-150 duration-100 py-6 px-10 rounded-xl  text-white font-bold cursor-pointer text-xl"
               >
-                Edit
+                Update
               </Button>
             </Form.Item>{" "}
           </div>

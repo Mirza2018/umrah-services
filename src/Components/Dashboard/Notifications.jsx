@@ -86,7 +86,7 @@ const Notifications = () => {
 
             {/* Notification text */}
             <div className="flex flex-col">
-              <span className="text-lg font-medium text-gray-700">
+              <span className="text-lg font-medium text-gray-700 capitalize">
                 {notification.message}
               </span>
               <p className="">

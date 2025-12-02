@@ -43,12 +43,14 @@ const ViewPassengersModal = ({
             <div className="text-lg ">
               <div className="flex justify-between border-b-2 border-[#FF9815] pb-3">
                 <div className="text-[#535763]">Name</div>
-                <div className="capitalize">{currentCompanyRecord?.fullName}</div>
+                <div className="capitalize">
+                  {currentCompanyRecord?.fullName}
+                </div>
               </div>
-              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
+              {/* <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Date of Birthday:</div>
                 <div>{currentCompanyRecord?.dob?.split("T")[0]}</div>
-              </div>
+              </div> */}
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">E-mail:</div>
                 <div>{currentCompanyRecord?.email}</div>
@@ -67,7 +69,11 @@ const ViewPassengersModal = ({
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Referral Code:</div>
-                <div>{currentCompanyRecord?.referralCode}</div>
+                <div className="font-medium font-mono">
+                  {currentCompanyRecord?.referralCode
+                    ? currentCompanyRecord?.referralCode
+                    : "Not Provided"}
+                </div>
               </div>
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Gender:</div>

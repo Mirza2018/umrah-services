@@ -11,7 +11,7 @@ const EarningsPage = () => {
   const { data: earningsData, isLoading:earningLoading } = useTotalTransactionQuery();
   const topBarEarning = [
     {
-      title: "Today Income",
+      title: "Today’s Income",
       value: earningLoading ? (
         <Spin />
       ) : (

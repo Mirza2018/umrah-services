@@ -26,6 +26,7 @@ const Profile = () => {
       email: userInfo?.email,
       phoneNumber: userInfo?.phoneNumber || "",
       city: userInfo?.city || "",
+      country: userInfo?.country || "",
       image: getImageUrl() + userInfo?.image,
     };
   }, [userInfo]);
@@ -99,7 +100,7 @@ const Profile = () => {
                 <Input
                   readOnly
                   placeholder="Enter your name"
-                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                  className="cursor-not-allowed py-2 px-3 text-xl !bg-gray-200"
                 />
               </Form.Item>
 
@@ -109,25 +110,34 @@ const Profile = () => {
               <Form.Item className="text-white " name={`email`}>
                 <Input
                   readOnly
-                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                  className="cursor-not-allowed py-2 px-3 text-xl !bg-gray-200"
                 />
               </Form.Item>
 
+              <Typography.Title level={5} style={{ color: "#222222" }}>
+                Country
+              </Typography.Title>
+              <Form.Item className="text-white " name={`country`}>
+                <Input
+                  readOnly
+                  className="cursor-not-allowed py-2 px-3 text-xl !bg-gray-200"
+                />
+              </Form.Item>
               <Typography.Title level={5} style={{ color: "#222222" }}>
                 City
               </Typography.Title>
               <Form.Item className="text-white " name={`city`}>
                 <Input
                   readOnly
-                  className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+                  className="cursor-not-allowed py-2 px-3 text-xl !bg-gray-200"
                 />
               </Form.Item>
               <Typography.Title level={5} style={{ color: "#222222" }}>
                 Phone Number
               </Typography.Title>
-              <Form.Item className="text-white " name={`phoneNumber`}>
+              <Form.Item className="filed-off" name={`phoneNumber`}>
                 <PhoneInput
-                  className="cursor-not-allowed"
+                  className="cursor-not-allowed "
                   enableSearch={true}
                 />
               </Form.Item>

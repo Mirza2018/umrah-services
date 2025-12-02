@@ -26,6 +26,11 @@ const columns = [
     key: "email",
   },
   {
+    title: "Country",
+    dataIndex: "country",
+    key: "country",
+  },
+  {
     title: "Date",
     dataIndex: "createdAt",
     key: "createdAt",
@@ -35,6 +40,7 @@ const columns = [
     title: "Type",
     dataIndex: "role",
     key: "role",
+    render: (text) => <p className="capitalize">{text}</p>,
     // filters: [
     //   {
     //     text: "Customers",

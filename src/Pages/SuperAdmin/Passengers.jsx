@@ -121,7 +121,7 @@ const Passengers = () => {
       {/* Header  */}
       <div className="w-full p-4   rounded-tl-xl rounded-tr-xl">
         <div className=" w-[95%] mx-auto  flex items-center justify-between">
-          <p className="text-3xl  font-semibold">All Customer</p>
+          <p className="text-3xl  font-semibold">All Customers</p>
           <div className="flex gap-4 items-center">
             <ConfigProvider
               theme={{ token: { colorTextPlaceholder: "#D0D0D1" } }}

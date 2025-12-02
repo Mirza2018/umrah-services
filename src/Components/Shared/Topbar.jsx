@@ -117,7 +117,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
               <FiBell className="text-secondary-color w-6 h-6" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-medium text-gray-700">
+              <span className="text-lg font-medium text-gray-700 capitalize">
                 {notification.message.replace(/\s+/g, " ").trim()}
               </span>
               <p className="">

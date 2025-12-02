@@ -45,7 +45,7 @@ const CreateService = () => {
               isService == "post" ? "bg-[#FFC4B0]" : ""
             }`}
           >
-            All Post
+            All Posts
           </button>
           {/* <button
             onClick={() => setService("vendor")}

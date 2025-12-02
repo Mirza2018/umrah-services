@@ -154,17 +154,31 @@ const CreteServiceForm = ({ setService }) => {
             </Form.Item>
 
             <Typography.Title level={4} style={{ color: "#222222" }}>
-              Description
+              Price
             </Typography.Title>
             <Form.Item
-              rules={[{ required: true, message: "Please enter Description" }]}
-              name="description"
+              rules={[{ required: true, message: "Please enter Price" }]}
+              name="price"
             >
-              <TextArea
-                rows={2}
-                placeholder="Type Description....."
-                className="py-2 px-3 text-xl  !bg-transparent"
+              <InputNumber
+                placeholder="Type Price...."
+                className="py- px-3 text-xl w-full !bg-transparent"
               />
+            </Form.Item>
+            <Typography.Title level={4} style={{ color: "#222222" }}>
+              Upload Picture
+            </Typography.Title>
+            <Form.Item
+              className="!max-w-sm"
+              rules={[{ required: true, message: "Please Upload Picture" }]}
+              name="picture"
+            >
+              <Dragger {...uploadCommonProps} listType="picture">
+                <p className=" ">
+                  <UploadOutlined className="text-2xl" />
+                </p>
+                <p className="ant-upload-text">Upload</p>
+              </Dragger>
             </Form.Item>
 
             {/* <Typography.Title level={4} style={{ color: "#222222" }}>
@@ -195,6 +209,55 @@ const CreteServiceForm = ({ setService }) => {
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
             </Form.Item> */}
+          </div>
+          <div className="flex-1 md:mx-6 mx-2 ">
+            <Typography.Title level={4} style={{ color: "#222222" }}>
+              Description
+            </Typography.Title>
+            <Form.Item
+              rules={[{ required: true, message: "Please enter Description" }]}
+              name="description"
+            >
+              <TextArea
+                rows={2}
+                placeholder="Type Description....."
+                className="py-2 px-3 text-xl  !bg-transparent"
+              />
+            </Form.Item>
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <Typography.Title level={4} style={{ color: "#222222" }}>
+                  Start Date
+                </Typography.Title>
+                <Form.Item
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please selete start date",
+                    },
+                  ]}
+                  name="startDate"
+                >
+                  <DatePicker style={{ width: "100%" }} />
+                </Form.Item>
+              </div>
+              <div className="flex-1">
+                <Typography.Title level={4} style={{ color: "#222222" }}>
+                  End Date
+                </Typography.Title>
+                <Form.Item
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please selete end date",
+                    },
+                  ]}
+                  name="endDate"
+                >
+                  <DatePicker style={{ width: "100%" }} />
+                </Form.Item>
+              </div>
+            </div>
 
             <Typography.Title level={4} style={{ color: "#222222" }}>
               Services include
@@ -255,70 +318,6 @@ const CreteServiceForm = ({ setService }) => {
                 </>
               )}
             </Form.List>
-          </div>
-          <div className="flex-1 md:mx-6 mx-2 ">
-            <Typography.Title level={4} style={{ color: "#222222" }}>
-              Price
-            </Typography.Title>
-            <Form.Item
-              rules={[{ required: true, message: "Please enter Price" }]}
-              name="price"
-            >
-              <InputNumber
-                placeholder="Type Price...."
-                className="py- px-3 text-xl w-full !bg-transparent"
-              />
-            </Form.Item>
-            <div className="flex gap-2">
-              <div className="flex-1">
-                <Typography.Title level={4} style={{ color: "#222222" }}>
-                  Start Date
-                </Typography.Title>
-                <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please selete start date",
-                    },
-                  ]}
-                  name="startDate"
-                >
-                  <DatePicker style={{ width: "100%" }} />
-                </Form.Item>
-              </div>
-              <div className="flex-1">
-                <Typography.Title level={4} style={{ color: "#222222" }}>
-                  End Date
-                </Typography.Title>
-                <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please selete end date",
-                    },
-                  ]}
-                  name="endDate"
-                >
-                  <DatePicker style={{ width: "100%" }} />
-                </Form.Item>
-              </div>
-            </div>
-
-            <Typography.Title level={4} style={{ color: "#222222" }}>
-              Upload Picture
-            </Typography.Title>
-            <Form.Item
-              className="!max-w-sm"
-              rules={[{ required: true, message: "Please Upload Picture" }]}
-              name="picture"
-            >
-              <Dragger {...uploadCommonProps} listType="picture">
-                <p className=" ">
-                  <UploadOutlined className="text-2xl" />
-                </p>
-                <p className="ant-upload-text">Upload</p>
-              </Dragger>
-            </Form.Item>
           </div>
         </div>
 
