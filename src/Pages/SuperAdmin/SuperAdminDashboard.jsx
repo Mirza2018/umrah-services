@@ -44,6 +44,8 @@ const SuperAdminDashboard = () => {
     isSuccess,
   } = useAllUsersQuery(filters);
   const handleSearch = (search) => {
+    console.log(search);
+    
     setFilters((prev) => ({
       ...prev,
       search: search,
@@ -97,6 +99,8 @@ const SuperAdminDashboard = () => {
     setIsImage(null);
     form.resetFields();
   };
+
+  
 
   return (
     <>
@@ -180,12 +184,15 @@ const SuperAdminDashboard = () => {
         <div className="xl:col-span-2">
           <div className="mt-5 xl:mt-10 rounded">
             <div className="flex-1">
-              <div className="flex justify-between items-center  py-2">
+              <div className="flex  gap-4 items-center  py-2">
+                <h1 className="text-lg font-medium">Search Country</h1>
                 <Select
+                  className="h-10 min-w-48"
                   showSearch
-                  placeholder="Country"
+                  placeholder="Selete country"
                   optionFilterProp="label"
-                  // onChange={onChange}
+                  onChange={handleSearch}
+                  allowClear
                   // onSearch={onSearch}
                   options={countries}
                 />

@@ -81,7 +81,7 @@ const AddNotification = () => {
             }
             options={[
               { value: "all", label: "All" },
-              { value: "customer", label: "Customer" },
+              { value: "user", label: "User" },
               { value: "vendor", label: "Vendor" },
             ]}
           />
@@ -91,7 +91,7 @@ const AddNotification = () => {
         </Typography.Title>
         <Form.Item
           rules={[{ required: true, message: "Please Select country Name" }]}
-          name="city"
+          name="countries"
         >
           <Select
             showSearch

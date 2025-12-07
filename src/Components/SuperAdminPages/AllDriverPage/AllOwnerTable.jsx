@@ -24,10 +24,10 @@ const AllOwnerTable = ({
 
   // Service Title Filter UI
   const getServiceTitleFilter = () => (
-    <Search
+    <Input
       placeholder="Search Service Title"
       allowClear
-      onChange={onServiceTitleSearch} // This function sends the query to the parent component
+      onChange={(e) => { onServiceTitleSearch(e.target.value) }} // This function sends the query to the parent component
       style={{ width: 180 }}
     />
   );
@@ -129,7 +129,7 @@ const AllOwnerTable = ({
       title: "Revenue",
       dataIndex: "revenue",
       key: "revenue",
-      sorter: (a, b) => a.revenue - b.revenue,
+      // sorter: (a, b) => a.revenue - b.revenue,
     },
     {
       title: "Join Date",

@@ -8,7 +8,7 @@ export default defineConfig({
   // ---- SERVER SETTINGS ----------------------------------------------------
   server: {
     host: true, // expose on network (docker, WSL, etc.)
-    port: 5174, // your chosen port
+    // port: 5174, 
     strictPort: true, // fail if port is taken, don’t auto-increment
 
     // Prevent HMR overlay from hiding the real error (optional)

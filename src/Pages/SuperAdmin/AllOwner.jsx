@@ -36,12 +36,14 @@ const AllOwner = () => {
   const handleSearch = (search) => {
     setFilters((prev) => ({
       ...prev,
-      serviceTitle:"",
+      // serviceTitle:"",
       search: search,
     }));
   };
   // Function to handle filtering for serviceTitle
   const handleServiceTitleSearch = (serviceTitle) => {
+    console.log(serviceTitle);
+    
     setFilters((prev) => ({
       ...prev,
       serviceTitle: serviceTitle,
