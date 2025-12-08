@@ -56,6 +56,11 @@ const AddNotification = () => {
     }
   };
 
+  const capitalizedCountries = countries.map((country) => ({
+    value: country.label,
+    label: country.label,
+  }));
+
   return (
     <div className="m-5 p-5 border border-[#FFC4B0] rounded-lg max-w-5xl mx-auto">
       <Form
@@ -99,7 +104,7 @@ const AddNotification = () => {
             optionFilterProp="label"
             // onChange={onChange}
             // onSearch={onSearch}
-            options={countries}
+            options={capitalizedCountries}
           />
         </Form.Item>
         {/* <Typography.Title level={4} style={{ color: "#222222" }}>
