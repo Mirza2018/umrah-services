@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const ErrorPage = () => {
   const userInfo = useSelector((state) => state.auth?.userInfo);
-  // console.log(userInfo);
+
+  console.log(userInfo);
   const navigate = useNavigate();
   return (
     <Result
@@ -12,12 +13,15 @@ const ErrorPage = () => {
       subTitle="Sorry, the page you visited does not exist."
       extra={
         <>
-          <Button
-            onClick={() => navigate(`/${userInfo?.role}/dashboard`)}
-            type="primary"
-          >
-            Back Home
-          </Button>
+          {userInfo?.role && (
+            <Button
+              onClick={() => navigate(`/${userInfo?.role}/dashboard`)}
+              type="primary"
+            >
+              Back Home
+            </Button>
+          )}
+
           <Button
             onClick={() => navigate(`/signin`)}
             className="bg-secondary-color text-white font-medium px-8"

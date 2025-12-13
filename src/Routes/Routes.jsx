@@ -53,6 +53,7 @@ import { useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
 import PrivacyPolicy from "../Pages/Common/settings/PrivacyPolicy";
+import { Navigate } from "react-router-dom";
 
 function AuthRedirect() {
   const token = useSelector((state) => state.auth?.accessToken);
@@ -62,30 +63,44 @@ function AuthRedirect() {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        navigate(`/${decodedToken?.role}/dashboard`, { replace: true });
+
+        // --- ADDED VALIDATION CHECK ---
+        const userRole = decodedToken?.role;
+
+        if (userRole) {
+          // If role exists, navigate to the correct dashboard path
+          navigate(`/${userRole}/dashboard`, { replace: true });
+        } else {
+          // If token is present but role is missing/invalid, treat as bad token
+          console.error("Token is valid but missing a 'role' claim.");
+          // You might also want to dispatch a logout action here
+          navigate("/signin", { replace: true });
+        }
+        // ------------------------------
       } catch (error) {
+        // This handles cases where the token is malformed or expired
+        console.error("Token decoding failed:", error);
         navigate("/signin", { replace: true });
       }
     } else {
+      // No token present, navigate to signin
       navigate("/signin", { replace: true });
     }
   }, [navigate, token]);
 
-  // Optionally display a loading indicator
   return <Loading />;
 }
 
 const router = createBrowserRouter([
   {
     path: "/",
-    index: true, // This applies to the exact path "/"
     element: <AuthRedirect />,
   },
   {
     path: "/dashboard",
-    index: true, // This applies to the exact path "/"
     element: <AuthRedirect />,
   },
+
   {
     path: "admin",
     element: (
@@ -377,7 +392,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <ErrorPage />,
+    element: <Navigate to="/signin" replace />,
   },
 ]);
 
