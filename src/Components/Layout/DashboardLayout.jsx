@@ -490,7 +490,7 @@ const DashboardLayout = () => {
             navigate("/signin");
           }}
         >
-          <NavLink to="/signin">Logout</NavLink>
+          <NavLink to="/signin">Log out</NavLink>
         </div>
       ),
     },

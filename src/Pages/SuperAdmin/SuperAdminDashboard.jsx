@@ -45,7 +45,7 @@ const SuperAdminDashboard = () => {
   } = useAllUsersQuery(filters);
   const handleSearch = (search) => {
     console.log(search);
-    
+
     setFilters((prev) => ({
       ...prev,
       search: search,
@@ -100,7 +100,10 @@ const SuperAdminDashboard = () => {
     form.resetFields();
   };
 
-  
+  const capitalizedCountries = countries.map((country) => ({
+    value: country.label,
+    label: country.label,
+  }));
 
   return (
     <>
@@ -194,7 +197,7 @@ const SuperAdminDashboard = () => {
                   onChange={handleSearch}
                   allowClear
                   // onSearch={onSearch}
-                  options={countries}
+                  options={capitalizedCountries}
                 />
               </div>
 
@@ -385,3 +388,4 @@ const countries = [
   { value: "zambia", label: "Zambia" },
   { value: "zimbabwe", label: "Zimbabwe" },
 ];
+

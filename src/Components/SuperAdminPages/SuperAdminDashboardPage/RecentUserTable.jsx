@@ -46,7 +46,7 @@ const columns = [
     //     text: "Customers",
     //     value: "user",
     //   },
-    //   {
+    //   { 
     //     text: "Vendors",
     //     value: "Vendor",
     //   },
@@ -62,7 +62,13 @@ const RecentUserTable = ({ data, loading, meta, onPageChange }) => {
         columns={columns}
         dataSource={data}
         loading={loading}
-        pagination={2}
+        pagination={{
+          current: meta?.currentPage,
+          pageSize: meta?.limit,
+          total: meta?.totalResults,
+          onChange: onPageChange,
+          showSizeChanger: true,
+        }}
         rowKey="id"
         // scroll={{ x: true }}
       />

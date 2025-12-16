@@ -178,10 +178,10 @@ export default EditAdminModal;
 const pathsArray = [
   { name: "customers", path: "customers" },
   { name: "all-vendors", path: "all-vendors" },
-  { name: "Vendors Platform Onboarding Requestst", path: "vendors-request" },
+  { name: "Vendors Platform Onboarding request", path: "vendors-request" },
   { name: "services-managements", path: "services-managements" },
   { name: "create-service", path: "create-service" },
-  { name: "Vendor additional services requestt", path: "service-request" },
+  { name: "Vendor additional services request", path: "service-request" },
   { name: "earnings", path: "earnings" },
   { name: "all-admin", path: "all-admin" },
   { name: "refunds", path: "refunds" },
