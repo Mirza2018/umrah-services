@@ -103,15 +103,17 @@ const AddServiceModal = ({ addService, setAddService }) => {
               />
             </Form.Item>
             <Typography.Title level={4} style={{ color: "#222222" }}>
-              Amount
+              Price/Percentage %
             </Typography.Title>
             <Form.Item
-              rules={[{ required: true, message: "Please enter Amount" }]}
+              rules={[
+                { required: true, message: "Please enter Price/Percentage %" },
+              ]}
               name="amount"
             >
               <InputNumber
                 controls={false}
-                placeholder="Enter Amount"
+                placeholder="Enter Price/Percentage %"
                 className="px-3 text-xl w-full  !bg-transparent"
               />
             </Form.Item>
