@@ -38,6 +38,7 @@ const SignIn = () => {
       });
 
       if (decodeToken.role != "admin" && decodeToken.role !== "sub-admin") {
+        dispatch(clearAuth());
         return toast.warning(
           "Plese use admin Email or Sub-Admin Email to login Dashboard",
           {
