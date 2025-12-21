@@ -47,13 +47,13 @@ const AllPassengersTable = ({
       title: "Country",
       dataIndex: "country",
       key: "country",
-      render: (text) => <p>{text ? text : "No data"}</p>,
+      render: (text) => <p>{text ? text : "N/A"}</p>,
     },
     {
       title: "City",
       dataIndex: "city",
       key: "city",
-      render: (text) => <p className="capitalize">{text}</p>,
+      render: (text) => <p>{text ? text : "N/A"}</p>,
     },
     {
       title: "Join Date",

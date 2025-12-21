@@ -15,7 +15,7 @@ const OwnerRequestSingle = ({ data, setRequestedDrivers, setIsDeleted }) => {
           {data?.fullName}
         </h1>
         <div className="flex justify-between items-center gap-2">
-          <Link to={`details/${data?._id}/${data?.serviceType?.type}`}>
+          <Link to={`details/${data?._id}/${data?.serviceType?._id}`}>
             <button
               className="font-semibold text-base bg-secondary-color text-white rounded-md  px-3 py-2  hover:scale-105 transition delay-100  text-nowrap
             "

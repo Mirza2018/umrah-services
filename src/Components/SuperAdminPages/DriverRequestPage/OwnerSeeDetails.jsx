@@ -84,7 +84,9 @@ const OwnerSeeDetails = () => {
                   </div>
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Phone:</div>
-                    <div className="">{data?.data?.attributes?.phone}</div>
+                    <div className="">
+                      {data?.data?.attributes?.phoneNumber}
+                    </div>
                   </div>
 
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
@@ -114,30 +116,32 @@ const OwnerSeeDetails = () => {
           </div>
           <div>
             {" "}
-            {data?.data?.attributes?.document &&  <div>
-              <h2 className=" font-semibold text-2xl mb-5">Documents</h2>
+            {data?.data?.attributes?.document && (
+              <div>
+                <h2 className=" font-semibold text-2xl mb-5">Documents</h2>
 
-              <div className="flex justify-start items-center gap-4">
-                <div className="w-28 bg-[#B4B8BD] h-36 flex flex-col justify-center ">
-                  <div className="bg-[#B3CEFC] rounded-full aspect-square flex justify-center items-center w-24 h-24 m-auto">
-                    <div>
-                      <Image
-                        src={getImageUrl() + data?.data?.attributes?.document}
-                        alt=""
-                      />
+                <div className="flex justify-start items-center gap-4">
+                  <div className="w-28 bg-[#B4B8BD] h-36 flex flex-col justify-center ">
+                    <div className="bg-[#B3CEFC] rounded-full aspect-square flex justify-center items-center w-24 h-24 m-auto">
+                      <div>
+                        <Image
+                          src={getImageUrl() + data?.data?.attributes?.document}
+                          alt=""
+                        />
+                      </div>
                     </div>
+                    <p className="text-xs mb-2 truncate mx-3">
+                      {
+                        data?.data?.attributes?.document?.split("/")[
+                          data?.data?.attributes?.document?.split("/").length -
+                            1
+                        ]
+                      }
+                    </p>
                   </div>
-                  <p className="text-xs mb-2 truncate mx-3">
-                    {
-                      data?.data?.attributes?.document?.split("/")[
-                        data?.data?.attributes?.document?.split("/").length - 1
-                      ]
-                    }
-                  </p>
                 </div>
               </div>
-            </div>}
-           
+            )}
           </div>
         </div>
       </div>
