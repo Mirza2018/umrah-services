@@ -28,7 +28,7 @@ const OwnerRequest = () => {
     setFilters((prev) => ({
       ...prev,
       search: search,
-    }));
+    })); 
   };
 
   console.log(requestedDrivers);

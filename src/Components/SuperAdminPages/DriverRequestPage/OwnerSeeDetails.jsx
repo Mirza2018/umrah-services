@@ -104,7 +104,7 @@ const OwnerSeeDetails = () => {
 
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Service type:</div>
-                    <div>{data?.data?.attributes?.serviceTypeInfo?.name}</div>
+                    <div>{data?.data?.attributes?.service?.name}</div>
                   </div>
                   <div className="sm:flex gap-1 sm:gap-2 mb-2">
                     <div className="">Referral Code:</div>
