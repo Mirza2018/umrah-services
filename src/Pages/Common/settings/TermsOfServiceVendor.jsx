@@ -10,18 +10,21 @@ const TermsOfServiceVendor = () => {
   const { data, isLoading, error } = useTermsQuery();
   const [termsAdd] = useTermsAddMutation();
   const [content, setContent] = useState("");
-
+  const myData = data?.data?.attributes.find((d) => d.targetAudience == "vendor");
   useEffect(() => {
-    if (data?.data?.attributes?.content) {
-      setContent(data?.data?.attributes?.content);
+    if (myData) {
+      setContent(myData?.content);
     }
-  }, [data?.data?.attributes?.content]);
+  }, [myData]);
+
+  
 
   const handleOnSave = async () => {
     const toastId = toast.loading("Terms Of Service is Adding...");
     const data = {
       type: "terms-of-condition",
       content: content,
+      targetAudience: "vendor",
     };
     try {
       const res = await termsAdd(data).unwrap();

@@ -2,7 +2,10 @@ import { Button } from "antd";
 import JoditEditor from "jodit-react";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
-import { useTermsAddMutation, useTermsQuery } from "../../../redux/api/adminApi";
+import {
+  useTermsAddMutation,
+  useTermsQuery,
+} from "../../../redux/api/adminApi";
 import { toast } from "sonner";
 import Loading from "../../../Components/UI/Loading";
 
@@ -11,16 +14,21 @@ const TermsOfService = () => {
   const [termsAdd] = useTermsAddMutation();
   const [content, setContent] = useState("");
 
+  const myData = data?.data?.attributes.find((d) => d.targetAudience == "user");
   useEffect(() => {
-    if (data?.data?.attributes?.content) {
-      setContent(data?.data?.attributes?.content);
+    if (myData) {
+      setContent(myData?.content);
     }
-  }, [data?.data?.attributes?.content]);
+  }, [myData]);
+
+  
+
 
   const handleOnSave = async () => {
     const toastId = toast.loading("Terms Of Service is Adding...");
     const data = {
       type: "terms-of-condition",
+      targetAudience: "user",
       content: content,
     };
     try {
@@ -46,8 +54,8 @@ const TermsOfService = () => {
     return <div>Error loading Customer Terms of Services</div>;
   }
 
-  console.log(content);
-  
+
+
   return (
     <div
       className=" min-h-[90vh]  rounded-xl bg-white"

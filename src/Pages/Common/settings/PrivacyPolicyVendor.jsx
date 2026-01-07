@@ -11,17 +11,22 @@ const PrivacyPolicyVendor = () => {
   const [termsAdd] = useTermsAddMutation();
   const [content, setContent] = useState("");
 
+  const myData = data?.data?.attributes?.find((d) => d?.targetAudience == "vendor");
   useEffect(() => {
-    if (data?.data?.attributes?.content) {
-      setContent(data?.data?.attributes?.content);
+    if (myData) {
+      setContent(myData?.content);
     }
-  }, [data?.data?.attributes?.content]);
+  }, [myData]);
+
+  console.log(data?.data?.attributes);
+  
 
   const handleOnSave = async () => {
     const toastId = toast.loading("Privacy policy is Adding...");
     const data = {
       type: "privacy-policy",
       content: content,
+      targetAudience: "vendor",
     };
     try {
       const res = await termsAdd(data).unwrap();
