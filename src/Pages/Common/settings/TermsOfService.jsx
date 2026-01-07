@@ -43,7 +43,7 @@ const TermsOfService = () => {
   }
 
   if (error) {
-    return <div>Error loading Terms of Services</div>;
+    return <div>Error loading Customer Terms of Services</div>;
   }
 
   console.log(content);
@@ -63,14 +63,13 @@ const TermsOfService = () => {
          
           /> */}
           <FaChevronLeft />
-          Terms of Services
+          Customer Terms of Services
         </p>
       </div>
       <div className=" flex justify-center items-center">
         <div className="w-full lg:w-[90%]">
           <div className="">
             <JoditEditor
-
               value={content}
               config={{ height: 500, theme: "light", readonly: false }}
               onBlur={(newContent) => setContent(newContent)}

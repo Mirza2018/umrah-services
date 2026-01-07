@@ -18,10 +18,11 @@ const EditProfile = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.auth?.userInfo);
-  const [selectedCountryIso, setSelectedCountryIso] = useState(null);
+  const [selectedCountryIso, setSelectedCountryIso] = useState(
+    userInfo?.country || null
+  );
 
   const initialValues = useMemo(() => {
-    // const user = data?.data?.attributes[0];
     return {
       fullName: userInfo?.fullName || "",
       email: userInfo?.email,
@@ -31,12 +32,30 @@ const EditProfile = () => {
       image: getImageUrl() + userInfo?.image,
     };
   }, [userInfo]);
+
   useEffect(() => {
     if (userInfo) {
       form.setFieldsValue(initialValues);
     }
   }, [initialValues, userInfo, form]);
-
+useEffect(() => {
+  const countryName = userInfo?.country || initialValues.country;
+  if (countryName) {
+    const country = Country.getAllCountries().find(
+      (c) => c.name === countryName
+    );
+    if (country) {
+      setSelectedCountryIso(country.isoCode);
+      // Also ensure city options are available
+    }
+  }
+}, [userInfo, initialValues.country]);
+  
+  
+  
+  
+  
+  
   const [imageUrl, setImageUrl] = useState(initialValues.image);
 
   const handleImageUpload = (info) => {
@@ -66,7 +85,7 @@ const EditProfile = () => {
 
   // All cities of selected country
   const cityOptions = useMemo(() => {
-    if (!selectedCountryIso) return [];
+    if (!selectedCountryIso) return []; // Return empty if no country selected
     const cities = City.getCitiesOfCountry(selectedCountryIso) || [];
     return cities
       .map((city) => ({
@@ -81,7 +100,7 @@ const EditProfile = () => {
   }, [initialValues.image]);
 
   const onFinish = async (values) => {
-    const toastId = toast.loading("Profile  is updateing ...");
+    const toastId = toast.loading("Profile is updating...");
 
     const data = {
       fullName: values.fullName,
@@ -90,30 +109,23 @@ const EditProfile = () => {
       country: values.country,
     };
 
-    // console.log(data);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
 
     if (values?.image?.fileList?.[0].originFileObj) {
       const profileImage = values.image?.fileList[0]?.originFileObj;
-
-      console.log(profileImage);
       formData.append("profileImage", profileImage);
     }
 
     try {
       const res = await profileUpdate(formData).unwrap();
-
-      console.log("API Response:", res?.data?.attributes);
       dispatch(setUserInfo(res?.data?.attributes));
-      toast.success("Profile sucessfully update.", {
+      toast.success("Profile successfully updated.", {
         id: toastId,
         duration: 2000,
       });
     } catch (error) {
-      console.log(error);
-
-      toast.error("There is an problem please try latter", {
+      toast.error("There is a problem, please try later", {
         id: toastId,
         duration: 2000,
       });
@@ -122,13 +134,10 @@ const EditProfile = () => {
 
   return (
     <div
-      className="bg-highlight-color min-h-[90vh]  rounded-xl"
-      style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
+      className="bg-highlight-color min-h-[90vh] rounded-xl"
+      style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
     >
-      <div className=" w-full flex items-center p-5 mb-10  rounded-tl-xl rounded-tr-xl">
-        {/* <p className="text-3xl text-black font-semibold w-[95%] mx-auto flex gap-1 items-center">
-          Profile Information
-        </p> */}
+      <div className="w-full flex items-center p-5 mb-10 rounded-tl-xl rounded-tr-xl">
         <p
           onClick={() => window.history.back()}
           className="text-3xl font-semibold flex justify-center items-center gap-2 cursor-pointer"
@@ -136,21 +145,20 @@ const EditProfile = () => {
           <FaChevronLeft /> Edit Information
         </p>
       </div>
-      {/* <div className=" flex justify-center items-center"> */}
       <Form
         form={form}
         onFinish={onFinish}
         layout="vertical"
-        className="bg-transparent p-4 w-full h-full  md:grid grid-cols-4 gap-2"
+        className="bg-transparent p-4 w-full h-full md:grid grid-cols-4 gap-2"
       >
-        <div className="flex flex-col items-center justify-between  ">
-          <div className="flex  flex-col items-center justify-center gap-5 border border-[#000] px-10 py-10 rounded-md bg-[#F5F5F5]">
+        <div className="flex flex-col items-center justify-between">
+          <div className="flex flex-col items-center justify-center gap-5 border border-[#000] px-10 py-10 rounded-md bg-[#F5F5F5]">
             <div className="relative">
               <img
-                className=" w-36 aspect-square object-contain relative rounded-full"
+                className="w-36 aspect-square object-contain relative rounded-full"
                 src={imageUrl}
                 alt=""
-              />{" "}
+              />
               <Form.Item name="image">
                 <Upload
                   beforeUpload={() => false} // Prevent automatic upload to server
@@ -185,33 +193,27 @@ const EditProfile = () => {
             </p>
           </div>
         </div>
-        <div className="col-span-3 flex flex-col  text-white mt-5 w-full">
+
+        <div className="col-span-3 flex flex-col text-white mt-5 w-full">
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Name
           </Typography.Title>
           <Form.Item className="text-white" name={`fullName`}>
             <Input
               placeholder="Enter your name"
-              className="  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+              className="py-2 px-3 text-xl bg-site-color border hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
             />
           </Form.Item>
 
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Email
           </Typography.Title>
-          <Form.Item className="text-white " name={`email`}>
+          <Form.Item className="text-white" name={`email`}>
             <Input
               readOnly
-              className="cursor-not-allowed  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
+              className="cursor-not-allowed py-2 px-3 text-xl bg-site-color border hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
             />
           </Form.Item>
-
-          {/* <Typography.Title level={5} style={{ color: "#222222" }}>
-            City
-          </Typography.Title>
-          <Form.Item className="text-white " name={`city`}>
-            <Input className="  py-2 px-3 text-xl bg-site-color border  hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color" />
-          </Form.Item> */}
 
           <div className="grid sm:grid-cols-2 gap-6">
             {/* Country */}
@@ -232,12 +234,13 @@ const EditProfile = () => {
                   placeholder="Search country"
                   options={countryOptions}
                   onChange={(value, option) => {
-                    setSelectedCountryIso(value);
+                    setSelectedCountryIso(value); // value = isoCode
                     form.setFieldsValue({
-                      country: option.countryName,
+                      country: option.countryName, // you're saving country NAME to form
                       city: undefined,
                     });
                   }}
+                  value={form.getFieldValue("country")}
                   optionFilterProp="label"
                   filterOption={(input, option) =>
                     option.label.toLowerCase().includes(input.toLowerCase())
@@ -266,8 +269,7 @@ const EditProfile = () => {
                   placeholder={
                     selectedCountryIso ? "Search city" : "First select country"
                   }
-                  options={cityOptions}
-                  disabled={!selectedCountryIso}
+                  options={cityOptions} // Dynamic city options
                   optionFilterProp="label"
                   filterOption={(input, option) =>
                     option.label.toLowerCase().includes(input.toLowerCase())
@@ -282,30 +284,30 @@ const EditProfile = () => {
           <Typography.Title level={5} style={{ color: "#222222" }}>
             Phone Number
           </Typography.Title>
-          <Form.Item className="text-white " name={`phoneNumber`}>
-            <PhoneInput className=" " enableSearch={true} />
+          <Form.Item className="text-white" name={`phoneNumber`}>
+            <PhoneInput className="" enableSearch={true} />
           </Form.Item>
 
           <div className="flex justify-end !w-full gap-5 ">
             <Button
               onClick={() => window.history.back()}
-              className="bg-main-color  transition delay-150 duration-100 py-6 px-8 text-xl rounded-xl text-black font-bold cursor-pointer"
+              className="bg-main-color transition delay-150 duration-100 py-6 px-8 text-xl rounded-xl text-black font-bold cursor-pointer"
             >
               Cancel
             </Button>
-            <Form.Item className="">
+            <Form.Item>
               <Button
                 htmlType="submit"
-                className="bg-green-400 transition delay-150 duration-100 py-6 px-10 rounded-xl  text-white font-bold cursor-pointer text-xl"
+                className="bg-green-400 transition delay-150 duration-100 py-6 px-10 rounded-xl text-white font-bold cursor-pointer text-xl"
               >
                 Update
               </Button>
-            </Form.Item>{" "}
+            </Form.Item>
           </div>
         </div>
       </Form>
     </div>
-    // </div>
   );
 };
+
 export default EditProfile;

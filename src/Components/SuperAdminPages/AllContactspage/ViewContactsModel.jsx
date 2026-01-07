@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Modal } from "antd";
 import { Person } from "../../../../public/images/AllImages";
+import dayjs from "dayjs";
 
 const ViewContactsModel = ({
   setIsViewEarningModalVisible,
@@ -39,6 +40,13 @@ const ViewContactsModel = ({
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
                 <div className="text-[#535763]">Role:</div>
                 <div className="capitalize">{record?.role}</div>
+              </div>
+              <div className="flex justify-between border-b-2 border-[#FF9815] py-3">
+                <div className="text-[#535763]">Date:</div>
+                <div className="capitalize">
+                  {/* {record?.createdAt?.split("T")[0]} */}
+                  {dayjs(record?.createdAt).format(" DD MMM, YY ( HH:mm:ss)")}
+                </div>
               </div>
 
               <div className="flex justify-between border-b-2 border-[#FF9815] py-3">

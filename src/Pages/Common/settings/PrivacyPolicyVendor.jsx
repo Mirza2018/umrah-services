@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import Loading from "../../../Components/UI/Loading";
 import { usePrivacyQuery, useTermsAddMutation } from "../../../redux/api/adminApi";
 
-const PrivacyPolicy = () => {
+const PrivacyPolicyVendor = () => {
   const { data, isLoading, error } = usePrivacyQuery();
   const [termsAdd] = useTermsAddMutation();
   const [content, setContent] = useState("");
@@ -43,7 +43,7 @@ const PrivacyPolicy = () => {
   }
 
   if (error) {
-    return <div>Error loading Customer privacy policy</div>;
+    return <div>Error loading Vendor privacy policy</div>;
   }
 
   console.log(content);
@@ -63,7 +63,7 @@ const PrivacyPolicy = () => {
          
           /> */}
           <FaChevronLeft />
-          Customer Privacy Policy
+          Vendor Privacy Policy
         </p>
       </div>
       <div className=" flex justify-center items-center">
@@ -86,4 +86,4 @@ const PrivacyPolicy = () => {
     </div>
   );
 };
-export default PrivacyPolicy;
+export default PrivacyPolicyVendor;

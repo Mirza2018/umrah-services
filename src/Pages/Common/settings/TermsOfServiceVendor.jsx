@@ -1,13 +1,13 @@
 import { Button } from "antd";
 import JoditEditor from "jodit-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
+import { useTermsAddMutation, useTermsQuery } from "../../../redux/api/adminApi";
 import { toast } from "sonner";
 import Loading from "../../../Components/UI/Loading";
-import { usePrivacyQuery, useTermsAddMutation } from "../../../redux/api/adminApi";
 
-const PrivacyPolicy = () => {
-  const { data, isLoading, error } = usePrivacyQuery();
+const TermsOfServiceVendor = () => {
+  const { data, isLoading, error } = useTermsQuery();
   const [termsAdd] = useTermsAddMutation();
   const [content, setContent] = useState("");
 
@@ -18,14 +18,14 @@ const PrivacyPolicy = () => {
   }, [data?.data?.attributes?.content]);
 
   const handleOnSave = async () => {
-    const toastId = toast.loading("Privacy policy is Adding...");
+    const toastId = toast.loading("Terms Of Service is Adding...");
     const data = {
-      type: "privacy-policy",
+      type: "terms-of-condition",
       content: content,
     };
     try {
       const res = await termsAdd(data).unwrap();
-      toast.success("TPrivacy policy is added Successfully", {
+      toast.success("Terms Of Service is added Successfully", {
         id: toastId,
         duration: 2000,
       });
@@ -43,7 +43,7 @@ const PrivacyPolicy = () => {
   }
 
   if (error) {
-    return <div>Error loading Customer privacy policy</div>;
+    return <div>Error loading Vendor Terms of Services</div>;
   }
 
   console.log(content);
@@ -63,7 +63,7 @@ const PrivacyPolicy = () => {
          
           /> */}
           <FaChevronLeft />
-          Customer Privacy Policy
+          Vendor Terms of Services
         </p>
       </div>
       <div className=" flex justify-center items-center">
@@ -86,4 +86,4 @@ const PrivacyPolicy = () => {
     </div>
   );
 };
-export default PrivacyPolicy;
+export default TermsOfServiceVendor;

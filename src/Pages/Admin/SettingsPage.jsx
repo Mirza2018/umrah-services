@@ -38,7 +38,7 @@ const SettingsPage = () => {
           <Link to={`terms-and-condition`}>
             <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
               <h1 className="text-2xl !hover:text-secondary-color">
-                Terms of Services
+                Customer Terms of Services
               </h1>
               <FaChevronRight />
             </div>
@@ -46,7 +46,24 @@ const SettingsPage = () => {
           <Link to={`privacy-policy`}>
             <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
               <h1 className="text-2xl !hover:text-secondary-color">
-                Privacy Policy
+                Customer Privacy Policy
+              </h1>
+              <FaChevronRight />
+            </div>
+          </Link>
+
+          <Link to={`terms-and-condition-vendor`}>
+            <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
+              <h1 className="text-2xl !hover:text-secondary-color">
+                Vendor Terms of Services
+              </h1>
+              <FaChevronRight />
+            </div>
+          </Link>
+          <Link to={`privacy-policy-vendor`}>
+            <div className="flex items-center justify-between me-20 border-2 border-[rgba(0, 0, 0, 0.18)] rounded-md  max-w-[1000px] p-3 cursor-pointer">
+              <h1 className="text-2xl !hover:text-secondary-color">
+                Vendor Privacy Policy
               </h1>
               <FaChevronRight />
             </div>

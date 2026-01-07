@@ -28,7 +28,7 @@ const OwnerRequest = () => {
     setFilters((prev) => ({
       ...prev,
       search: search,
-    })); 
+    }));
   };
 
   console.log(requestedDrivers);
@@ -49,14 +49,23 @@ const OwnerRequest = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 p-10">
-        {data?.data?.attributes?.users?.map((singleData) => (
-          <OwnerRequestSingle
-            data={singleData}
-            key={singleData?._id}
-            setRequestedDrivers={setRequestedDrivers}
-            setIsDeleted={setIsDeleted}
-          />
-        ))}
+        {data?.data?.attributes?.users.length == 0 ? (
+          <p className="text-lg col-span-1 lg:col-span-2 xl:col-span-3 ">
+            There are no pending vendor onboarding requests
+          </p>
+        ) : (
+          <>
+            {" "}
+            {data?.data?.attributes?.users?.map((singleData) => (
+              <OwnerRequestSingle
+                data={singleData}
+                key={singleData?._id}
+                setRequestedDrivers={setRequestedDrivers}
+                setIsDeleted={setIsDeleted}
+              />
+            ))}
+          </>
+        )}
 
         <DeleteVendorRequest
           isDeleted={isDeleted}
@@ -65,22 +74,17 @@ const OwnerRequest = () => {
           sID={requestedDrivers?.serviceType?.type}
         />
       </div>
-      {/* pagination=
-      {{
-        current: meta?.page,
-        pageSize: meta?.limit,
-        total: meta?.total,
-        onChange: onPageChange,
-   
-      }} */}
-
-      <Pagination
-        align="end"
-        current={data?.data?.attributes?.pagination?.current}
-        pageSize={data?.data?.attributes?.pagination?.limit}
-        total={data?.data?.attributes?.pagination?.total}
-        onChange={onPageChange}
-      />
+      {data?.data?.attributes?.users.length == 0 ? (
+        " "
+      ) : (
+        <Pagination
+          align="end"
+          current={data?.data?.attributes?.pagination?.current}
+          pageSize={data?.data?.attributes?.pagination?.limit}
+          total={data?.data?.attributes?.pagination?.total}
+          onChange={onPageChange}
+        />
+      )}
     </div>
   );
 };

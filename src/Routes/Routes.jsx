@@ -54,6 +54,7 @@ import { jwtDecode } from "jwt-decode";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
 import PrivacyPolicy from "../Pages/Common/settings/PrivacyPolicy";
 import { Navigate } from "react-router-dom";
+import TermsOfServiceVendor from "../Pages/Common/settings/TermsOfServiceVendor";
 
 function AuthRedirect() {
   const token = useSelector((state) => state.auth?.accessToken);
@@ -206,6 +207,14 @@ const router = createBrowserRouter([
       },
       {
         path: "settings/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "settings/terms-and-condition-vendor",
+        element: <TermsOfServiceVendor />,
+      },
+      {
+        path: "settings/privacy-policy-vendor",
         element: <PrivacyPolicy />,
       },
       {
