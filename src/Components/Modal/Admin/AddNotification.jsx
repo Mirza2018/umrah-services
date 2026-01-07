@@ -39,8 +39,18 @@ const AddNotification = () => {
 
   const onFinish = async (values) => {
     const toastId = toast.loading("Notification is Sending...");
+    let data;
+    if (values?.countries == "All") {
+      data = {
+        message: values.message,
+        type: values.type,
+      };
+    } else {
+      data = { ...values };
+    }
+
     try {
-      const res = await addNotification(values);
+      const res = await addNotification(data);
       toast.success("Notification Send successfully", {
         id: toastId,
         duration: 2000,
@@ -169,6 +179,7 @@ const AddNotification = () => {
 export default AddNotification;
 
 const countries = [
+  { value: "All", label: "All" },
   { value: "afghanistan", label: "Afghanistan" },
   { value: "albania", label: "Albania" },
   { value: "algeria", label: "Algeria" },
