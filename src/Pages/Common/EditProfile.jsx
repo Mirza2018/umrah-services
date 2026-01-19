@@ -7,28 +7,35 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { useUpdateUserMutation } from "../../redux/api/adminApi";
+import {
+  useUpdateUserMutation,
+  useUserProfileQuery,
+} from "../../redux/api/adminApi";
 import { getImageUrl } from "../../redux/getBaseUrl";
 import { setUserInfo } from "../../redux/slices/authSlice";
 import profileImage from "/images/profileImage.png";
 import { Country, City } from "country-state-city";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const EditProfile = () => {
-  const [profileUpdate] = useUpdateUserMutation();
+  const [profileUpdate, { isLoading }] = useUpdateUserMutation();
+  const { data } = useUserProfileQuery();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.auth?.userInfo);
   const [selectedCountryIso, setSelectedCountryIso] = useState(
-    userInfo?.country || null
+    userInfo?.country || null,
   );
 
   const initialValues = useMemo(() => {
     return {
-      fullName: userInfo?.fullName || "",
+      fullName: userInfo?.fullName || data?.data?.attributes[0].fullName || "",
       email: userInfo?.email,
-      phoneNumber: userInfo?.phoneNumber || "",
-      country: userInfo?.country || "",
-      city: userInfo?.city || "",
+      phoneNumber:
+        userInfo?.phoneNumber || data?.data?.attributes[0].phoneNumber || "",
+      city: userInfo?.city || data?.data?.attributes[0].city || "",
+      country: userInfo?.country || data?.data?.attributes[0].country || "",
       image: getImageUrl() + userInfo?.image,
     };
   }, [userInfo]);
@@ -38,24 +45,19 @@ const EditProfile = () => {
       form.setFieldsValue(initialValues);
     }
   }, [initialValues, userInfo, form]);
-useEffect(() => {
-  const countryName = userInfo?.country || initialValues.country;
-  if (countryName) {
-    const country = Country.getAllCountries().find(
-      (c) => c.name === countryName
-    );
-    if (country) {
-      setSelectedCountryIso(country.isoCode);
-      // Also ensure city options are available
+  useEffect(() => {
+    const countryName = userInfo?.country || initialValues.country;
+    if (countryName) {
+      const country = Country.getAllCountries().find(
+        (c) => c.name === countryName,
+      );
+      if (country) {
+        setSelectedCountryIso(country.isoCode);
+        // Also ensure city options are available
+      }
     }
-  }
-}, [userInfo, initialValues.country]);
-  
-  
-  
-  
-  
-  
+  }, [userInfo, initialValues.country]);
+
   const [imageUrl, setImageUrl] = useState(initialValues.image);
 
   const handleImageUpload = (info) => {
@@ -297,10 +299,18 @@ useEffect(() => {
             </Button>
             <Form.Item>
               <Button
+                disabled={isLoading}
                 htmlType="submit"
-                className="bg-green-400 transition delay-150 duration-100 py-6 px-10 rounded-xl text-white font-bold cursor-pointer text-xl"
+                className={`!bg-green-400 transition delay-150 duration-100 ${isLoading ? "py-6 px-2  " : "py-6 px-10 "} rounded-xl !text-white font-bold cursor-pointer text-xl !border-0`}
               >
-                Update
+                {isLoading ? (
+                  <div className="gap-2 flex justify-center items-center">
+                    <Spin indicator={<LoadingOutlined spin />} style={{color:"white"}} size="default" />
+                    Updateing ...
+                  </div>
+                ) : (
+                  "Update"
+                )}
               </Button>
             </Form.Item>
           </div>

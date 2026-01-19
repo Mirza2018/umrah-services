@@ -15,18 +15,21 @@ const Profile = () => {
   // const token = useSelector((state) => state.auth?.accessToken);
   // const user = jwtDecode(token);
   const [form] = Form.useForm();
-  // const { data, isLoading } = useUserProfileQuery();
+  const { data, isLoading } = useUserProfileQuery();
+  console.log(data?.data?.attributes[0]);
+  
 
   const userInfo = useSelector((state) => state.auth?.userInfo);
-  console.log(userInfo);
+  // console.log(userInfo);
   const initialValues = useMemo(() => {
     // const user = data?.data?.attributes[0];
     return {
-      fullName: userInfo?.fullName || "",
+      fullName: userInfo?.fullName || data?.data?.attributes[0].fullName || "",
       email: userInfo?.email,
-      phoneNumber: userInfo?.phoneNumber || "",
-      city: userInfo?.city || "",
-      country: userInfo?.country || "",
+      phoneNumber:
+        userInfo?.phoneNumber || data?.data?.attributes[0].phoneNumber || "",
+      city: userInfo?.city || data?.data?.attributes[0].city || "",
+      country: userInfo?.country || data?.data?.attributes[0].country || "",
       image: getImageUrl() + userInfo?.image,
     };
   }, [userInfo]);
