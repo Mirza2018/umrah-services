@@ -3,6 +3,39 @@ import { baseApi } from "./baseApi";
 
 export const adminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    getFaqs: build.query({
+      query: (params) => ({
+        url: `/fandq`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.faq],
+    }),
+    addFaqs: build.mutation({
+      query: (body) => ({
+        url: `/fandq`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [tagTypes.faq],
+    }),
+    updateFaq: build.mutation({
+      query: ({ id, data }) => ({
+        url: `/fandq/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.faq],
+    }),
+
+    deleteFaq: build.mutation({
+      query: (id) => ({
+        url: `/fandq/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.faq],
+    }),
+
     //terms-of-condition
     terms: build.query({
       query: (params) => ({
@@ -585,4 +618,9 @@ export const {
   useAllBannerQuery,
   usePostBannerMutation,
   useDeleteBannerMutation,
+  //Faq
+  useGetFaqsQuery,
+  useAddFaqsMutation,
+  useUpdateFaqMutation,
+  useDeleteFaqMutation,
 } = adminApi;

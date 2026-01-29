@@ -21,6 +21,7 @@ export const tagTypes = {
   notificationPost: "NotificationPost",
   notificationAction: "NotificationAction",
   banner: "Banner",
+  faq: "Faq",
 };
 
 export const tagTypesList = [
@@ -46,4 +47,5 @@ export const tagTypesList = [
   tagTypes.banner,
   tagTypes.vendorRequest,
   tagTypes.notificationCount,
+  tagTypes.faq,
 ];

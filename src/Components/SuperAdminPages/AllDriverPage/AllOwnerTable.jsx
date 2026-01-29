@@ -73,6 +73,12 @@ const AllOwnerTable = ({
       key: "email",
     },
     {
+      title: "Country",
+      dataIndex: "country",
+      key: "country",
+      render: (text) => <p className="capitalize">{text}</p>,
+    },
+    {
       title: "City",
       dataIndex: "city",
       key: "city",
@@ -105,7 +111,7 @@ const AllOwnerTable = ({
     // --- AVAILABILITY COLUMN WITH DATE RANGE FILTER ---
     {
       title: (
-        <div style={{ display: "flex", flexDirection: "column"  }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           Availability
           {getAvailabilityDateFilter()}
         </div>
@@ -117,7 +123,7 @@ const AllOwnerTable = ({
           <div className="flex flex-col items-center justify-start gap-2 ">
             {text?.map((availabe, index) => (
               <p key={availabe?.date} className=" ">
-                {` ${index + 1}) ${dayjs(availabe?.date).format("DD-MM-YYYY") }`}
+                {` ${index + 1}) ${dayjs(availabe?.date).format("DD-MM-YYYY")}`}
               </p>
             ))}
           </div>

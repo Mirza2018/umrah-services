@@ -1,52 +1,80 @@
 /* eslint-disable react/no-unescaped-entities */
 import { PlusOutlined } from "@ant-design/icons";
+import { Form, Pagination } from "antd";
+import { Modal } from "antd";
 import { Button, Input, Collapse, ConfigProvider } from "antd";
 import JoditEditor from "jodit-react";
 import { useRef, useState } from "react";
+import { BiEdit, BiPlus } from "react-icons/bi";
+import { BsTrash, BsTrash2 } from "react-icons/bs";
 import { FaChevronLeft } from "react-icons/fa";
-
-const { Panel } = Collapse;
+import {
+  useAddFaqsMutation,
+  useDeleteFaqMutation,
+  useGetFaqsQuery,
+  useUpdateFaqMutation,
+} from "../../../redux/api/adminApi";
+import { toast } from "sonner";
+import { useMemo } from "react";
+import { useEffect } from "react";
 
 const FAQ = () => {
-  const editor = useRef(null);
-  // State to hold the FAQ list and active panel key
-  const [faqList, setFaqList] = useState([{ question: "", answer: "" }]); // Initial Q/A pair
-  const [activeKey, setActiveKey] = useState([0]); // Track the active panel
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 5,
+  });
+  const { data } = useGetFaqsQuery(filters);
 
-  // Function to save all Q/A pairs
-  const handleOnSave = () => {
-    console.log(faqList); // This will log all Q/A pairs
+  const onPageChange = (page, limit) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
+      limit,
+    }));
+  };
+  console.log(data?.data?.attributes?.result);
+
+  const [addFaq] = useAddFaqsMutation();
+  const [EditFaq] = useUpdateFaqMutation();
+  const [deleteFaq] = useDeleteFaqMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [editingFaq, setEditingFaq] = useState(null);
+
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteItem, setDeleteItem] = useState(null);
+
+  const [form] = Form.useForm();
+
+  const handleAddFaq = () => {
+    setEditingFaq(null);
+    setEditingFaq(null);
+    setIsModalOpen(true);
+    form.resetFields();
   };
 
-  // Function to add a new Q/A pair
-  const handleAddQus = () => {
-    const newFaqList = [...faqList, { question: "", answer: "" }]; // Add new Q/A pair
-    setFaqList(newFaqList);
-    setActiveKey([newFaqList.length - 1]); // Set the new panel as active
+  const handleEditFaq = (faq) => {
+    setEditingFaq(faq);
+    setIsModalOpen(true);
   };
 
-  // Function to update question text
-  const handleQuestionChange = (index, value) => {
-    const newFaqList = [...faqList];
-    newFaqList[index].question = value;
-    setFaqList(newFaqList);
+  const handleDeleteFaq = (id) => {
+    setDeleteItem(id);
+    setDeleteModalOpen(true);
   };
 
-  // Function to update answer text
-  const handleAnswerChange = (index, value) => {
-    const newFaqList = [...faqList];
-    newFaqList[index].answer = value;
-    setFaqList(newFaqList);
-  };
+  const initialValues = useMemo(() => {
+    return {
+      question: editingFaq?.question,
+      answer: editingFaq?.answer,
+    };
+  }, [editingFaq]);
 
-  // Function to remove a Q/A pair
-  const handleRemoveQus = (index) => {
-    if (faqList.length > 1) {
-      const newFaqList = faqList.filter((_, i) => i !== index); // Remove the item at the given index
-      setFaqList(newFaqList);
-      setActiveKey([Math.max(0, index - 1)]); // Set the previous panel as active or default to the first one
+  useEffect(() => {
+    if (editingFaq) {
+      form.setFieldsValue(initialValues);
     }
-  };
+  }, [editingFaq, form]);
 
   return (
     <div
@@ -54,7 +82,7 @@ const FAQ = () => {
       style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
     >
       <div className="  w-full p-5 mb-10  rounded-tl-xl rounded-tr-xl">
-        <div className=" w-[95%] mx-auto  flex items-center ">
+        <div className=" w-[95%] mx-auto  flex items-center justify-between">
           <p
             onClick={() => window.history.back()}
             className="text-2xl  font-semibold flex  items-center gap-2 cursor-pointer"
@@ -66,112 +94,172 @@ const FAQ = () => {
             <FaChevronLeft />
             FAQ
           </p>
+          <Button
+            className="gap-2 bg-main-blue hover:bg-main-blue/90"
+            onClick={handleAddFaq}
+          >
+            <BiPlus className="h-4 w-4" />
+            Add FAQ
+          </Button>
         </div>
       </div>
-      <div className="p-2 rounded flex flex-col gap-5 w-full sm:w-[90%] md:w-[90%] lg:w-[80%] xl:w-[70%] mx-auto">
-        {/* Q/A Portions */}
-        <ConfigProvider
-          theme={{
-            components: {
-              Collapse: {
-                colorTextHeading: "#000",
-                colorBorder: "#000",
-                colorText: "#000",
-                borderRadiusLG: 4,
-                headerPadding: "12px 20px",
-                contentBg: "#fff",
-                headerBg: "#fff",
-              },
-            },
+      <div className=" flex flex-col gap-y-3 p-2">
+        {data?.data?.attributes?.result?.map((faq, index) => (
+          <div
+            key={faq?._id}
+            className="p-6 group bg-blue-100 rounded-xl shadow"
+          >
+            <div className="flex items-start gap-4 ">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white border-blue-600 text-sm font-medium text-secondary-text shrink-0">
+                {/* {index + 1} */}
+                {index +
+                  1 +
+                  data?.data?.attributes?.pagination?.limit *
+                    (data?.data?.attributes?.pagination?.currentPage - 1)}
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg text-foreground">
+                  <span className="font-semibold">Qustion:</span>{" "}
+                  {faq?.question}
+                </h3>
+                <p className="mt-2 text-sm text-secondary-text">
+                  <span className="font-semibold">Answer:</span> {faq?.answer}
+                </p>
+              </div>
+              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button className="" onClick={() => handleEditFaq(faq)}>
+                  <BiEdit className="h-4 w-4 text-lime-600" />
+                </Button>
+                <Button className="" onClick={() => handleDeleteFaq(faq?._id)}>
+                  <BsTrash className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <Pagination
+          align="end"
+          className="pt-5"
+          current={data?.data?.attributes?.pagination?.currentPage}
+          pageSize={data?.data?.attributes?.pagination?.limit}
+          total={data?.data?.attributes?.pagination?.totalResults}
+          onChange={onPageChange}
+          showSizeChanger
+        />
+      </div>
+
+      <Modal
+        key={editingFaq?._id}
+        title={editingFaq ? "Edit FAQ" : "Add FAQ"}
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        onOk={() => form.submit()}
+        okText={editingFaq ? "Update" : "Create"}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={async (values) => {
+            const toastId = toast.loading(
+              `Faq is ${editingFaq ? "updating..." : "adding..."}`,
+            );
+            setIsLoading(true);
+            try {
+              let res;
+              if (editingFaq) {
+                res = await EditFaq({
+                  data: values,
+                  id: editingFaq?._id,
+                }).unwrap();
+              } else {
+                res = await addFaq(values).unwrap();
+              }
+
+              console.log("Faq Data:", values);
+              if (res) {
+                setIsLoading(false);
+                toast.success(`Faq is ${editingFaq ? "update" : "add"}`, {
+                  id: toastId,
+                  duration: 2000,
+                });
+              }
+            } catch (err) {
+              console.error(err);
+              toast.error("There is an error, please try latter", {
+                id: toastId,
+                duration: 2000,
+              });
+            } finally {
+              setEditingFaq(null);
+              setIsModalOpen(false);
+              setEditingFaq(null);
+              form.resetFields();
+            }
           }}
         >
-          <Collapse
-            accordion
-            activeKey={activeKey}
-            onChange={setActiveKey}
-            className="bg-primary-color"
+          <Form.Item
+            label="Question"
+            // initialValue={editingFaq?.question}
+            name="question"
+            rules={[{ required: true, message: "Question is required" }]}
           >
-            {faqList.map((faq, index) => (
-              <Panel
-                header={`Question ${index + 1}`}
-                key={index}
-                className="!text-black bg-primary-color flex flex-col gap-1"
-                extra={
-                  faqList.length > 1 && (
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleRemoveQus(index)}
-                    >
-                      Remove
-                    </button>
-                  )
-                }
-              >
-                <div className="flex flex-col gap-3">
-                  <div className="flex flex-col gap-3">
-                    <p className="text-black text-xl font-medium">{`Question ${
-                      index + 1
-                    }`}</p>
-                    <Input
-                      placeholder="Type your question"
-                      value={faq.question}
-                      onChange={(e) =>
-                        handleQuestionChange(index, e.target.value)
-                      }
-                      className="h-10  border"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p className="text-black text-xl font-medium">Answer</p>
-                    <JoditEditor
-                      ref={editor}
-                      value={faq.answer}
-                      config={{ height: 300, theme: "light", readonly: false }}
-                      onBlur={(newContent) =>
-                        handleAnswerChange(index, newContent)
-                      }
-                    />
-                  </div>
-                </div>
-              </Panel>
-            ))}
-          </Collapse>
-        </ConfigProvider>
-        <div>
-          <Button
-            block
-            onClick={handleAddQus}
-            style={{
-              padding: "1px",
-              fontSize: "24px",
-              fontWeight: "500",
-              color: "#222222",
-              background: "transparent",
-              height: "40px",
-              border: "1px solid #999999",
-            }}
+            <Input
+              // defaultValue={editingFaq?.question}
+              placeholder="Enter question"
+            />
+          </Form.Item>
+
+          <Form.Item
+            // initialValue={editingFaq?.answer}
+            label="Answer"
+            name="answer"
+            rules={[{ required: true, message: "Answer is required" }]}
           >
-            <PlusOutlined />
-            Add More Questions
-          </Button>
-          <Button
-            block
-            onClick={handleOnSave}
-            style={{
-              marginTop: "16px",
-              padding: "1px",
-              fontSize: "24px",
-              fontWeight: "500",
-              color: "#fff",
-              background: "#000",
-              height: "40px",
-              border: "none",
-            }}
-          >
-            Update & Save
-          </Button>
-        </div>
-      </div>
+            <Input.TextArea
+              // defaultValue={editingFaq?.answer}
+              rows={4}
+              placeholder="Enter answer"
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        title="Delete FAQ"
+        open={deleteModalOpen}
+        onCancel={() => setDeleteModalOpen(false)}
+        onOk={async () => {
+          console.log("DELETE ID:", deleteItem);
+
+          if (!deleteItem) return;
+
+          const toastId = toast.loading("Deleting Faq...");
+          setIsLoading(true);
+          try {
+            const res = await deleteFaq(deleteItem).unwrap();
+
+            console.log("Delete ID:", deleteItem);
+            if (res) {
+              setIsLoading(false);
+              toast.success("Success", { id: toastId, duration: 2000 });
+            }
+          } catch (err) {
+            console.error(err);
+            toast.error("There is an error, please try latter", {
+              id: toastId,
+              duration: 2000,
+            });
+          } finally {
+            setDeleteModalOpen(false);
+            setDeleteItem(null);
+          }
+        }}
+        okText="Delete"
+        okButtonProps={{ danger: true }}
+      >
+        <p>Are you sure you want to delete this FAQ?</p>
+      </Modal>
     </div>
   );
 };
