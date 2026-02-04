@@ -119,7 +119,7 @@ const FAQ = () => {
               </div>
               <div className="flex-1">
                 <h3 className="text-lg text-foreground">
-                  <span className="font-semibold">Qustion:</span>{" "}
+                  <span className="font-semibold">Question:</span>{" "}
                   {faq?.question}
                 </h3>
                 <p className="mt-2 text-sm text-secondary-text">
