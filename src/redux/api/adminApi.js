@@ -543,6 +543,17 @@ export const adminApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.banner],
     }),
 
+    /////Incompleted Services/////
+
+    allIncompletedServices: build.query({
+      query: (params) => ({
+        url: `/usm/uncomplete-service`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.vendor],
+    }),
+
     //end
   }),
 });
@@ -623,4 +634,6 @@ export const {
   useAddFaqsMutation,
   useUpdateFaqMutation,
   useDeleteFaqMutation,
+  ///Incompled Services
+  useAllIncompletedServicesQuery,
 } = adminApi;

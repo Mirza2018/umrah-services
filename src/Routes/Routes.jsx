@@ -56,6 +56,7 @@ import PrivacyPolicy from "../Pages/Common/settings/PrivacyPolicy";
 import { Navigate } from "react-router-dom";
 import TermsOfServiceVendor from "../Pages/Common/settings/TermsOfServiceVendor";
 import PrivacyPolicyVendor from "../Pages/Common/settings/PrivacyPolicyVendor";
+import IncompletedServices from "../Pages/SuperAdmin/IncompletedServices";
 
 function AuthRedirect() {
   const token = useSelector((state) => state.auth?.accessToken);
@@ -147,6 +148,10 @@ const router = createBrowserRouter([
       {
         path: "service-request",
         element: <ServiceRequests />,
+      },
+      {
+        path: "incompleted-services",
+        element: <IncompletedServices />,
       },
       {
         path: "earnings",

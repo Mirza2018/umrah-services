@@ -46,6 +46,8 @@ const DashboardLayout = () => {
       return ["services-managements"];
     if (currentPath.includes("/create-service")) return ["create-service"];
     if (currentPath.includes("/service-request")) return ["service-request"];
+    if (currentPath.includes("/incompleted-services"))
+      return ["incompleted-services"];
     if (currentPath.includes("/earnings")) return ["earnings"];
     if (currentPath.includes("/all-admin")) return ["all-admin"];
     if (currentPath.includes("/refunds")) return ["refunds"];
@@ -221,6 +223,22 @@ const DashboardLayout = () => {
           Vendor additional services request
         </NavLink>
       ),
+    },
+    {
+      key: "incompleted-services",
+      icon: (
+        <img
+          src={AllIcons.serviceManagement}
+          alt="incompleted-services"
+          width={20}
+          style={{
+            filter: location.pathname.includes("incompleted-services")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="incompleted-services">Incompleted services</NavLink>,
     },
 
     {
