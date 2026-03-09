@@ -1,0 +1,112 @@
+/* CountryCitySelectStyle.css */
+
+/* Container spacing */
+.ccs-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .ccs-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Label */
+.ccs-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #111;
+}
+
+/* Button */
+.ccs-select-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: 100%;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid hsl(0, 0%, 3%);
+  background: white;
+  color: #111;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ccs-select-btn:hover {
+  border-color: #000;
+}
+
+/* Dropdown */
+.ccs-dropdown {
+  position: absolute;
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 12px;
+  border: 1px solid hsla(0, 79%, 38%, 0);
+  background: white;
+  box-shadow: 0 10px 15px rgba(68, 57, 57, 0.1);
+  z-index: 100;
+}
+
+/* Search box */
+.ccs-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid hsl(214, 17%, 47%);
+  color: #000;
+}
+
+.ccs-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+/* List */
+.ccs-list {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+/* Option */
+.ccs-option {
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  background: white;
+  color:#000;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ccs-option:hover {
+  background: hsl(200, 16%, 96%);
+}
+
+.ccs-option.active {
+  background: hsl(220, 16%, 96%);
+  font-weight: 500;
+}
+
+/* Empty */
+.ccs-empty {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #888;
+}
+
+/* Wrapper */
+.ccs-wrapper {
+  position: relative;
+}

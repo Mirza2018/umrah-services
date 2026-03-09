@@ -86,16 +86,22 @@ const EditProfile = () => {
   }, []);
 
   // All cities of selected country
-  const cityOptions = useMemo(() => {
-    if (!selectedCountryIso) return []; // Return empty if no country selected
-    const cities = City.getCitiesOfCountry(selectedCountryIso) || [];
-    return cities
-      .map((city) => ({
-        label: city.name,
-        value: city.name,
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label));
-  }, [selectedCountryIso]);
+const cityOptions = useMemo(() => {
+  if (!selectedCountryIso) return [];
+  const cities = City.getCitiesOfCountry(selectedCountryIso) || [];
+  const seen = new Set();
+  return cities
+    .filter((city) => {
+      if (seen.has(city.name)) return false;
+      seen.add(city.name);
+      return true;
+    })
+    .map((city) => ({
+      label: city.name,
+      value: city.name,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+}, [selectedCountryIso]);
 
   useEffect(() => {
     setImageUrl(initialValues.image);
@@ -267,17 +273,15 @@ const EditProfile = () => {
               >
                 <Select
                   showSearch
-                  size="large"
-                  placeholder={
-                    selectedCountryIso ? "Search city" : "First select country"
-                  }
-                  options={cityOptions} // Dynamic city options
+                  placeholder="Select City"
+                  options={cityOptions}
                   optionFilterProp="label"
                   filterOption={(input, option) =>
                     option.label.toLowerCase().includes(input.toLowerCase())
                   }
-                  className="w-full"
+                  className="w-full h-10"
                   popupClassName="rounded-xl"
+                  virtual={false}
                 />
               </Form.Item>
             </div>
@@ -305,7 +309,11 @@ const EditProfile = () => {
               >
                 {isLoading ? (
                   <div className="gap-2 flex justify-center items-center">
-                    <Spin indicator={<LoadingOutlined spin />} style={{color:"white"}} size="default" />
+                    <Spin
+                      indicator={<LoadingOutlined spin />}
+                      style={{ color: "white" }}
+                      size="default"
+                    />
                     Updateing ...
                   </div>
                 ) : (
