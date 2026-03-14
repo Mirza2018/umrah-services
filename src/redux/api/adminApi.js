@@ -553,6 +553,26 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.vendor],
     }),
+    //// Discount
+    allDiscount: build.query({
+      query: (params) => ({
+        url: `/discount/all`,
+        method: "GET",
+        params,
+      }),
+      providesTags: [tagTypes.discount],
+    }),
+
+    postDiscount: build.mutation({
+      query: (body) => {
+        return {
+          url: `/discount/add`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [tagTypes.discount],
+    }),
 
     //end
   }),
@@ -636,4 +656,7 @@ export const {
   useDeleteFaqMutation,
   ///Incompled Services
   useAllIncompletedServicesQuery,
+  //Discount
+  useAllDiscountQuery,
+  usePostDiscountMutation,
 } = adminApi;

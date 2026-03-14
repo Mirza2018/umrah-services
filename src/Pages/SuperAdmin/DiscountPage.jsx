@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import AddAdminModal from "../../Components/Modal/Admin/AddAdminModal";
-import AdminTable from "../../Components/SuperAdminPages/AdminPage/AdminTable";
-import { useAllAdminQuery } from "../../redux/api/adminApi";
 
-const AdminPage = () => {
+import AddDiscountModal from "../../Components/Modal/Admin/AddDiscountModal";
+import DiscountTable from "../../Components/SuperAdminPages/AdminPage/DiscountTable";
+import {
+  useAllDiscountQuery,
+} from "../../redux/api/adminApi";
+
+const DiscountPage = () => {
   const [isAddAdmin, setisAddAdmin] = useState(false);
 
   const [filters, setFilters] = useState({
@@ -18,10 +21,10 @@ const AdminPage = () => {
       page,
       limit,
     }));
-  }; 
+  };
 
   const { data, currentData, isLoading, isFetching, isSuccess } =
-    useAllAdminQuery(filters);
+    useAllDiscountQuery(filters);
   const handleSearch = (search) => {
     setFilters((prev) => ({
       ...prev,
@@ -36,7 +39,7 @@ const AdminPage = () => {
       {/* Header  */}
       <div className=" w-full p-4  flex rounded-tl-xl rounded-tr-xl">
         <div className=" w-[95%] mx-auto  flex items-center justify-between ms-5">
-          <p className="text-3xl  font-semibold">Manage Admin Users</p>
+          <p className="text-3xl  font-semibold">Discount Page</p>
           <div className="flex gap-4 items-center"></div>
         </div>
 
@@ -46,14 +49,14 @@ const AdminPage = () => {
         >
           <IoMdAdd className="md:text-3xl text-2xl" />
           <p className="md:text-2xl text-lg font-semibold whitespace-nowrap">
-            Add Admin
+            Add Discount
           </p>
         </div>
       </div>
 
-      <AddAdminModal isAddAdmin={isAddAdmin} setisAddAdmin={setisAddAdmin} />
+      <AddDiscountModal isAddAdmin={isAddAdmin} setisAddAdmin={setisAddAdmin} />
       <main className="p-5">
-        <AdminTable
+        <DiscountTable
           data={data?.data?.attributes?.result}
           meta={data?.data?.attributes?.pagination}
           loading={isLoading}
@@ -64,4 +67,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default DiscountPage;

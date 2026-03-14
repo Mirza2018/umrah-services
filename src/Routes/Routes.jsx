@@ -57,6 +57,7 @@ import { Navigate } from "react-router-dom";
 import TermsOfServiceVendor from "../Pages/Common/settings/TermsOfServiceVendor";
 import PrivacyPolicyVendor from "../Pages/Common/settings/PrivacyPolicyVendor";
 import IncompletedServices from "../Pages/SuperAdmin/IncompletedServices";
+import DiscountPage from "../Pages/SuperAdmin/DiscountPage";
 
 function AuthRedirect() {
   const token = useSelector((state) => state.auth?.accessToken);
@@ -160,6 +161,10 @@ const router = createBrowserRouter([
       {
         path: "all-admin",
         element: <AdminPage />,
+      },
+      {
+        path: "discount",
+        element: <DiscountPage />,
       },
 
       {

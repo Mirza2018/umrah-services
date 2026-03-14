@@ -242,6 +242,23 @@ const DashboardLayout = () => {
     },
 
     {
+      key: "discount",
+      icon: (
+        <img
+          src={AllIcons.six}
+          alt="discount"
+          width={20}
+          style={{
+            filter: location.pathname.includes("discount")
+              ? "brightness(0) invert(1)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <NavLink to="discount">Discount</NavLink>,
+    },
+
+    {
       key: "earnings",
       icon: (
         <img

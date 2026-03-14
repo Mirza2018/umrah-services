@@ -22,6 +22,7 @@ export const tagTypes = {
   notificationAction: "NotificationAction",
   banner: "Banner",
   faq: "Faq",
+  discount: "Discount",
 };
 
 export const tagTypesList = [
@@ -48,4 +49,5 @@ export const tagTypesList = [
   tagTypes.vendorRequest,
   tagTypes.notificationCount,
   tagTypes.faq,
+  tagTypes.discount,
 ];
