@@ -43,6 +43,7 @@ import six from "./dashboard-logo/6.svg";
 import seven from "./dashboard-logo/7.svg";
 import eight from "./dashboard-logo/8.svg";
 import nine from "./dashboard-logo/9.svg";
+import discountLogo from "./dashboard-logo/discountLogo.svg";
 import serviceManagement from "./dashboard-logo/serviceManagement.svg";
 import doc1 from "./doc1.png";
 import doc2 from "./doc2.png";
@@ -129,4 +130,5 @@ export const AllIcons = {
   report,
   todayIncome,
   totalIncome,
+  discountLogo,
 };

@@ -29,7 +29,7 @@ const DiscountTable = ({ data, onPageChange, loading, meta }) => {
     },
 
     {
-      title: "Discound Code",
+      title: "Discount Code",
       dataIndex: "couponCode",
       key: "couponCode",
     },

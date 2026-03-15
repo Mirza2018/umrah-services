@@ -49,6 +49,7 @@ const DashboardLayout = () => {
     if (currentPath.includes("/incompleted-services"))
       return ["incompleted-services"];
     if (currentPath.includes("/earnings")) return ["earnings"];
+    if (currentPath.includes("/discount")) return ["discount"];
     if (currentPath.includes("/all-admin")) return ["all-admin"];
     if (currentPath.includes("/refunds")) return ["refunds"];
     if (currentPath.includes("/feedback")) return ["feedback"];
@@ -245,7 +246,7 @@ const DashboardLayout = () => {
       key: "discount",
       icon: (
         <img
-          src={AllIcons.six}
+          src={AllIcons.discountLogo}
           alt="discount"
           width={20}
           style={{

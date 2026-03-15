@@ -65,16 +65,16 @@ const AddDiscountModal = ({ isAddAdmin, setisAddAdmin }) => {
             className="bg-transparent w-full text-start"
           >
             <Typography.Title level={4} style={{ color: "#222222" }}>
-              Discound Code
+              Discount Code
             </Typography.Title>
             <Form.Item
               rules={[
-                { required: true, message: "Please enter discound Code" },
+                { required: true, message: "Please enter discount Code" },
               ]}
               name="couponCode"
             >
               <Input
-                placeholder="Discound Code"
+                placeholder="Discount Code"
                 className="py-2 px-3 text-xl  !bg-transparent"
               />
             </Form.Item>
