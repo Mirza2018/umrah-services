@@ -62,9 +62,7 @@ const AllOwnerTable = ({
       dataIndex: "fullName",
       key: "fullName",
       render: (text) => (
-        <div className="flex items-center gap-2">
-          <p className="capitalize">{text}</p>
-        </div>
+        <p className="text-start max-w-28 capitalize">{text || "-"}</p>
       ),
     },
     {
@@ -76,13 +74,17 @@ const AllOwnerTable = ({
       title: "Country",
       dataIndex: "country",
       key: "country",
-      render: (text) => <p className="capitalize">{text}</p>,
+      render: (text) => (
+        <p className="text-start max-w-28 capitalize">{text || "-"}</p>
+      ),
     },
     {
       title: "City",
       dataIndex: "city",
       key: "city",
-      render: (text) => <p className="capitalize">{text}</p>,
+      render: (text) => (
+        <p className="text-start max-w-28 capitalize">{text || "-"}</p>
+      ),
     },
 
     // --- SERVICE TITLE COLUMN WITH FILTER ---

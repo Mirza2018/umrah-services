@@ -26,22 +26,14 @@ const AllPassengersTable = ({
       title: "Customers Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (text) => (
-        <div className="flex items-center gap-2">
-          {/* <img
-            src={Person.samplePerson}
-            alt={text}
-            className="w-8 h-8 rounded-full"
-          /> */}
-          <p className="capitalize">{text}</p>
-        </div>
-      ),
+      render: (text) => <p className="text-start max-w-28">{text || "-"}</p>,
     },
 
     {
       title: "E-mail",
       dataIndex: "email",
       key: "email",
+      render: (text) => <p className="text-start ">{text || "-"}</p>,
     },
     {
       title: "Country",

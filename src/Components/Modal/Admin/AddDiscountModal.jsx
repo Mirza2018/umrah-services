@@ -24,6 +24,14 @@ const AddDiscountModal = ({ isAddAdmin, setisAddAdmin }) => {
       content: "Are you sure you want to create this discount code?",
       okText: "Confirm",
       cancelText: "Cancel",
+      centered: true,
+      okButtonProps: {
+        style: {
+          backgroundColor: "#FE4101",
+          borderColor: "#FE4101",
+          color: "#fff",
+        },
+      },
 
       onOk: async () => {
         const toastId = toast.loading("Discount code is Creating...");

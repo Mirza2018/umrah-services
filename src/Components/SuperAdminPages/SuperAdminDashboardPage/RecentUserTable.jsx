@@ -14,21 +14,25 @@ const columns = [
     title: "Full Name",
     dataIndex: "fullName",
     key: "fullName",
+    render: (text) => <p className="text-start">{text || "-"}</p>,
   },
   {
     title: "Phone",
     dataIndex: "phoneNumber",
     key: "phoneNumber",
+    render: (text) => <p className="text-start">{text || "-"}</p>,
   },
   {
     title: "Email",
     dataIndex: "email",
     key: "email",
+    render: (text) => <p className="text-start">{text || "-"}</p>,
   },
   {
     title: "Country",
     dataIndex: "country",
     key: "country",
+    render: (text) => <p className="text-start">{text || "-"}</p>,
   },
   {
     title: "Date",
@@ -46,7 +50,7 @@ const columns = [
     //     text: "Customers",
     //     value: "user",
     //   },
-    //   { 
+    //   {
     //     text: "Vendors",
     //     value: "Vendor",
     //   },
