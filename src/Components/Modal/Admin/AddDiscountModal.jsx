@@ -5,6 +5,7 @@ import {
   DatePicker,
   Form,
   Input,
+  InputNumber,
   Modal,
   Select,
   Typography,
@@ -18,24 +19,48 @@ const AddDiscountModal = ({ isAddAdmin, setisAddAdmin }) => {
   const [postDiscount] = usePostDiscountMutation();
 
   const onFinish = async (values) => {
-    const toastId = toast.loading("Discount code is Creating...");
+    Modal.confirm({
+      title: "Create Discount Code?",
+      content: "Are you sure you want to create this discount code?",
+      okText: "Confirm",
+      cancelText: "Cancel",
 
-    try {
-      const res = await postDiscount(values);
-      toast.success("Discount code created successfully", {
-        id: toastId,
-        duration: 2000,
-      });
-      console.log(res);
-    } catch (error) {
-      toast.error("There is some Problem please try latter", {
-        id: toastId,
-        duration: 2000,
-      });
-      console.log(error);
-    }
-    form.resetFields();
-    setisAddAdmin(false);
+      onOk: async () => {
+        const toastId = toast.loading("Discount code is Creating...");
+
+        try {
+          const payload = {
+            ...values,
+            expireDate: values.expireDate.format("YYYY-MM-DD"),
+          };
+          if (payload.discountAmount <= 0) {
+            return toast.error("Discount amount must be greater than 0", {
+              id: toastId,
+              duration: 2000,
+            });
+          }
+
+          const res = await postDiscount(payload);
+
+          toast.success("Discount code created successfully", {
+            id: toastId,
+            duration: 2000,
+          });
+
+          console.log(res);
+
+          form.resetFields();
+          setisAddAdmin(false);
+        } catch (error) {
+          toast.error("There is some Problem please try later", {
+            id: toastId,
+            duration: 2000,
+          });
+
+          console.log(error);
+        }
+      },
+    });
   };
 
   return (
@@ -87,9 +112,11 @@ const AddDiscountModal = ({ isAddAdmin, setisAddAdmin }) => {
               ]}
               name="discountAmount"
             >
-              <Input
+              <InputNumber
+                controls={false}
+                min={0}
                 placeholder="Enter Discount Amount"
-                className="py-2 px-3 text-xl  !bg-transparent"
+                className="py-0.5 px-3 text-xl  !bg-transparent w-full"
               />
             </Form.Item>
             <Typography.Title level={4} style={{ color: "#222222" }}>
