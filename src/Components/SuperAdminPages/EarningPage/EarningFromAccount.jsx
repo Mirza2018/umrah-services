@@ -46,7 +46,7 @@ const EarningFromAccount = ({ data, loading, meta, onPageChange }) => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      render: (text) => <p>$ {text}</p>,
+      render: (text) => <p>$ {text.toFixed(2)}</p>,
     },
     {
       title: "Date",
