@@ -23,7 +23,7 @@ const UserRatioLineChart = () => {
   const { data, isLoading } = useEarningRatioQuery(filter);
 
   const onChange = (date, dateString) => {
-    console.log(dateString);
+    // console.log(dateString);
     setFilter({ year: dateString });
   };
   return (

@@ -172,7 +172,7 @@ const ViewServiceModel = ({
             onClick={handleReject}
             className="font-semibold text-base rounded-md border border-secondary-color text-secondary-color  px-3 py-2 hover:scale-105 transition delay-100 "
           >
-            Delete
+           Reject
           </button>
           {/* <Link to={`accepted`}> */}
           <button

@@ -16,7 +16,7 @@ const Profile = () => {
   // const user = jwtDecode(token);
   const [form] = Form.useForm();
   const { data, isLoading } = useUserProfileQuery();
-  console.log(data?.data?.attributes[0]);
+  // console.log(data?.data?.attributes[0]);
   
 
   const userInfo = useSelector((state) => state.auth?.userInfo);
