@@ -2,15 +2,9 @@ import { Button, Table } from "antd";
 import { useState } from "react";
 import { GoEye } from "react-icons/go";
 import ViewServiceModel from "./ViewServiceModel";
-import { render } from "react-dom";
+import dayjs from "dayjs";
 // Sample data for the table
-const data = Array.from({ length: 8 }, (_, index) => ({
-  key: (index + 1).toString(),
-  slNumber: "#1234",
-  vendorsName: "James Tracy",
-  email: "abc@gmail.com",
-  postTitle: "abc@gmail.com",
-}));
+
 
 // Define the columns for the table
 
@@ -41,9 +35,14 @@ const ServiceRequestsTable = ({ data, loading, meta, onPageChange }) => {
       render: (text) => {
         return (
           <div className="flex flex-col items-center justify-start gap-2">
-            {text?.map((availabe, index) => (
+            {/* {text?.map((availabe, index) => (
               <p key={availabe?.date} className=" ">
                 {`   ${index + 1}) ${availabe?.date?.split("T")[0]}`}
+              </p>
+            ))} */}
+            {text?.map((availabe, index) => (
+              <p key={availabe?.date} className=" ">
+                {`${index + 1}) ${dayjs(availabe?.date).format("YYYY-MM-DD")}`}
               </p>
             ))}
           </div>
@@ -65,7 +64,11 @@ const ServiceRequestsTable = ({ data, loading, meta, onPageChange }) => {
       dataIndex: "status",
       key: "status",
       render: (text) => (
-        <p className={`capitalize ${text=="pending"? "text-secondary-color": "text-success-color"} `}>{text}</p>
+        <p
+          className={`capitalize ${text == "pending" ? "text-secondary-color" : "text-success-color"} `}
+        >
+          {text}
+        </p>
       ),
     },
     {
