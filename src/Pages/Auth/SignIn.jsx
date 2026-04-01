@@ -97,6 +97,7 @@ const SignIn = () => {
               Email
             </Typography.Title>
             <Form.Item
+              normalize={(value) => value?.trim().toLowerCase()}
               name="email"
               className=""
               rules={[

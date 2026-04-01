@@ -68,6 +68,7 @@ const ForgotPassword = () => {
               onFinish={onFinish}
             >
               <Form.Item
+                normalize={(value) => value?.trim().toLowerCase()}
                 rules={[
                   {
                     required: true,
