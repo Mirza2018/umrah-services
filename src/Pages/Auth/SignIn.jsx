@@ -79,7 +79,7 @@ const SignIn = () => {
           <div className="flex flex-col justify-center items-center">
             <div className="text-center md:mt-5 mb-8">
               <h1 className="text-3xl sm:text-4xl font-medium mb-4">
-                Login to Account!
+                Login to Account!1
               </h1>
               <p className="text-lg sm:text-xl mb-2 ">
                 Please enter your email and password to continue.
