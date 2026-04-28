@@ -10,21 +10,41 @@
 
 <body>
   <!-- ✅ Error catcher FIRST before anything else -->
-  <script>
-    window.onerror = function(msg, src, line, col, err) {
-      document.body.innerHTML = '<div style="padding:20px;font-size:14px;color:red;word-break:break-all;">'
-        + '<b>Error:</b> ' + msg + '<br/>'
-        + '<b>Source:</b> ' + src + '<br/>'
-        + '<b>Line:</b> ' + line + '<br/>'
-        + '<b>Detail:</b> ' + (err ? err.stack : 'none')
-        + '</div>';
-    };
-    window.addEventListener('unhandledrejection', function(e) {
-      document.body.innerHTML = '<div style="padding:20px;font-size:14px;color:red;word-break:break-all;">'
-        + '<b>Unhandled Promise:</b> ' + (e.reason?.message || e.reason)
-        + '</div>';
-    });
-  </script>
+<script>
+  var errors = [];
+  
+  window.onerror = function(msg, src, line, col, err) {
+    errors.push({msg, src, line});
+    var div = document.createElement('div');
+    div.style = 'padding:20px;font-size:12px;color:red;word-break:break-all;background:white;position:fixed;top:0;left:0;right:0;z-index:99999;overflow:auto;max-height:100vh;';
+    div.innerHTML = '<b>JS Error:</b><br/>'
+      + 'Message: ' + msg + '<br/>'
+      + 'Source: ' + src + '<br/>'
+      + 'Line: ' + line + '<br/>'
+      + 'Stack: ' + (err && err.stack ? err.stack.substring(0, 500) : 'none');
+    document.body.appendChild(div);
+    return false;
+  };
+
+  window.addEventListener('unhandledrejection', function(e) {
+    var div = document.createElement('div');
+    div.style = 'padding:20px;font-size:12px;color:orange;word-break:break-all;background:white;position:fixed;top:0;left:0;right:0;z-index:99999;';
+    div.innerHTML = '<b>Promise Error:</b><br/>'
+      + (e.reason && e.reason.stack ? e.reason.stack.substring(0, 500) : String(e.reason));
+    document.body.appendChild(div);
+  });
+
+  // Check localStorage availability (fails in iOS Private Mode)
+  try {
+    localStorage.setItem('__test__', '1');
+    localStorage.removeItem('__test__');
+  } catch(e) {
+    var div = document.createElement('div');
+    div.style = 'padding:20px;font-size:12px;color:purple;background:white;position:fixed;top:0;left:0;right:0;z-index:99999;';
+    div.innerHTML = '<b>LocalStorage blocked!</b> Likely iOS Private Mode.';
+    document.body.appendChild(div);
+  }
+</script>
 
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
