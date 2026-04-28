@@ -8,48 +8,24 @@ export default defineConfig({
     drop: ["console", "debugger"],
     target: "es2015",
   },
-  optimizeDeps: {
-    exclude: ["socket.io-client"],
-  },
+
   build: {
     minify: "esbuild",
     target: "es2015",
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          // Split antd into its own chunk
-          if (id.includes("node_modules/antd")) {
-            return "antd";
-          }
-          // Split antd dependencies
-          if (id.includes("node_modules/@ant-design")) {
-            return "ant-design";
-          }
-          if (id.includes("node_modules/rc-")) {
-            return "rc-components";
-          }
-          if (id.includes("node_modules/react-dom")) {
-            return "react-dom";
-          }
-          if (id.includes("node_modules/react")) {
-            return "react";
-          }
-          if (
-            id.includes("node_modules/@reduxjs") ||
-            id.includes("node_modules/react-redux")
-          ) {
-            return "redux";
-          }
-          if (
-            id.includes("node_modules/react-router-dom") ||
-            id.includes("node_modules/react-router")
-          ) {
-            return "router";
-          }
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
+        manualChunks: {
+          // ✅ Keep react + react-dom + react-redux TOGETHER
+          // so useSyncExternalStore is always available
+          "react-vendor": [
+            "react",
+            "react-dom",
+            "react-redux",
+            "react-router-dom",
+          ],
+          "redux-vendor": ["@reduxjs/toolkit", "redux-persist"],
+          "antd-vendor": ["antd", "@ant-design/icons"],
         },
       },
     },
