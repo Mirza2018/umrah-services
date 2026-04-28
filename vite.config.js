@@ -15,10 +15,39 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          redux: ["@reduxjs/toolkit", "react-redux"],
-          antd: ["antd"],
+        manualChunks(id) {
+          // Split antd into its own chunk
+          if (id.includes("node_modules/antd")) {
+            return "antd";
+          }
+          // Split antd dependencies
+          if (id.includes("node_modules/@ant-design")) {
+            return "ant-design";
+          }
+          if (id.includes("node_modules/rc-")) {
+            return "rc-components";
+          }
+          if (id.includes("node_modules/react-dom")) {
+            return "react-dom";
+          }
+          if (id.includes("node_modules/react")) {
+            return "react";
+          }
+          if (
+            id.includes("node_modules/@reduxjs") ||
+            id.includes("node_modules/react-redux")
+          ) {
+            return "redux";
+          }
+          if (
+            id.includes("node_modules/react-router-dom") ||
+            id.includes("node_modules/react-router")
+          ) {
+            return "router";
+          }
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
         },
       },
     },
