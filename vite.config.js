@@ -8,7 +8,9 @@ export default defineConfig({
     drop: ["console", "debugger"],
     target: "es2015",
   },
-
+  optimizeDeps: {
+    exclude: ["socket.io-client"],
+  },
   build: {
     minify: "esbuild",
     target: "es2015",

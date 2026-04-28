@@ -45,6 +45,17 @@
     document.body.appendChild(div);
   }
 </script>
+<script>
+  var _origDefine = Object.defineProperty;
+  var _callCount = 0;
+  Object.defineProperty = function() {
+    _callCount++;
+    if (_callCount > 50000) {
+      throw new Error("INFINITE LOOP DETECTED at call " + _callCount);
+    }
+    return _origDefine.apply(this, arguments);
+  };
+</script>
 
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>

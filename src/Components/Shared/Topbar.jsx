@@ -15,7 +15,7 @@ import { clearAuth } from "../../redux/slices/authSlice";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
 import dayjs from "dayjs";
-import { v4 as uuidv4 } from "uuid"; // Add for unique toast IDs
+
 import { FiBell } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
 
@@ -89,7 +89,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
       console.log("Received admin_notification:", msg);
       setUnreadCount(msg?.data?.unreadCount || 0);
       if (!toastId.current) {
-        toastId.current = uuidv4();
+        toastId.current = "toast1";
       }
       toast.success(msg?.message || "New notification received!", {
         id: toastId.current,
