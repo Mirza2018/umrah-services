@@ -5,7 +5,7 @@ import AccountRecoveryTable from "../Tables/Admin/AccountRecoveryTable";
 import ViewAccountRecovery from "../Modal/Admin/ViewAccountRecovery";
 import RejectAccountRecovery from "../Modal/Admin/RejectAccountRecovery";
 import AproveAccountModal from "../Modal/Admin/AproveAccountModal";
-import { App } from "antd";
+
 
 //* Modal Table
 
