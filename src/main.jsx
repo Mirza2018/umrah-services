@@ -21,9 +21,13 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <h1 style={{ color: "green", padding: "20px" }}>App Loaded OK</h1>
+    <Provider store={store}>
+      <h1 style={{ color: "green", padding: "20px" }}>Redux OK</h1>
+    </Provider>
   </React.StrictMode>,
 );
