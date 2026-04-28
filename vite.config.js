@@ -1,26 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import legacy from "@vitejs/plugin-legacy";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    legacy({
-      targets: ["ios >= 13", "safari >= 13"],
-      renderLegacyChunks: true,
-      modernPolyfills: true,
-    }),
-  ],
+  plugins: [react()],
 
   esbuild: {
     drop: ["console", "debugger"],
+    target: "es2015",
   },
 
   build: {
     minify: "esbuild",
+    target: "es2015",
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      external: (id) => id.includes(".git"),
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom"],
