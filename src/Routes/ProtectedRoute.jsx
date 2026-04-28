@@ -7,43 +7,45 @@ import { Navigate } from "react-router-dom";
 import { clearAuth } from "../redux/slices/authSlice";
 
 function ProtectedRoute({ children, role }) {
-  const token = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {
-    if (!token?.accessToken) {
+    const accessToken = auth?.accessToken;
+
+    if (!accessToken) {
       setIsAuthorized(false);
       return;
     }
 
-    let decodeToken;
+    let decoded;
 
     try {
-      decodeToken = jwtDecode(token.accessToken);
-    } catch (error) {
-      console.error("Token decode failed:", error);
+      decoded = jwtDecode(accessToken);
+    } catch (err) {
+      console.error("Invalid token");
       dispatch(clearAuth());
       setIsAuthorized(false);
       return;
     }
 
-    const currentTime = Date.now() / 1000;
+    const now = Date.now() / 1000;
 
-    if (decodeToken.exp < currentTime) {
+    if (!decoded?.exp || decoded.exp < now) {
       dispatch(clearAuth());
       setIsAuthorized(false);
       return;
     }
 
-    if (decodeToken?.role !== role) {
+    if (decoded.role !== role) {
       setIsAuthorized(false);
-    } else {
-      setIsAuthorized(true);
+      return;
     }
-  }, [token?.accessToken, role, dispatch]);
 
-  // ⏳ Loading
+    setIsAuthorized(true);
+  }, [auth?.accessToken, role, dispatch]);
+
   if (isAuthorized === null) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -52,24 +54,22 @@ function ProtectedRoute({ children, role }) {
     );
   }
 
-  // 🚫 Unauthorized
   if (!isAuthorized) {
     return <Navigate to="/signin" replace />;
   }
 
-  // 🔐 Sub-admin route protection
   if (role === "sub-admin") {
     const pathParts = window.location.pathname.split("/");
     const currentPath = pathParts.length > 2 ? pathParts[2] : null;
 
-    const allowed = token?.userInfo?.categoryPermissions?.includes(currentPath);
+    const allowed = auth?.userInfo?.categoryPermissions?.includes(currentPath);
 
     if (!allowed && currentPath !== "dashboard" && currentPath !== "settings") {
       return <Navigate to="/sub-admin/dashboard" replace />;
     }
   }
 
-  return <>{children}</>;
+  return children;
 }
 
 export default ProtectedRoute;
