@@ -104,44 +104,44 @@ const Topbar = ({ collapsed, setCollapsed }) => {
 
   const userInfo = useSelector((state) => state.auth?.userInfo);
 
-  // const notificationMenu = (
-  //   <div
-  //     className="flex flex-col gap-4 w-full text-center bg-white p-4 rounded-lg"
-  //     style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
-  //     onClick={() => setCollapsed(false)}
-  //   >
-  //     {notifications?.data?.attributes?.result?.map((notification) => (
-  //       <div className="text-start" key={notification._id}>
-  //         <div className="flex gap-2">
-  //           <div className="p-2 rounded-md">
-  //             <FiBell className="text-secondary-color w-6 h-6" />
-  //           </div>
-  //           <div className="flex flex-col">
-  //             <span className="text-lg font-medium text-gray-700 capitalize">
-  //               {notification.message.replace(/\s+/g, " ").trim()}
-  //             </span>
-  //             <p className="">
-  //               {dayjs(notification?.createdAt).format("MMMM DD, YYYY")} |{" "}
-  //               <span className="font-semibold">
-  //                 {dayjs(notification?.createdAt).format("hh:mm A")}
-  //               </span>
-  //             </p>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     ))}
-  //     <Link
-  //       to={`/${userInfo?.role}/notifications`}
-  //       onClick={() => {
-  //         notificationRead();
-  //         setUnreadCount(0);
-  //       }}
-  //       className="px-16 text-white mx-auto bg-secondary-color rounded-2xl h-8 py-1 font-semibold"
-  //     >
-  //       See All
-  //     </Link>
-  //   </div>
-  // );
+  const notificationMenu = (
+    <div
+      className="flex flex-col gap-4 w-full text-center bg-white p-4 rounded-lg"
+      style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
+      onClick={() => setCollapsed(false)}
+    >
+      {notifications?.data?.attributes?.result?.map((notification) => (
+        <div className="text-start" key={notification._id}>
+          <div className="flex gap-2">
+            <div className="p-2 rounded-md">
+              <FiBell className="text-secondary-color w-6 h-6" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-medium text-gray-700 capitalize">
+                {notification.message.replace(/\s+/g, " ").trim()}
+              </span>
+              <p className="">
+                {dayjs(notification?.createdAt).format("MMMM DD, YYYY")} |{" "}
+                <span className="font-semibold">
+                  {dayjs(notification?.createdAt).format("hh:mm A")}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+      <Link
+        to={`/${userInfo?.role}/notifications`}
+        onClick={() => {
+          notificationRead();
+          setUnreadCount(0);
+        }}
+        className="px-16 text-white mx-auto bg-secondary-color rounded-2xl h-8 py-1 font-semibold"
+      >
+        See All
+      </Link>
+    </div>
+  );
 
   return (
     <div className="pt-4 mx-[-50px] flex justify-between items-center bg-[#ffffff]">
@@ -152,7 +152,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
         />
       </div>
       <div className="flex items-center justify-center mr-5 gap-2">
-        {/* <Dropdown
+        <Dropdown
           overlay={notificationMenu}
           trigger={["hover"]}
           placement="bottomRight"
@@ -165,7 +165,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
               className="text-secondary-color font-bold text-xl rounded-full bg-[#B4B8BD] w-11 aspect-square p-1 flex justify-center items-center"
             />
           </Badge>
-        </Dropdown> */}
+        </Dropdown>
         <Link
           to="settings/profile"
           className="flex items-center justify-center gap-2 bg-transparent text-base-color border-0 rounded-lg h-8 px-2 py-1 mr-5"
