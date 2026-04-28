@@ -108,9 +108,9 @@ const router = createBrowserRouter([
   {
     path: "admin",
     element: (
-      <ProtectedRoute role="admin">
+      // <ProtectedRoute role="admin">
         <DashboardLayout />
-      </ProtectedRoute>
+      // </ProtectedRoute>
     ),
     children: [
       {
@@ -262,9 +262,9 @@ const router = createBrowserRouter([
   {
     path: "sub-admin",
     element: (
-      <ProtectedRoute role="sub-admin">
+      // <ProtectedRoute role="sub-admin">
         <DashboardLayout />
-      </ProtectedRoute>
+      // </ProtectedRoute>
     ),
     children: [
       {

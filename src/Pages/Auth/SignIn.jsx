@@ -22,7 +22,7 @@ const SignIn = () => {
 
   const onFinish = async (values) => {
     const toastId = toast.loading(" Logging in...");
-    console.log("umrah-dashboard:", values);
+    // console.log("umrah-dashboard:", values);
 
     try {
       const res = await userLogin(values).unwrap();
@@ -30,7 +30,7 @@ const SignIn = () => {
       dispatch(clearAuth());
       dispatch(setAccessToken(res?.data?.accessToken));
       dispatch(setUserInfo(decodeToken));
-      console.log("res: ", decodeToken);
+ 
       cookies.set("umrah-dashboard_accessToken", res?.data?.accessToken);
       toast.success(res.message, {
         id: toastId,

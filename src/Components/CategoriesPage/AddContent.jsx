@@ -16,7 +16,7 @@ const { Dragger } = Upload;
 const AddContent = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    console.log(values);
+    // console.log(values);
     //    form.resetFields();
   };
   const existingContents = ["Welcome to Mauritius!", "Our City"];

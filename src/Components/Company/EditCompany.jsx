@@ -37,7 +37,7 @@ const EditCompany = () => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    console.log(imageUrl);
+    // console.log(imageUrl);
     navigate("/admin/profile");
   };
 

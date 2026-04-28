@@ -51,7 +51,7 @@ const CreteServiceForm = ({ setService }) => {
       if (values?.picture?.fileList?.[0].originFileObj) {
         const profileImage = values.picture?.fileList[0]?.originFileObj;
 
-        console.log(profileImage);
+        // console.log(profileImage);
         formData.append("image", profileImage);
       }
     const toastId = toast.loading("Service is createing...");

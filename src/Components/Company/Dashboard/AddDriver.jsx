@@ -10,7 +10,7 @@ const AddDriver = () => {
     listType: "picture",
   };
   const onFinish = (values) => {
-    console.log(values);
+    // console.log(values);
     form.resetFields();
   };
   return (
