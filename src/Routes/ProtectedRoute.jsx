@@ -3,78 +3,72 @@ import { Spin } from "antd";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { clearAuth } from "../redux/slices/authSlice";
 
 function ProtectedRoute({ children, role }) {
   const token = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {
-    if (token?.accessToken) {
-      const decodeToken = jwtDecode(token?.accessToken);
-      const currentTime = Date.now() / 1000;
-
-      if (decodeToken.exp < currentTime) {
-        // Token is expired, log the user out
-
-        dispatch(clearAuth()); // Dispatch logout action
-        navigate("/signin");
-        setIsAuthorized(false);
-      } else {
-        // Check if the role matches
-        if (decodeToken?.role !== role) {
-          setIsAuthorized(false);
-        } else {
-          setIsAuthorized(true);
-        }
-      }
-    } else {
+    if (!token?.accessToken) {
       setIsAuthorized(false);
+      return;
     }
-  }, [token?.accessToken, role]);
 
-  // Render loading state while checking the token
+    let decodeToken;
+
+    try {
+      decodeToken = jwtDecode(token.accessToken);
+    } catch (error) {
+      console.error("Token decode failed:", error);
+      dispatch(clearAuth());
+      setIsAuthorized(false);
+      return;
+    }
+
+    const currentTime = Date.now() / 1000;
+
+    if (decodeToken.exp < currentTime) {
+      dispatch(clearAuth());
+      setIsAuthorized(false);
+      return;
+    }
+
+    if (decodeToken?.role !== role) {
+      setIsAuthorized(false);
+    } else {
+      setIsAuthorized(true);
+    }
+  }, [token?.accessToken, role, dispatch]);
+
+  // ⏳ Loading
   if (isAuthorized === null) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center h-screen">
         <Spin size="large" />
       </div>
     );
   }
 
-  // Redirect if unauthorized
-  if (isAuthorized === false) {
+  // 🚫 Unauthorized
+  if (!isAuthorized) {
     return <Navigate to="/signin" replace />;
   }
 
-    const path = window.location.pathname;
-    const currentpath = path.split("/")[2];
-  if (role == "sub-admin") {
-    // console.log(token?.userInfo?.categoryPermissions, children);
-    // console.log(currentpath);
+  // 🔐 Sub-admin route protection
+  if (role === "sub-admin") {
+    const pathParts = window.location.pathname.split("/");
+    const currentPath = pathParts.length > 2 ? pathParts[2] : null;
 
-    const currentCategory = token?.userInfo?.categoryPermissions?.find(
-      (cat) => cat === currentpath
-    );
-    // console.log(currentCategory);
+    const allowed = token?.userInfo?.categoryPermissions?.includes(currentPath);
 
-    if (
-      !currentCategory &&
-      currentpath != "dashboard" &&
-      currentpath != "settings"
-    ) {
-      console.log("redirecting");
-      return <Navigate to={`/sub-admin/dashboard`} replace />;
+    if (!allowed && currentPath !== "dashboard" && currentPath !== "settings") {
+      return <Navigate to="/sub-admin/dashboard" replace />;
     }
-
-    //   ?.includes(path.split("/")[2])
-    //   ? null
-    //   : navigate("/employee/dashboard");
   }
-  // Render children if authorized
+
   return <>{children}</>;
 }
 
