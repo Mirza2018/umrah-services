@@ -19,18 +19,23 @@
 //   </React.StrictMode>
 // );
 
-// Test 3 — Add PersistGate
+// Test 4 — Add Router
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+const testRouter = createBrowserRouter([
+  { path: "*", element: <h1 style={{color:"green",padding:"20px"}}>Router OK</h1> }
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <h1 style={{color: "green", padding: "20px"}}>PersistGate OK</h1>
+        <RouterProvider router={testRouter} />
       </PersistGate>
     </Provider>
   </React.StrictMode>
