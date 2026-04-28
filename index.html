@@ -9,6 +9,23 @@
 </head>
 
 <body>
+  <!-- ✅ Error catcher FIRST before anything else -->
+  <script>
+    window.onerror = function(msg, src, line, col, err) {
+      document.body.innerHTML = '<div style="padding:20px;font-size:14px;color:red;word-break:break-all;">'
+        + '<b>Error:</b> ' + msg + '<br/>'
+        + '<b>Source:</b> ' + src + '<br/>'
+        + '<b>Line:</b> ' + line + '<br/>'
+        + '<b>Detail:</b> ' + (err ? err.stack : 'none')
+        + '</div>';
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      document.body.innerHTML = '<div style="padding:20px;font-size:14px;color:red;word-break:break-all;">'
+        + '<b>Unhandled Promise:</b> ' + (e.reason?.message || e.reason)
+        + '</div>';
+    });
+  </script>
+
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
