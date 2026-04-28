@@ -1,6 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useEffect } from "react";
-import { createBrowserRouter, useNavigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import DashboardLayout from "../Components/Layout/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
@@ -49,7 +53,7 @@ import ServiceRequests from "../Pages/SuperAdmin/ServiceRequests";
 import SuperAdminDashboard from "../Pages/SuperAdmin/SuperAdminDashboard";
 import CreateService from "../Pages/SuperAdmin/CreateService";
 import ServicesManagementsPage from "../Pages/SuperAdmin/ServicesManagementsPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
 import PrivacyPolicy from "../Pages/Common/settings/PrivacyPolicy";
@@ -58,39 +62,47 @@ import TermsOfServiceVendor from "../Pages/Common/settings/TermsOfServiceVendor"
 import PrivacyPolicyVendor from "../Pages/Common/settings/PrivacyPolicyVendor";
 import IncompletedServices from "../Pages/SuperAdmin/IncompletedServices";
 import DiscountPage from "../Pages/SuperAdmin/DiscountPage";
+import { clearAuth } from "../redux/slices/authSlice";
 
 function AuthRedirect() {
   const token = useSelector((state) => state.auth?.accessToken);
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
+    // 🛑 Prevent loop
+    if (location.pathname === "/signin") return;
 
-        // --- ADDED VALIDATION CHECK ---
-        const userRole = decodedToken?.role;
+    if (!token) {
+      navigate("/signin", { replace: true });
+      return;
+    }
 
-        if (userRole) {
-          // If role exists, navigate to the correct dashboard path
-          navigate(`/${userRole}/dashboard`, { replace: true });
-        } else {
-          // If token is present but role is missing/invalid, treat as bad token
-          console.error("Token is valid but missing a 'role' claim.");
-          // You might also want to dispatch a logout action here
-          navigate("/signin", { replace: true });
-        }
-        // ------------------------------
-      } catch (error) {
-        // This handles cases where the token is malformed or expired
-        console.error("Token decoding failed:", error);
+    try {
+      const decodedToken = jwtDecode(token);
+      const userRole = decodedToken?.role;
+      const currentTime = Date.now() / 1000;
+
+      // 🔐 Expired token
+      if (decodedToken.exp < currentTime) {
+        dispatch(clearAuth());
+        navigate("/signin", { replace: true });
+        return;
+      }
+
+      if (userRole) {
+        navigate(`/${userRole}/dashboard`, { replace: true });
+      } else {
+        dispatch(clearAuth());
         navigate("/signin", { replace: true });
       }
-    } else {
-      // No token present, navigate to signin
+    } catch (error) {
+      console.error("Token decode failed:", error);
+      dispatch(clearAuth());
       navigate("/signin", { replace: true });
     }
-  }, [navigate, token]);
+  }, [token, navigate, location.pathname, dispatch]);
 
   return <Loading />;
 }
@@ -108,9 +120,9 @@ const router = createBrowserRouter([
   {
     path: "admin",
     element: (
-      // <ProtectedRoute role="admin">
+      <ProtectedRoute role="admin">
         <DashboardLayout />
-      // </ProtectedRoute>
+      </ProtectedRoute>
     ),
     children: [
       {
@@ -262,9 +274,9 @@ const router = createBrowserRouter([
   {
     path: "sub-admin",
     element: (
-      // <ProtectedRoute role="sub-admin">
+      <ProtectedRoute role="sub-admin">
         <DashboardLayout />
-      // </ProtectedRoute>
+      </ProtectedRoute>
     ),
     children: [
       {
