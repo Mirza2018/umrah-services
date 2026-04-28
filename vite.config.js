@@ -13,20 +13,22 @@ export default defineConfig({
   ],
 
   esbuild: {
-    drop: ["console", "debugger"], // ✅ moved to top-level
+    drop: ["console", "debugger"],
   },
 
   build: {
     minify: "esbuild",
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       external: (id) => id.includes(".git"),
-    },
       output: {
-      manualChunks: {
-        vendor: ["react", "react-dom", "react-router-dom"],
-        redux: ["@reduxjs/toolkit", "react-redux"],
-        antd: ["antd"],
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+          redux: ["@reduxjs/toolkit", "react-redux"],
+          antd: ["antd"],
+        },
       },
+    },
   },
 
   server: {
