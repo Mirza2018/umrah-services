@@ -21,6 +21,12 @@ export default defineConfig({
     rollupOptions: {
       external: (id) => id.includes(".git"),
     },
+      output: {
+      manualChunks: {
+        vendor: ["react", "react-dom", "react-router-dom"],
+        redux: ["@reduxjs/toolkit", "react-redux"],
+        antd: ["antd"],
+      },
   },
 
   server: {
